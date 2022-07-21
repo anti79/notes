@@ -34,7 +34,9 @@
 				<Button x:Name="allBtn" Command="{ Binding SwitchToAll }" >All notes</Button>
 				<Button x:Name="favoritesBtn"  Command="{ Binding SwitchToFavorites }"  >Favorites</Button>
 			</StackPanel>
-			<StackPanel Grid.Column="2" Orientation="Horizontal"/>
+			<StackPanel Grid.Column="2" Orientation="Horizontal">
+				
+			</StackPanel>
 		</Grid>
 
 		

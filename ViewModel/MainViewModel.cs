@@ -53,10 +53,12 @@ namespace notes.ViewModel
 				{
 					CurrentPage = new NotesPage();
 					var vm = new NotesViewModel(); ;
+					vm.Title = "All notes";
 					vm.GetNotesDelegate = () =>
 					{
 						return Storage.Instance.GetAllNotes();
 					};
+					CurrentPage.DataContext = vm;
 
 
 				});
@@ -70,9 +72,8 @@ namespace notes.ViewModel
 				switchToNotebooksCommand = new Command(() =>
 				{
 					CurrentPage = new NotebookPage();
-					var vm = new NotebooksViewModel();
+					var vm = new NotebooksViewModel(); //TODO: save vm
 					vm.ParentViewModel = this;
-					
 					CurrentPage.DataContext = vm;
 				});
 			}
@@ -86,6 +87,7 @@ namespace notes.ViewModel
 				{
 					CurrentPage = new NotesPage();
 					var vm = new NotesViewModel();
+					vm.Title = "Favorites";
 					vm.GetNotesDelegate = () =>
 					{
 						return Storage.Instance.GetFavoriteNotes();

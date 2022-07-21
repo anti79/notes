@@ -19,7 +19,7 @@
 		</Grid.RowDefinitions>
 		<StackPanel Grid.Row="0" Orientation="Horizontal">
 
-			<Button x:Name="backBtn" Click="backBtn_Click">&lt;</Button>
+			<Button x:Name="backBtn" Command="{Binding GoBackCommand}" Visibility="{Binding IsNotebook}">&lt;</Button>
 			<TextBlock FontSize="30" Text="{Binding Title}"/>
 		</StackPanel>
 		<GridView x:Name="gridview" ItemsSource="{Binding Notes}" Grid.Row="1">

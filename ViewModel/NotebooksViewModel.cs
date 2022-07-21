@@ -25,12 +25,15 @@ namespace notes.ViewModel
 		}
 
 		ICommand openNotebook;
+		
 
 		public ICommand OpenNotebookCommand { get
 			{
 				return GetOpenNotebookCommand();
 			}
 		}
+
+		
 
 		public ICommand GetOpenNotebookCommand()
 		{
@@ -45,6 +48,7 @@ namespace notes.ViewModel
 						return nb.Notes;
 					};
 					vm.Title = nb.Name;
+					vm.IsNotebook = true;
 					page.DataContext = vm;
 					vm.ParentViewModel = ParentViewModel;
 					((MainViewModel)ParentViewModel).CurrentPage = page;

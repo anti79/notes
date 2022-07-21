@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace notes.ViewModel
 {
@@ -14,12 +15,14 @@ namespace notes.ViewModel
 		GetNotes getNotesDelegate;
 
 		public string Title {get;set;}
+		public bool IsNotebook { get; set; }
 		public NotesViewModel()
 		{
 			GetNotesDelegate = () =>
 			{
 				return Storage.Instance.GetAllNotes();
 			};
+			IsNotebook = false;
 		}
 		public GetNotes GetNotesDelegate
 		{
@@ -47,5 +50,21 @@ namespace notes.ViewModel
 				return this;
 			}
 		}
+
+		ICommand goBack;
+		public ICommand GetGoBackCommand()
+		{
+			if (goBack is null)
+			{
+				goBack = new Command(() =>
+				{
+					((MainViewModel)ParentViewModel).SwitchToNotebooks.Execute(null);
+				});
+			}
+			return goBack;
+		}
+
+		public ICommand GoBackCommand { get { return GetGoBackCommand(); } }
+
 	}
 }

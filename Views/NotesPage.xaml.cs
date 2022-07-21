@@ -31,7 +31,7 @@ namespace notes.Views
 
 		private void backBtn_Click(object sender, RoutedEventArgs e)
 		{
-			(((MainViewModel)(((NotesViewModel)DataContext).ParentViewModel))).SwitchToNotebooks.Execute(null);
+			//((NotesViewModel)DataContext).Ex
 		}
 	}
 }
