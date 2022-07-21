@@ -9,8 +9,8 @@
 	xmlns:m="using:notes.Model"
 	mc:Ignorable="d"
 	xmlns:i="using:Microsoft.Xaml.Interactivity"
-	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	xmlns:core="using:Microsoft.Xaml.Interactions.Core" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 	<Page.DataContext>
 		<vm:NotebooksViewModel></vm:NotebooksViewModel>
 	</Page.DataContext>
@@ -19,10 +19,11 @@
 			<RowDefinition/>
 			<RowDefinition Height="9*"></RowDefinition>
 		</Grid.RowDefinitions>
-		<StackPanel Grid.Row="0">
+		<controls:DockPanel Grid.Row="0" VerticalAlignment="Center">
 			<TextBlock FontSize="30">Notebooks</TextBlock>
-		</StackPanel>
-		<GridView x:Name="gridview" ItemsSource="{Binding Notebooks}" Grid.Row="1" Tapped="gridview_Tapped">
+			<Button Margin="10" controls:DockPanel.Dock="Right" HorizontalAlignment="Right" Command="{Binding CreateNotebookCommand}">+ Notebook</Button>
+		</controls:DockPanel>
+		<GridView x:Name="gridview" ItemsSource="{Binding Notebooks, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Tapped="gridview_Tapped">
 			
 			<GridView.ItemTemplate>
 				

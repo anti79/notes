@@ -1,6 +1,7 @@
 ﻿using notes.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -36,20 +37,19 @@ namespace notes.ViewModel
 			}
 		}
 
-		public List<Note> Notes
+		ObservableCollection<Note> notes;
+		public ObservableCollection<Note> Notes
 		{
 			get {
-				return getNotesDelegate();
+				if(notes is null)
+				{
+					notes = new ObservableCollection<Note>(getNotesDelegate());
+				}
+				return notes;
 			}
+			
 		}
-		
-		public ViewModel MainFrameContext
-		{
-			get
-			{
-				return this;
-			}
-		}
+
 
 		ICommand goBack;
 		public ICommand GetGoBackCommand()

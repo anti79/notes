@@ -2,6 +2,7 @@
 using notes.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,14 @@ namespace notes.ViewModel
 {
 	class NotebooksViewModel:ViewModel
 	{
-		public List<Notebook> Notebooks { get
+		ObservableCollection<Notebook> notebooks;
+		public ObservableCollection<Notebook> Notebooks { get
 			{
-				return Storage.Instance.Notebooks;
+				if(notebooks is null)
+				{
+					notebooks = new ObservableCollection<Notebook>(Storage.Instance.Notebooks);
+				}
+				return notebooks;
 			} 
 		}
 		
@@ -25,15 +31,32 @@ namespace notes.ViewModel
 		}
 
 		ICommand openNotebook;
-		
+		ICommand createNotebook;
 
 		public ICommand OpenNotebookCommand { get
 			{
 				return GetOpenNotebookCommand();
 			}
 		}
+		public ICommand CreateNotebookCommand
+		{
+			get
+			{
+				return GetCreateNotebookCommand();
+			}
+		}
 
-		
+		private ICommand GetCreateNotebookCommand()
+		{
+			if (createNotebook is null)
+			{
+				createNotebook = new Command(()=> {
+					Notebooks.Add(new Notebook() { Name = "Untitled" });
+
+				});
+			}
+			return createNotebook;
+		}
 
 		public ICommand GetOpenNotebookCommand()
 		{
@@ -52,6 +75,7 @@ namespace notes.ViewModel
 					page.DataContext = vm;
 					vm.ParentViewModel = ParentViewModel;
 					((MainViewModel)ParentViewModel).CurrentPage = page;
+					((MainViewModel)ParentViewModel).OpenedNotebook = nb;
 				});
 				
 			}

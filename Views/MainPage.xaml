@@ -34,8 +34,10 @@
 				<Button x:Name="allBtn" Command="{ Binding SwitchToAll }" >All notes</Button>
 				<Button x:Name="favoritesBtn"  Command="{ Binding SwitchToFavorites }"  >Favorites</Button>
 			</StackPanel>
-			<StackPanel Grid.Column="2" Orientation="Horizontal">
-				
+			<StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
+				<Button Command="{Binding CreateNoteCommand}">+</Button>
+				<Button></Button>
+				<Button>...</Button>
 			</StackPanel>
 		</Grid>
 
@@ -44,7 +46,7 @@
 >
 			
 		</Frame>
-		<Frame Name="noteFrame" Grid.RowSpan="2" Margin="200,0,200,0" Visibility="Collapsed">
+		<Frame Name="noteFrame" Grid.RowSpan="2" Margin="200,0,200,0"  Content="{Binding NoteEditorPage}" Visibility="{Binding EditorVisible}">
 			
 		</Frame>
 		

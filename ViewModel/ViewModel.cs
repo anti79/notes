@@ -11,7 +11,7 @@ namespace notes.ViewModel
 	class ViewModel : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
-		protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+		public void RaisePropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			if (PropertyChanged != null)
 			{
