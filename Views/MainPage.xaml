@@ -46,7 +46,7 @@
 >
 			
 		</Frame>
-		<Frame Name="noteFrame" Grid.RowSpan="2" Margin="200,0,200,0"  Content="{Binding NoteEditorPage}" Visibility="{Binding EditorVisible}">
+		<Frame Name="noteFrame" Grid.RowSpan="2" Margin="200,0,200,0"  Content="{Binding EditorPage, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding EditorVisible, UpdateSourceTrigger=PropertyChanged}">
 			
 		</Frame>
 		

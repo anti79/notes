@@ -26,7 +26,10 @@ namespace notes.ViewModel
 
 		public bool EditorVisible
 		{
-			get;set;
+		get
+			{
+				return EditorPage != null;
+			}
 		}
 
 		public Page CurrentPage { get
@@ -51,6 +54,7 @@ namespace notes.ViewModel
 			{
 				editorPage = value;
 				RaisePropertyChanged();
+				RaisePropertyChanged(nameof(EditorVisible));
 			}
 		}
 		public MainViewModel()
@@ -146,8 +150,8 @@ namespace notes.ViewModel
 						//OpenedNotebook.Notes.Add(new Note());
 						//((NotesViewModel)(CurrentPage.DataContext)).Notes.Add(new Note());
 						//((NotesViewModel)(CurrentPage.DataContext)).RaisePropertyChanged("Notes");
-						EditorVisible = true;
-						//EditorPage = new No
+						EditorPage = new EditorPage();
+
 
 					}
 				});
