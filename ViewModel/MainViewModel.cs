@@ -29,6 +29,9 @@ namespace notes.ViewModel
 		public MainViewModel()
 		{
 			CurrentPage = new NotebookPage();
+			var vm = new NotebooksViewModel();
+			vm.ParentViewModel = this;
+			CurrentPage.DataContext = vm;
 		}
 
 
@@ -67,6 +70,10 @@ namespace notes.ViewModel
 				switchToNotebooksCommand = new Command(() =>
 				{
 					CurrentPage = new NotebookPage();
+					var vm = new NotebooksViewModel();
+					vm.ParentViewModel = this;
+					
+					CurrentPage.DataContext = vm;
 				});
 			}
 			return switchToNotebooksCommand;
@@ -90,6 +97,7 @@ namespace notes.ViewModel
 			}
 			return switchToFavoritesCommand;
 		}
-	
+
+		//public bool 
 	}
 }

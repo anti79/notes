@@ -17,8 +17,10 @@
 			<RowDefinition/>
 			<RowDefinition Height="9*"></RowDefinition>
 		</Grid.RowDefinitions>
-		<StackPanel Grid.Row="0">
-			<TextBlock FontSize="30">All notes</TextBlock>
+		<StackPanel Grid.Row="0" Orientation="Horizontal">
+
+			<Button x:Name="backBtn" Click="backBtn_Click">&lt;</Button>
+			<TextBlock FontSize="30" Text="{Binding Title}"/>
 		</StackPanel>
 		<GridView x:Name="gridview" ItemsSource="{Binding Notes}" Grid.Row="1">
 			<GridView.ItemTemplate>

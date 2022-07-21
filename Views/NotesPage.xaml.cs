@@ -27,7 +27,11 @@ namespace notes.Views
 		public NotesPage()
 		{
 			this.InitializeComponent();
-			
+		}
+
+		private void backBtn_Click(object sender, RoutedEventArgs e)
+		{
+			(((MainViewModel)(((NotesViewModel)DataContext).ParentViewModel))).SwitchToNotebooks.Execute(null);
 		}
 	}
 }

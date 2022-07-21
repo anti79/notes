@@ -1,4 +1,5 @@
 ﻿using notes.Model;
+using notes.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +19,7 @@ namespace notes.ViewModel
 				return Storage.Instance.Notebooks;
 			} 
 		}
+		
 		public NotebooksViewModel()
 		{
 		}
@@ -34,9 +36,18 @@ namespace notes.ViewModel
 		{
 			if(openNotebook is null)
 			{
-				openNotebook = new ActionCommand<Notebook>((e) => {
-					Console.WriteLine(e);
-					//((MainViewModel)ParentViewModel).
+				openNotebook = new ActionCommand<Notebook>((nb) => {
+					Console.WriteLine(nb);
+					var page = new NotesPage();
+					var vm = new NotesViewModel();
+					vm.GetNotesDelegate = () =>
+					{
+						return nb.Notes;
+					};
+					vm.Title = nb.Name;
+					page.DataContext = vm;
+					vm.ParentViewModel = ParentViewModel;
+					((MainViewModel)ParentViewModel).CurrentPage = page;
 				});
 				
 			}

@@ -12,6 +12,8 @@ namespace notes.ViewModel
 	{
 		public delegate List<Note> GetNotes();
 		GetNotes getNotesDelegate;
+
+		public string Title {get;set;}
 		public NotesViewModel()
 		{
 			GetNotesDelegate = () =>
@@ -30,6 +32,7 @@ namespace notes.ViewModel
 				getNotesDelegate = value;
 			}
 		}
+
 		public List<Note> Notes
 		{
 			get {
