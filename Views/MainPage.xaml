@@ -1,0 +1,54 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:notes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Custom="using:Microsoft.UI.Xaml.Controls"
+	xmlns:v ="using:notes.Views"
+	xmlns:vm="using:notes.ViewModel"
+    x:Class="notes.MainPage"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	<Page.DataContext>
+		<vm:MainViewModel/>
+	</Page.DataContext>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition Height="9*"/>
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="0">
+			<!--upper menu-->
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			<StackPanel Grid.Column="0" Orientation="Horizontal">
+				<Button/>
+				<Button/>
+			</StackPanel>
+			<StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+				<Button x:Name="notebooksBtn"  Command="{ Binding SwitchToNotebooks }">Notebooks</Button>
+				<Button x:Name="allBtn" Command="{ Binding SwitchToAll }" >All notes</Button>
+				<Button x:Name="favoritesBtn"  Command="{ Binding SwitchToFavorites }"  >Favorites</Button>
+			</StackPanel>
+			<StackPanel Grid.Column="2" Orientation="Horizontal"/>
+		</Grid>
+
+		
+		<Frame Name="mainFrame" Grid.Row="1" Margin="30" Content="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+>
+			
+		</Frame>
+		<Frame Name="noteFrame" Grid.RowSpan="2" Margin="200,0,200,0" Visibility="Collapsed">
+			
+		</Frame>
+		
+
+		<!--<WebView HorizontalAlignment="Left" Height="610" Margin="10,150,0,0" VerticalAlignment="Top" Width="1040" x:Name="view"/>-->
+
+
+	</Grid>
+</Page>

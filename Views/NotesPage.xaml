@@ -1,0 +1,42 @@
+﻿<Page
+    x:Class="notes.Views.NotesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:notes.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:vm="using:notes.ViewModel"
+	xmlns:m="using:notes.Model"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	<Page.DataContext>
+		<vm:NotesViewModel></vm:NotesViewModel>
+	</Page.DataContext>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition Height="9*"></RowDefinition>
+		</Grid.RowDefinitions>
+		<StackPanel Grid.Row="0">
+			<TextBlock FontSize="30">All notes</TextBlock>
+		</StackPanel>
+		<GridView x:Name="gridview" ItemsSource="{Binding Notes}" Grid.Row="1">
+			<GridView.ItemTemplate>
+				<DataTemplate x:DataType="m:Note">
+					<Border Background="Aqua" Width="200" Height="200" Margin="30">
+						<Grid Margin="10">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="7*"></RowDefinition>
+								<RowDefinition Height="24*"></RowDefinition>
+								<RowDefinition Height="5*"></RowDefinition>
+							</Grid.RowDefinitions>
+							<TextBlock FontSize="20">title</TextBlock>
+							<TextBlock Grid.Row="2">date</TextBlock>
+						</Grid>
+					</Border>
+				</DataTemplate>
+			</GridView.ItemTemplate>
+		</GridView>
+	</Grid>
+
+</Page>

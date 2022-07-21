@@ -1,0 +1,39 @@
+﻿<Page
+    x:Class="notes.Views.NotebookPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:notes.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:vm="using:notes.ViewModel"
+	xmlns:m="using:notes.Model"
+	mc:Ignorable="d"
+	xmlns:i="using:Microsoft.Xaml.Interactivity"
+	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	<Page.DataContext>
+		<vm:NotebooksViewModel></vm:NotebooksViewModel>
+	</Page.DataContext>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition Height="9*"></RowDefinition>
+		</Grid.RowDefinitions>
+		<StackPanel Grid.Row="0">
+			<TextBlock FontSize="30">Notebooks</TextBlock>
+		</StackPanel>
+		<GridView x:Name="gridview" ItemsSource="{Binding Notebooks}" Grid.Row="1" Tapped="gridview_Tapped">
+			
+			<GridView.ItemTemplate>
+				
+				<DataTemplate x:DataType="m:Notebook" >
+					
+					<StackPanel Margin="30" HorizontalAlignment="Center">
+						<Image Source="ms-appx:///Assets/cover1.png" Stretch="None"></Image>
+						<TextBlock Text="{Binding Name}" HorizontalAlignment="Center"></TextBlock>
+					</StackPanel>
+				</DataTemplate>
+			</GridView.ItemTemplate>
+		</GridView>
+	</Grid>
+</Page>
