@@ -21,7 +21,7 @@ namespace notes.ViewModel
 		NotebooksViewModel nbVM;
 		NotesViewModel favVM;
 
-
+	 
 
 
 		public bool EditorVisible
@@ -150,7 +150,14 @@ namespace notes.ViewModel
 						//OpenedNotebook.Notes.Add(new Note());
 						//((NotesViewModel)(CurrentPage.DataContext)).Notes.Add(new Note());
 						//((NotesViewModel)(CurrentPage.DataContext)).RaisePropertyChanged("Notes");
+						Storage.Instance.CreateFile("name");
 						EditorPage = new EditorPage();
+						var editorVM = new EditorViewModel();
+						editorVM.Note = new Note();
+						editorVM.ParentViewModel = this;
+						EditorPage.DataContext = editorVM;
+						
+						
 
 
 					}

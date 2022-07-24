@@ -33,6 +33,7 @@ namespace notes.Views
 		private void gridview_Tapped(object sender, TappedRoutedEventArgs e)
 		{
 			//((FrameworkElement)e.OriginalSource).DataContext;
+			if (e.OriginalSource.GetType() == typeof(Grid)) return;
 			((NotebooksViewModel)DataContext).OpenNotebookCommand.Execute(((FrameworkElement)e.OriginalSource).DataContext);
 		}
 	}

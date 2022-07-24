@@ -10,6 +10,8 @@ namespace notes.Model
 	{
 		public string Title { get; set; }
 		public bool IsFavorite { get; set; }
+
+		public string Content { get; set; }
 		DateTime creationTime;
 
 		public string DateString
@@ -31,7 +33,8 @@ namespace notes.Model
 
 		public Note()
 		{
-			creationTime = DateTime.Today; 
+			creationTime = DateTime.Today;
+			Content = "";
 		}
 
 	}

@@ -27,7 +27,13 @@ namespace notes.Views
 		public EditorPage()
 		{
 			this.InitializeComponent();
-			
+			Binding myBinding = new Binding();
+			myBinding.Source = this.DataContext;
+			myBinding.Path = new PropertyPath("Text");
+			myBinding.Mode = BindingMode.TwoWay;
+			myBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+			BindingOperations.SetBinding(textEditorBox, CustomRichEditBox.CustomTextProperty, myBinding);
+
 		}
 	}
 }

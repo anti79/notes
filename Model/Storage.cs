@@ -9,7 +9,13 @@ namespace notes.Model
 	class Storage
 	{
 		private static Storage instance = null;
-		private static readonly object _lock = new object ();  
+		private static readonly object _lock = new object();
+
+		public void CreateFile(string name)
+		{
+			//System.IO.File.Create($"notes/{name}.note");
+		}
+
 
 		public List<Notebook> Notebooks { get; set; }
 		public static Storage Instance

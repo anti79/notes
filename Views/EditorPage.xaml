@@ -5,12 +5,26 @@
     xmlns:local="using:notes.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
+	xmlns:v="using:notes.Views" xmlns:v1="using:notes"
+	xmlns:vm="using:notes.ViewModel" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+	mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	
+	<Grid>
+		<Border Background="AntiqueWhite">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="11*"></RowDefinition>
+					<RowDefinition Height="89*"></RowDefinition>
+				</Grid.RowDefinitions>
+				<controls:DockPanel>
+					<Button Margin="1265,0,0,0" x:Name="saveBtn" Command="{Binding ExitCommand}" Height="45" Width="225">Save</Button>
+				</controls:DockPanel>
+				<v:CustomRichEditBox Grid.Row="1" x:Name="textEditorBox">
 
-    <Grid>
-		<Border Background="Aqua">
-			
+				</v:CustomRichEditBox>
+			</Grid>
+
 		</Border>
-    </Grid>
+	</Grid>
 </Page>
