@@ -120,7 +120,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\EditorViewModel.cs" />
-    <Compile Include="Views\CustomRichEditBox.cs" />
     <Compile Include="Model\Notebook.cs" />
     <Compile Include="Model\Storage.cs" />
     <Compile Include="ViewModel\ActionCommand.cs" />
@@ -132,6 +131,7 @@
     <Compile Include="Views\EditorPage.xaml.cs">
       <DependentUpon>EditorPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\IEditorPage.cs" />
     <Compile Include="Views\NotesPage.xaml.cs">
       <DependentUpon>NotesPage.xaml</DependentUpon>
     </Compile>

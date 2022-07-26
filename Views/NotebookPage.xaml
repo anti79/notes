@@ -24,11 +24,9 @@
 			<Button Margin="10" controls:DockPanel.Dock="Right" HorizontalAlignment="Right" Command="{Binding CreateNotebookCommand}">+ Notebook</Button>
 		</controls:DockPanel>
 		<GridView x:Name="gridview" ItemsSource="{Binding Notebooks, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Tapped="gridview_Tapped">
-			
+
 			<GridView.ItemTemplate>
-				
 				<DataTemplate x:DataType="m:Notebook" >
-					
 					<StackPanel Margin="30" HorizontalAlignment="Center">
 						<Image Source="ms-appx:///Assets/cover1.png" Stretch="None"></Image>
 						<TextBlock Text="{Binding Name}" HorizontalAlignment="Center"></TextBlock>

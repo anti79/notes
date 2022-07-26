@@ -7,6 +7,8 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage.Streams;
+using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,18 +24,24 @@ namespace notes.Views
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
-	public sealed partial class EditorPage : Page
+	public sealed partial class EditorPage : Page, IEditorPage
 	{
 		public EditorPage()
 		{
 			this.InitializeComponent();
-			Binding myBinding = new Binding();
-			myBinding.Source = this.DataContext;
-			myBinding.Path = new PropertyPath("Text");
-			myBinding.Mode = BindingMode.TwoWay;
-			myBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-			BindingOperations.SetBinding(textEditorBox, CustomRichEditBox.CustomTextProperty, myBinding);
+			
 
+		}
+
+		public ITextDocument GetEditorContent()
+		{
+			return textEditorBox.Document;
+			
+		}
+
+		public void SetEditorContent(IRandomAccessStream stream)
+		{
+			textEditorBox.Document.LoadFromStream(TextSetOptions.ApplyRtfDocumentDefaults, stream);
 		}
 	}
 }

@@ -9,7 +9,7 @@
 	xmlns:vm="using:notes.ViewModel" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-	
+
 	<Grid>
 		<Border Background="AntiqueWhite">
 			<Grid>
@@ -17,12 +17,17 @@
 					<RowDefinition Height="11*"></RowDefinition>
 					<RowDefinition Height="89*"></RowDefinition>
 				</Grid.RowDefinitions>
-				<controls:DockPanel>
-					<Button Margin="1265,0,0,0" x:Name="saveBtn" Command="{Binding ExitCommand}" Height="45" Width="225">Save</Button>
-				</controls:DockPanel>
-				<v:CustomRichEditBox Grid.Row="1" x:Name="textEditorBox">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="62*"></ColumnDefinition>
+						<ColumnDefinition Width="13*"></ColumnDefinition>
+					</Grid.ColumnDefinitions>
+					<TextBox Text="{Binding Title, Mode=TwoWay}" PlaceholderText="Title" FontSize="50"></TextBox>
+					<Button Grid.Column="1" x:Name="saveBtn" Command="{Binding ExitCommand}" Width="250" >Save</Button>
+				</Grid>
+				<RichEditBox Grid.Row="1" x:Name="textEditorBox" >
 
-				</v:CustomRichEditBox>
+				</RichEditBox>
 			</Grid>
 
 		</Border>

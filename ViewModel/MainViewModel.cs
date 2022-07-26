@@ -150,13 +150,13 @@ namespace notes.ViewModel
 						//OpenedNotebook.Notes.Add(new Note());
 						//((NotesViewModel)(CurrentPage.DataContext)).Notes.Add(new Note());
 						//((NotesViewModel)(CurrentPage.DataContext)).RaisePropertyChanged("Notes");
-						Storage.Instance.CreateFile("name");
+					
 						EditorPage = new EditorPage();
-						var editorVM = new EditorViewModel();
+						var editorVM = new EditorViewModel((IEditorPage)EditorPage);
 						editorVM.Note = new Note();
 						editorVM.ParentViewModel = this;
 						EditorPage.DataContext = editorVM;
-						
+						//Storage.Instance.CreateFile()
 						
 
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage.Streams;
+using Windows.UI.Text;
 
 namespace notes.Model
 {
@@ -12,29 +14,46 @@ namespace notes.Model
 		public bool IsFavorite { get; set; }
 
 		public string Content { get; set; }
-		DateTime creationTime;
+		DateTime creationDateTime;
 
+		public DateTime CreationDateTime
+		{
+			get
+			{
+				return creationDateTime;
+			}
+		}
+		public string FileName
+		{
+			get
+			{
+				return Title + " " + creationDateTime.ToUniversalTime().ToString()
+					.Replace("/","")
+					.Replace(" ", "-")
+					.Replace(":","")
+					+ ".rtf";
+			}
+		}
 		public string DateString
 		{
 			get //todo: extension method
 			{
-				if (creationTime.Date == DateTime.Today)
+				if (creationDateTime.Date == DateTime.Today)
 				{
 					return "Today";
 				}
-				else if (creationTime.Date == DateTime.Today - TimeSpan.FromDays(1))
+				else if (creationDateTime.Date == DateTime.Today - TimeSpan.FromDays(1))
 				{
 					return "Yesterday";
 				}
-				return creationTime.Date.ToShortDateString();
+				return creationDateTime.Date.ToShortDateString();
 
 			}
 		}
 
 		public Note()
 		{
-			creationTime = DateTime.Today;
-			Content = "";
+			creationDateTime = DateTime.Now;
 		}
 
 	}

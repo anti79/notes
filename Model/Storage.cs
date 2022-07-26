@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.Storage.Streams;
+using Windows.UI.Text;
 
 namespace notes.Model
 {
@@ -10,13 +14,42 @@ namespace notes.Model
 	{
 		private static Storage instance = null;
 		private static readonly object _lock = new object();
+		StorageFolder folder;
 
-		public void CreateFile(string name)
+		
+
+		
+		public async void SaveNote(Note note, Notebook notebook)
 		{
-			//System.IO.File.Create($"notes/{name}.note");
+			StorageFolder storageFolder;
+			try
+			{
+				storageFolder = await folder.GetFolderAsync(notebook.Name);
+			}
+			catch
+			{
+				storageFolder = await folder.CreateFolderAsync(notebook.Name);
+			}
+			try
+			{
+				await storageFolder.GetFileAsync(note.FileName);
+			}
+
+			catch (FileNotFoundException)
+			{
+				await storageFolder.CreateFileAsync(note.FileName);	
+			}
+			var stream = await (await storageFolder.GetFileAsync(note.FileName)).OpenAsync(FileAccessMode.ReadWrite);
+			var bytes = Encoding.UTF8.GetBytes(note.Content);
+			stream.AsStream().Write(bytes, 0, bytes.Length);
+			
 		}
 
-
+		public async Task<IRandomAccessStream> GetStream(Note note)
+		{
+			return await (
+				(await folder.GetFileAsync(note.FileName)).OpenAsync(FileAccessMode.ReadWrite));
+		}
 		public List<Notebook> Notebooks { get; set; }
 		public static Storage Instance
 		{
@@ -27,6 +60,7 @@ namespace notes.Model
 					if (instance == null)
 					{
 						instance = new Storage();
+						
 					}
 					return instance;
 				}
@@ -64,10 +98,30 @@ namespace notes.Model
 		private Storage()
 		{
 			Notebooks = new List<Notebook>();
-			var n = new Notebook() { Name = "n1" };
-			n.Notes.Add(new Note() { Title = "test" });
-			Notebooks.Add(n);
-			Notebooks.Add(new Notebook() { Name = "n2" });
-		} 
+			folder = ApplicationData.Current.LocalFolder;
+		}
+		public async Task Load()
+		{
+			var subfolders = await folder.GetFoldersAsync();
+			foreach (var sf in subfolders)
+			{
+				List<Note> thisNotebookNotes = new List<Note>();
+				var files = await sf.GetFilesAsync();
+				foreach(var file in files)
+				{
+					Note n = new Note();
+					n.Content = await FileIO.ReadTextAsync(file);
+					n.Title = file.Name.Split(" ")[0];
+					thisNotebookNotes.Add(n);
+				}
+				Notebooks.Add(new Notebook()
+				{
+					Name = sf.Name,
+					Notes = thisNotebookNotes
+
+				});
+
+			}
+		}
 	}
 }
