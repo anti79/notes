@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace notes.ViewModel
 {
-	class MainViewModel:ViewModel
+	class MainViewModel : ViewModel
 	{
 		Page currentPage;
 		Page editorPage;
@@ -21,12 +21,12 @@ namespace notes.ViewModel
 		NotebooksViewModel nbVM;
 		NotesViewModel favVM;
 
-	 
+
 
 
 		public bool EditorVisible
 		{
-		get
+			get
 			{
 				return EditorPage != null;
 			}
@@ -94,13 +94,13 @@ namespace notes.ViewModel
 
 		public Notebook OpenedNotebook { get; set; }
 
-		public ICommand SwitchToAll { get { return GetSwitchToAllCommand(); }}
-		public ICommand SwitchToNotebooks { get { return GetSwitchToNotebooksCommand(); }}
-		public ICommand SwitchToFavorites { get { return GetSwitchToFavoritesCommand(); }}
-		public ICommand CreateNote { get { return GetCreateNoteCommand(); }}
-		public ICommand GetSwitchToAllCommand()
+		public ICommand SwitchToAll { get { return GetSwitchToAllCommand(); } }
+		public ICommand SwitchToNotebooks { get { return GetSwitchToNotebooksCommand(); } }
+		public ICommand SwitchToFavorites { get { return GetSwitchToFavoritesCommand(); } }
+		public ICommand CreateNote { get { return GetCreateNoteCommand(); } }
+		ICommand GetSwitchToAllCommand()
 		{
-			if(switchToAllCommand is null)
+			if (switchToAllCommand is null)
 			{
 				switchToAllCommand = new Command(() =>
 				{
@@ -112,9 +112,9 @@ namespace notes.ViewModel
 			}
 			return switchToAllCommand;
 		}
-		public ICommand GetSwitchToNotebooksCommand()
+		ICommand GetSwitchToNotebooksCommand()
 		{
-			if(switchToNotebooksCommand is null)
+			if (switchToNotebooksCommand is null)
 			{
 				switchToNotebooksCommand = new Command(() =>
 				{
@@ -124,10 +124,10 @@ namespace notes.ViewModel
 			}
 			return switchToNotebooksCommand;
 		}
-		
-		public ICommand GetSwitchToFavoritesCommand()
+
+		ICommand GetSwitchToFavoritesCommand()
 		{
-			if(switchToFavoritesCommand is null)
+			if (switchToFavoritesCommand is null)
 			{
 				switchToFavoritesCommand = new Command(() =>
 				{
@@ -139,25 +139,22 @@ namespace notes.ViewModel
 			}
 			return switchToFavoritesCommand;
 		}
-		public ICommand GetCreateNoteCommand()
+		ICommand GetCreateNoteCommand()
 		{
 			if (createNoteCommand is null)
 			{
 				createNoteCommand = new Command(() =>
 				{
-					if(CurrentPage.GetType()==typeof(NotesPage) && ((NotesViewModel)((NotesPage)CurrentPage).DataContext).IsNotebook)
+					if (CurrentPage.GetType() == typeof(NotesPage) && ((NotesViewModel)((NotesPage)CurrentPage).DataContext).IsNotebook)
 					{
-						//OpenedNotebook.Notes.Add(new Note());
-						//((NotesViewModel)(CurrentPage.DataContext)).Notes.Add(new Note());
-						//((NotesViewModel)(CurrentPage.DataContext)).RaisePropertyChanged("Notes");
-					
+
 						EditorPage = new EditorPage();
-						var editorVM = new EditorViewModel((IEditorPage)EditorPage);
-						editorVM.Note = new Note();
+						var editorVM = new EditorViewModel((IEditorPage)EditorPage, new Note());
 						editorVM.ParentViewModel = this;
+						editorVM.NewNote = true;
 						EditorPage.DataContext = editorVM;
 						//Storage.Instance.CreateFile()
-						
+
 
 
 					}
@@ -166,6 +163,25 @@ namespace notes.ViewModel
 			return createNoteCommand;
 		}
 		public ICommand CreateNoteCommand { get { return GetCreateNoteCommand(); } }
+
+		ICommand openNote;
+
+		ICommand GetOpenNoteCommand()
+		{
+			if(openNote is null)
+			{
+				openNote = new ActionCommand<Note>((note) =>
+				{
+					EditorPage = new EditorPage();
+					var editorVM = new EditorViewModel((IEditorPage)EditorPage, note);
+					editorVM.Note = note;
+					editorVM.ParentViewModel = this;
+					EditorPage.DataContext = editorVM;
+				});
+			}
+			return openNote;
+		}
+		public ICommand OpenNoteCommand { get { return GetOpenNoteCommand(); } }
 
 		//public bool 
 	}

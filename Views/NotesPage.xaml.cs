@@ -33,5 +33,11 @@ namespace notes.Views
 		{
 			//((NotesViewModel)DataContext).Ex
 		}
+
+		private void gridview_Tapped(object sender, TappedRoutedEventArgs e)
+		{
+			if (e.OriginalSource.GetType() == typeof(Grid)) return;
+			((NotesViewModel)DataContext).OpenNoteCommand.Execute(((FrameworkElement)e.OriginalSource).DataContext);
+		}
 	}
 }

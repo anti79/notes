@@ -52,7 +52,8 @@ namespace notes.ViewModel
 
 
 		ICommand goBack;
-		public ICommand GetGoBackCommand()
+		ICommand openNote;
+		ICommand GetGoBackCommand()
 		{
 			if (goBack is null)
 			{
@@ -63,8 +64,19 @@ namespace notes.ViewModel
 			}
 			return goBack;
 		}
+		ICommand GetOpenNoteCommand()
+		{
+			if(openNote is null)
+			{
+				openNote = new ActionCommand<Note>((note) =>
+				{
+					((MainViewModel)ParentViewModel).OpenNoteCommand.Execute(note);
+				});
+			}
+			return openNote;
+		}
 
 		public ICommand GoBackCommand { get { return GetGoBackCommand(); } }
-
+		public ICommand OpenNoteCommand { get { return GetOpenNoteCommand(); } }
 	}
 }

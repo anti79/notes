@@ -22,7 +22,7 @@
 			<Button x:Name="backBtn" Command="{Binding GoBackCommand}" Visibility="{Binding IsNotebook}">&lt;</Button>
 			<TextBlock FontSize="30" Text="{Binding Title}"/>
 		</StackPanel>
-		<GridView x:Name="gridview" ItemsSource="{Binding Notes}" Grid.Row="1">
+		<GridView x:Name="gridview" ItemsSource="{Binding Notes}" Grid.Row="1" Tapped="gridview_Tapped">
 			<GridView.ItemTemplate>
 				<DataTemplate x:DataType="m:Note">
 					<Border Background="Aqua" Width="200" Height="200" Margin="30">

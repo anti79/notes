@@ -5,7 +5,7 @@ namespace notes.Views
 {
 	internal interface IEditorPage
 	{
-		void SetEditorContent(IRandomAccessStream stream);
+		void SetEditorContent(string stream);
 		ITextDocument GetEditorContent();
 	}
 }

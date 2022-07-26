@@ -39,9 +39,10 @@ namespace notes.Views
 			
 		}
 
-		public void SetEditorContent(IRandomAccessStream stream)
+		public void SetEditorContent(string str)
 		{
-			textEditorBox.Document.LoadFromStream(TextSetOptions.ApplyRtfDocumentDefaults, stream);
+			textEditorBox.Document.SetText(TextSetOptions.FormatRtf, str);
+			//textEditorBox.Document.LoadFromStream(TextSetOptions.FormatRtf, stream);
 		}
 	}
 }

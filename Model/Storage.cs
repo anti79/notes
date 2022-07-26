@@ -16,9 +16,9 @@ namespace notes.Model
 		private static readonly object _lock = new object();
 		StorageFolder folder;
 
-		
 
-		
+
+
 		public async void SaveNote(Note note, Notebook notebook)
 		{
 			StorageFolder storageFolder;
@@ -37,12 +37,17 @@ namespace notes.Model
 
 			catch (FileNotFoundException)
 			{
-				await storageFolder.CreateFileAsync(note.FileName);	
+				await storageFolder.CreateFileAsync(note.FileName);
 			}
-			var stream = await (await storageFolder.GetFileAsync(note.FileName)).OpenAsync(FileAccessMode.ReadWrite);
+
+			var file = await storageFolder.GetFileAsync(note.FileName);
+			var stream = await file.OpenAsync(FileAccessMode.ReadWrite);
 			var bytes = Encoding.UTF8.GetBytes(note.Content);
 			stream.AsStream().Write(bytes, 0, bytes.Length);
-			
+			stream.Dispose();
+
+
+
 		}
 
 		public async Task<IRandomAccessStream> GetStream(Note note)

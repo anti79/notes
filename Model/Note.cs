@@ -14,6 +14,8 @@ namespace notes.Model
 		public bool IsFavorite { get; set; }
 
 		public string Content { get; set; }
+
+		public IRandomAccessStream DocumentStream { get; set; }
 		DateTime creationDateTime;
 
 		public DateTime CreationDateTime

@@ -46,7 +46,7 @@ namespace notes.ViewModel
 			}
 		}
 
-		private ICommand GetCreateNotebookCommand()
+		ICommand GetCreateNotebookCommand()
 		{
 			if (createNotebook is null)
 			{
@@ -58,7 +58,7 @@ namespace notes.ViewModel
 			return createNotebook;
 		}
 
-		public ICommand GetOpenNotebookCommand()
+		ICommand GetOpenNotebookCommand()
 		{
 			if(openNotebook is null)
 			{
