@@ -53,11 +53,13 @@ namespace notes.ViewModel
 				exitCommand = new Command(()=>
 				{
 					var mainVM = ((MainViewModel)ParentViewModel);
+					mainVM.UpdatePages();
 					mainVM.EditorPage = null;
 					string str = "";
 					page.GetEditorContent().GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out str);
 					Note.Content = str;
 					Note.Title = Title;
+
 					if (NewNote)
 					{
 						((NotesViewModel)mainVM.CurrentPage.DataContext).Notes.Add(Note);

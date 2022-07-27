@@ -1,5 +1,7 @@
-﻿using System;
+﻿using notes.ViewModel;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,21 +10,62 @@ using Windows.UI.Text;
 
 namespace notes.Model
 {
-	class Note
+	class Note:ObservableObject
 	{
-		public string Title { get; set; }
-		public bool IsFavorite { get; set; }
+		string title;
+		bool isFavorite;
+		string content;
 
-		public string Content { get; set; }
 
-		public IRandomAccessStream DocumentStream { get; set; }
+
+		public string Title { get
+			{
+				return title;
+			}
+			set
+			{
+				title = value;
+				RaisePropertyChanged();
+			}
+		}
+		public bool IsFavorite { 
+			get
+			{
+				return isFavorite;
+			}
+			set
+			{
+				isFavorite = true;
+			}
+		}
+
+		public string Content
+		{
+			get
+			{
+				return content;
+			}
+			set
+			{
+				content = value;
+				RaisePropertyChanged();
+			}
+		}
+
+		
 		DateTime creationDateTime;
+
 
 		public DateTime CreationDateTime
 		{
 			get
 			{
 				return creationDateTime;
+			}
+			set
+			{
+				creationDateTime = value;
+				RaisePropertyChanged();
 			}
 		}
 		public string FileName

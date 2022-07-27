@@ -23,7 +23,13 @@ namespace notes.ViewModel
 
 
 
-
+		public void UpdatePages()
+		{
+			allNotesVM.RaisePropertyChanged(nameof(allNotesVM.Notes));
+			nbVM.RaisePropertyChanged(nameof(nbVM.Notebooks));
+			favVM.RaisePropertyChanged(nameof(favVM.Notes));
+			//((ViewModel)CurrentPage.DataContext).RaisePropertyChanged("Notes");
+		}
 		public bool EditorVisible
 		{
 			get
@@ -39,7 +45,7 @@ namespace notes.ViewModel
 			set
 			{
 				currentPage = value;
-				RaisePropertyChanged(nameof(CurrentPage));
+				RaisePropertyChanged();
 
 			}
 		}

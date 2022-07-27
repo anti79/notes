@@ -8,16 +8,9 @@ using System.Threading.Tasks;
 
 namespace notes.ViewModel
 {
-	class ViewModel : INotifyPropertyChanged
+	class ViewModel:ObservableObject
 	{
-		public event PropertyChangedEventHandler PropertyChanged;
-		public void RaisePropertyChanged([CallerMemberName] string propertyName = null)
-		{
-			if (PropertyChanged != null)
-			{
-				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
+		
 		public ViewModel ParentViewModel { get; set; }
 	}
 }
