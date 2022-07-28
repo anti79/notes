@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage.Streams;
+using Windows.UI;
 using Windows.UI.Text;
 
 namespace notes.Model
@@ -16,7 +17,18 @@ namespace notes.Model
 		bool isFavorite;
 		string content;
 
-
+		string color;
+		public string Color
+		{
+			get
+			{
+				return color;
+			}
+			set
+			{
+				color = value;
+			}
+		}
 
 		public string Title { get
 			{
@@ -68,16 +80,22 @@ namespace notes.Model
 				RaisePropertyChanged();
 			}
 		}
+		Guid guid;
 		public string FileName
 		{
 			get
 			{
+				/*
 				return creationDateTime.ToUniversalTime().ToString()
 					.Replace("/","")
 					.Replace(" ", "-")
 					.Replace(":","")
 					+ ".rtf";
+				*/
+				return guid.ToString();
+				
 			}
+			
 		}
 		public string DateString
 		{
@@ -99,6 +117,9 @@ namespace notes.Model
 		public Note()
 		{
 			creationDateTime = DateTime.Now;
+			guid = new Guid();
+			List<string> colors =  new List<string>() { "#DFA1A1", "#FDBFBF", "#FFD380", "#EDF47A", "#80E7E5" };
+			color = colors[new Random().Next(colors.Count)];
 		}
 
 	}

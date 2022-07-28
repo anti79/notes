@@ -34,7 +34,7 @@ namespace notes.Model
 			var file = await storageFolder.CreateFileAsync(note.FileName,
 			Windows.Storage.CreationCollisionOption.OpenIfExists);
 
-			await Windows.Storage.FileIO.AppendTextAsync(file, AddRTFMetadata(note).Content + Environment.NewLine);
+			await Windows.Storage.FileIO.WriteTextAsync(file, AddRTFMetadata(note).Content + Environment.NewLine);
 
 
 
@@ -42,12 +42,12 @@ namespace notes.Model
 
 		Note AddRTFMetadata(Note note)
 		{
-			note.Content = $"{{{note.Title}}} \n {note.Content}";
+			note.Content = $"{note.Content} \n {{{note.Title}}}";
 			return note;
 		}
 		Note ParseRTFMetadata(Note note)
 		{
-			string data = note.Content.Split('}')[0].Replace("{", "");
+			string data = note.Content.Split('{').Last().Replace("}", "");
 			note.Title = data.Split('|')[0];
 			return note;
 		}
@@ -127,6 +127,7 @@ namespace notes.Model
 				{
 					Name = sf.Name,
 					Notes = thisNotebookNotes
+					
 
 				});
 

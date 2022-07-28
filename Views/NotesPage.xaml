@@ -9,6 +9,11 @@
 	xmlns:m="using:notes.Model"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	<Page.Resources>
+		<Style TargetType="RichEditBox">
+			
+		</Style>
+	</Page.Resources>
 	<Page.DataContext>
 		<vm:NotesViewModel></vm:NotesViewModel>
 	</Page.DataContext>
@@ -25,7 +30,7 @@
 		<GridView x:Name="gridview" ItemsSource="{Binding Notes}" Grid.Row="1" Tapped="gridview_Tapped">
 			<GridView.ItemTemplate>
 				<DataTemplate x:DataType="m:Note">
-					<Border Background="Aqua" Width="200" Height="200" Margin="30">
+					<Border Background="{Binding Color}" Width="200" Height="200" Margin="30">
 						<Grid Margin="10">
 							<Grid.RowDefinitions>
 								<RowDefinition Height="7*"></RowDefinition>
@@ -33,8 +38,10 @@
 								<RowDefinition Height="5*"></RowDefinition>
 							</Grid.RowDefinitions>
 							<TextBlock FontSize="20" Text="{Binding Title}"></TextBlock>
-							<TextBlock FontSize="16" Grid.Row="1" Text="{Binding Content}"></TextBlock>
-							<TextBlock Grid.Row="2">date</TextBlock>
+							<RichEditBox FontSize="16" Grid.Row="1" Loaded="RichEditBox_Loaded" IsEnabled="False">
+								
+							</RichEditBox>
+							<TextBlock Grid.Row="2" Text="{Binding DateString}"></TextBlock>
 						</Grid>
 					</Border>
 				</DataTemplate>
