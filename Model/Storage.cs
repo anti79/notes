@@ -30,25 +30,29 @@ namespace notes.Model
 			{
 				storageFolder = await folder.CreateFolderAsync(notebook.Name);
 			}
-			try
-			{
-				await storageFolder.GetFileAsync(note.FileName);
-			}
 
-			catch (FileNotFoundException)
-			{
-				await storageFolder.CreateFileAsync(note.FileName);
-			}
+			var file = await storageFolder.CreateFileAsync(note.FileName,
+			Windows.Storage.CreationCollisionOption.OpenIfExists);
 
-			var file = await storageFolder.GetFileAsync(note.FileName);
-			var stream = await file.OpenAsync(FileAccessMode.ReadWrite);
-			var bytes = Encoding.UTF8.GetBytes(note.Content);
-			stream.AsStream().Write(bytes, 0, bytes.Length);
-			stream.Dispose();
+			await Windows.Storage.FileIO.AppendTextAsync(file, AddRTFMetadata(note).Content + Environment.NewLine);
 
 
 
 		}
+
+		Note AddRTFMetadata(Note note)
+		{
+			note.Content = $"{{{note.Title}}} \n {note.Content}";
+			return note;
+		}
+		Note ParseRTFMetadata(Note note)
+		{
+			string data = note.Content.Split('}')[0].Replace("{", "");
+			note.Title = data.Split('|')[0];
+			return note;
+		}
+		
+
 
 		public async Task<IRandomAccessStream> GetStream(Note note)
 		{
@@ -116,7 +120,7 @@ namespace notes.Model
 				{
 					Note n = new Note();
 					n.Content = await FileIO.ReadTextAsync(file);
-					n.Title = file.Name.Split(" ")[0];
+					n = ParseRTFMetadata(n);
 					thisNotebookNotes.Add(n);
 				}
 				Notebooks.Add(new Notebook()

@@ -65,7 +65,7 @@ namespace notes.ViewModel
 						((NotesViewModel)mainVM.CurrentPage.DataContext).Notes.Add(Note);
 						mainVM.OpenedNotebook.Notes.Add(Note);
 					}
-					//Storage.Instance.SaveNote(Note, mainVM.OpenedNotebook);
+					Storage.Instance.SaveNote(Note, mainVM.OpenedNotebook);
 
 
 				});

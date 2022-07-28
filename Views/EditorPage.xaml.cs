@@ -41,7 +41,14 @@ namespace notes.Views
 
 		public void SetEditorContent(string str)
 		{
-			textEditorBox.Document.SetText(TextSetOptions.FormatRtf, str);
+			if (str is null)
+			{
+				textEditorBox.Document.SetText(TextSetOptions.FormatRtf, "");
+			}
+			else
+			{
+				textEditorBox.Document.SetText(TextSetOptions.FormatRtf, str);
+			}
 			//textEditorBox.Document.LoadFromStream(TextSetOptions.FormatRtf, stream);
 		}
 	}

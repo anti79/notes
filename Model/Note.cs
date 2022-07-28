@@ -72,7 +72,7 @@ namespace notes.Model
 		{
 			get
 			{
-				return Title + " " + creationDateTime.ToUniversalTime().ToString()
+				return creationDateTime.ToUniversalTime().ToString()
 					.Replace("/","")
 					.Replace(" ", "-")
 					.Replace(":","")
