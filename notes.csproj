@@ -151,7 +151,12 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\center-alignment.png" />
     <Content Include="Assets\cover1.png" />
+    <Content Include="Assets\justify-alignment.png" />
+    <Content Include="Assets\left-alignment.png" />
+    <Content Include="Assets\list.png" />
+    <Content Include="Assets\right-alignment.png" />
     <Content Include="note.html" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
@@ -193,6 +198,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.7.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Utilities">
+      <Version>17.2.32505.113</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
       <Version>2.0.1</Version>

@@ -23,7 +23,8 @@ namespace notes.ViewModel
         {
             if (_action != null)
             {
-                var castParameter = (T)Convert.ChangeType(parameter, typeof(T));
+                //var castParameter = (T)Convert.ChangeType(parameter, typeof(T));
+                var castParameter = (T)parameter;
                 _action(castParameter);
             }
         }

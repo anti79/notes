@@ -26,7 +26,6 @@ namespace notes
         public MainPage()
         {
             this.InitializeComponent();
-            //view.Source = new Uri("ms-appx-web:///note.html");
         }
 
 

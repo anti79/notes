@@ -32,22 +32,12 @@ namespace notes.Views
 			
 		}
 
-		private void backBtn_Click(object sender, RoutedEventArgs e)
-		{
-			//((NotesViewModel)DataContext).Ex
-		}
-
 		private void gridview_Tapped(object sender, TappedRoutedEventArgs e)
 		{
 			if (e.OriginalSource.GetType() == typeof(Grid)) return;
 			((NotesViewModel)DataContext).OpenNoteCommand.Execute(((FrameworkElement)e.OriginalSource).DataContext);
 		}
 
-		private void RichTextBlock_Loading(FrameworkElement sender, object args)
-		{
-			
-			
-		}
 
 		private void RichEditBox_Loaded(object sender, RoutedEventArgs e)
 		{

@@ -15,6 +15,7 @@
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="11*"></RowDefinition>
+					<RowDefinition Height="11*"></RowDefinition>
 					<RowDefinition Height="89*"></RowDefinition>
 				</Grid.RowDefinitions>
 				<Grid>
@@ -22,10 +23,44 @@
 						<ColumnDefinition Width="62*"></ColumnDefinition>
 						<ColumnDefinition Width="13*"></ColumnDefinition>
 					</Grid.ColumnDefinitions>
-					<TextBox Text="{Binding Title, Mode=TwoWay}" PlaceholderText="Title" FontSize="50"></TextBox>
-					<Button Grid.Column="1" x:Name="saveBtn" Command="{Binding ExitCommand}" Width="250" >Save</Button>
+					<TextBox Text="{Binding Title, Mode=TwoWay}" PlaceholderText="Title" FontSize="50" Margin="5,7,0,6"></TextBox>
+
+					<Button Grid.Column="1" x:Name="saveBtn" Command="{Binding ExitCommand}" Width="220" Height="80" HorizontalAlignment="Center" >Save</Button>
 				</Grid>
-				<RichEditBox Grid.Row="1" x:Name="textEditorBox" >
+				<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+					<StackPanel Orientation="Horizontal" Margin="20">
+						<Button Command="{Binding ToggleBoldCommand}" FontWeight="Bold">B</Button>
+						<Button Command="{Binding ToggleItalicCommand}" FontStyle="Italic">I</Button>
+						<Button Command="{Binding ToggleUnderlinedCommand}" >
+							<TextBlock TextDecorations="Underline">U</TextBlock>
+						</Button>
+						<Button Command="{Binding ToggleStrikethroughCommand}" >
+							<TextBlock TextDecorations="Strikethrough">S</TextBlock>
+						</Button>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<Button Command="{Binding SetAlignmentCommand}" CommandParameter="Left">
+							<Image Source="ms-appx:///Assets/left-alignment.png" Width="12" Height="19"></Image>
+						</Button>
+						<Button  Command="{Binding SetAlignmentCommand}" CommandParameter="Center">
+							<Image Source="ms-appx:///Assets/center-alignment.png" Width="12" Height="19"></Image>
+						</Button>
+						<Button  Command="{Binding SetAlignmentCommand}" CommandParameter="Right">
+							<Image Source="ms-appx:///Assets/right-alignment.png" Width="12" Height="19"></Image>
+						</Button>
+						<Button  Command="{Binding SetAlignmentCommand}" CommandParameter="Justify"> 
+							<Image Source="ms-appx:///Assets/justify-alignment.png" Width="12" Height="19"></Image>
+						</Button>
+					</StackPanel>
+					<!--
+					<StackPanel Orientation="Horizontal" Margin="20">
+						<Button Command="{Binding ToggleBulletListCommand}">
+							<Image Source="ms-appx:///Assets/list.png" Width="12" Height="19"></Image>
+							
+						</Button>
+					</StackPanel>-->
+				</StackPanel>
+				<RichEditBox Grid.Row="2" x:Name="textEditorBox" Margin="10,0,10,10">
 
 				</RichEditBox>
 			</Grid>

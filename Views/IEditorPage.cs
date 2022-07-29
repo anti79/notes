@@ -7,5 +7,6 @@ namespace notes.Views
 	{
 		void SetEditorContent(string stream);
 		ITextDocument GetEditorContent();
+
 	}
 }

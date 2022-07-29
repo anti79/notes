@@ -1,4 +1,5 @@
-﻿using notes.Model;
+﻿using Microsoft.VisualStudio.PlatformUI;
+using notes.Model;
 using notes.Views;
 using System;
 using System.Collections.Generic;
@@ -9,15 +10,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Storage.Streams;
+using Windows.UI.Text;
+using Windows.UI.Xaml.Controls;
 
 namespace notes.ViewModel
 {
-	class EditorViewModel:ViewModel
+	class EditorViewModel : ViewModel
 	{
 
-	
+
 		public Note Note { get; set; }
 		IEditorPage page;
+		ITextDocument document;
 		public bool NewNote { get; set; }
 		public EditorViewModel(IEditorPage page, Note note)
 		{
@@ -25,8 +29,9 @@ namespace notes.ViewModel
 			Note = note;
 			Title = note.Title;
 			NewNote = false;
+			document = page.GetEditorContent();
 			page.SetEditorContent(note.Content);
-			
+
 		}
 		ICommand exitCommand;
 		public ICommand ExitCommand
@@ -48,9 +53,9 @@ namespace notes.ViewModel
 		}
 		ICommand GetExitCommand()
 		{
-			if(exitCommand is null)
+			if (exitCommand is null)
 			{
-				exitCommand = new Command(()=>
+				exitCommand = new Command(() =>
 				{
 					var mainVM = ((MainViewModel)ParentViewModel);
 					mainVM.UpdatePages();
@@ -71,6 +76,126 @@ namespace notes.ViewModel
 				});
 			}
 			return exitCommand;
+		}
+
+
+		//FORMATTING
+		ICommand toggleBold;
+		ICommand toggleItalic;
+		ICommand toggleUnderlined;
+		ICommand toggleStrikethrough;
+		ICommand setAlignment;
+		public ICommand ToggleBoldCommand
+		{
+			get { 
+				return GetToggleBoldCommand(); 
+			}
+		}
+		ICommand GetToggleBoldCommand()
+		{
+			if (toggleBold is null)
+			{
+				toggleBold = new Command(() =>
+				{
+					document.Selection.CharacterFormat.Bold = FormatEffect.Toggle;
+				});
+				
+
+			}
+			return toggleBold;
+		}
+		public ICommand ToggleItalicCommand
+		{
+			get
+			{
+				return GetToggleItalicCommand();
+			}
+		}
+		ICommand GetToggleItalicCommand()
+		{
+			if (toggleItalic is null)
+			{
+				toggleItalic = new Command(() =>
+				{
+					document.Selection.CharacterFormat.Italic = FormatEffect.Toggle;
+				});
+
+
+			}
+			return toggleItalic;
+		}
+
+		public ICommand ToggleUnderlinedCommand
+		{
+			get
+			{
+				return GetToggleUnderlinedCommand();
+			}
+		}
+		ICommand GetToggleUnderlinedCommand()
+		{
+			if (toggleUnderlined is null)
+			{
+				toggleUnderlined = new Command(() =>
+				{
+					if (document.Selection.CharacterFormat.Underline == UnderlineType.None)
+					{
+						document.Selection.CharacterFormat.Underline = UnderlineType.Single;
+					}
+					else
+					{
+						document.Selection.CharacterFormat.Underline = UnderlineType.None;
+					}
+
+				});
+
+
+			}
+			return toggleUnderlined;
+		}
+
+		public ICommand ToggleStrikethroughCommand
+		{
+			get
+			{
+				return GetToggleStrikethroughCommand();
+			}
+		}
+		ICommand GetToggleStrikethroughCommand()
+		{
+			if (toggleStrikethrough is null)
+			{
+				toggleStrikethrough = new Command(() =>
+				{
+					document.Selection.CharacterFormat.Strikethrough = FormatEffect.Toggle;
+				});
+
+
+			}
+			return toggleStrikethrough;
+		}
+
+		public ICommand SetAlignmentCommand
+		{
+			get
+			{
+				return GetSetAlignmentCommandCommand();
+			}
+		}
+		ICommand GetSetAlignmentCommandCommand()
+		{
+			if (setAlignment is null)
+			{
+				setAlignment = new ActionCommand<string>((type) =>
+				{
+
+					document.Selection.ParagraphFormat.Alignment = (ParagraphAlignment)Enum.Parse(typeof(ParagraphAlignment), type);
+					//document.Selection.ParagraphFormat.ListStyle = MarkerStyle.
+				});
+
+
+			}
+			return setAlignment;
 		}
 	}
 }
