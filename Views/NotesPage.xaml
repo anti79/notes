@@ -7,12 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:vm="using:notes.ViewModel"
 	xmlns:m="using:notes.Model"
+	xmlns:notes="using:notes"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 	<Page.Resources>
-		<Style TargetType="RichEditBox">
-			
-		</Style>
+		<notes:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
 	</Page.Resources>
 	<Page.DataContext>
 		<vm:NotesViewModel></vm:NotesViewModel>

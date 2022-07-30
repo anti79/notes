@@ -6,12 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:v="using:notes.Views" xmlns:v1="using:notes"
+	xmlns:ui="using:Windows.UI.Xaml.Controls"
 	xmlns:vm="using:notes.ViewModel" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+	<Page.Resources>
+		<v1:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
+	</Page.Resources>
 	<Grid>
-		<Border Background="AntiqueWhite">
+		<Border Background="{Binding ChosenColor, Converter={StaticResource ColorToBrushConverter}, UpdateSourceTrigger=PropertyChanged}">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="11*"></RowDefinition>
@@ -48,10 +51,24 @@
 						<Button  Command="{Binding SetAlignmentCommand}" CommandParameter="Right">
 							<Image Source="ms-appx:///Assets/right-alignment.png" Width="12" Height="19"></Image>
 						</Button>
-						<Button  Command="{Binding SetAlignmentCommand}" CommandParameter="Justify"> 
+						<Button  Command="{Binding SetAlignmentCommand}" CommandParameter="Justify">
 							<Image Source="ms-appx:///Assets/justify-alignment.png" Width="12" Height="19"></Image>
 						</Button>
 					</StackPanel>
+					<StackPanel Orientation="Horizontal" Margin="20">
+						<Button Height="32" Width="40">
+							<Image Source="ms-appx:///Assets/fill.png" Width="14" Height="20"></Image>
+							<Button.Flyout>
+								<Flyout>
+									<ColorPicker Color="{Binding ChosenColor, Mode=TwoWay}"></ColorPicker>
+								</Flyout>
+							</Button.Flyout>
+						</Button>
+
+
+
+					</StackPanel>
+
 					<!--
 					<StackPanel Orientation="Horizontal" Margin="20">
 						<Button Command="{Binding ToggleBulletListCommand}">

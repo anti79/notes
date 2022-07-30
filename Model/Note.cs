@@ -27,6 +27,7 @@ namespace notes.Model
 			set
 			{
 				color = value;
+				RaisePropertyChanged();
 			}
 		}
 

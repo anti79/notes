@@ -3,6 +3,7 @@ using notes.Model;
 using notes.Views;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Storage.Streams;
+using Windows.UI;
 using Windows.UI.Text;
 using Windows.UI.Xaml.Controls;
 
@@ -18,6 +20,7 @@ namespace notes.ViewModel
 	class EditorViewModel : ViewModel
 	{
 
+	
 
 		public Note Note { get; set; }
 		IEditorPage page;
@@ -31,6 +34,14 @@ namespace notes.ViewModel
 			NewNote = false;
 			document = page.GetEditorContent();
 			page.SetEditorContent(note.Content);
+
+			string hex = note.Color.Replace("#", "");
+
+			Color c = ColorUtils.GetColorFromHex(note.Color);
+
+			ChosenColor = c;
+			
+			
 
 		}
 		ICommand exitCommand;
@@ -64,7 +75,7 @@ namespace notes.ViewModel
 					page.GetEditorContent().GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out str);
 					Note.Content = str;
 					Note.Title = Title;
-
+					Note.Color = ChosenColor.ToString();
 					if (NewNote)
 					{
 						((NotesViewModel)mainVM.CurrentPage.DataContext).Notes.Add(Note);
@@ -85,6 +96,23 @@ namespace notes.ViewModel
 		ICommand toggleUnderlined;
 		ICommand toggleStrikethrough;
 		ICommand setAlignment;
+		//COLOR
+		ICommand setColor;
+		Windows.UI.Color color;
+		public Windows.UI.Color ChosenColor
+		{
+			get
+			{
+				return color;
+			}
+			set
+			{
+				color = value;
+				RaisePropertyChanged();
+			}
+		}
+		
+
 		public ICommand ToggleBoldCommand
 		{
 			get { 
@@ -196,6 +224,22 @@ namespace notes.ViewModel
 
 			}
 			return setAlignment;
+		}
+		public ICommand SetColorCommand
+		{
+			get
+			{
+				return GetSetColorCommand();
+			}
+		}
+		public ICommand GetSetColorCommand()
+		{
+			if(setColor is null) {
+				setColor = new Command(()=> {
+					
+				});
+			}
+			return setColor;
 		}
 	}
 }

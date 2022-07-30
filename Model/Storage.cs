@@ -42,13 +42,25 @@ namespace notes.Model
 
 		Note AddRTFMetadata(Note note)
 		{
-			note.Content = $"{note.Content} \n {{{note.Title}}}";
+			note.Content = $"{note.Content} \n {{{note.Title}|{note.Color}}} ";
 			return note;
 		}
 		Note ParseRTFMetadata(Note note)
 		{
-			string data = note.Content.Split('{').Last().Replace("}", "");
+			string data = note.Content.Split('{').Last()
+				.Replace("}", "")
+				.Replace("\r","")
+				.Replace("\n","")
+				.Replace(" ","");
 			note.Title = data.Split('|')[0];
+			try
+			{
+				note.Color = data.Split('|')[1];
+			}
+			catch (IndexOutOfRangeException)
+			{
+				note.Color = "#DFA1A1";
+			}
 			return note;
 		}
 		
