@@ -47,5 +47,20 @@ namespace notes.Views
 			noteBox.IsReadOnly = true;
 			noteBox.Foreground = new SolidColorBrush(Colors.Black);
 		}
+
+		private void note_RightTapped(object sender, RightTappedRoutedEventArgs e)
+		{
+			FrameworkElement senderElement = sender as FrameworkElement;
+			if(sender.GetType() == typeof(Grid))
+			{
+				senderElement = senderElement.Parent as FrameworkElement;
+			}
+			FlyoutBase flyoutBase = FlyoutBase.GetAttachedFlyout(senderElement);
+			var showOptions = new FlyoutShowOptions();
+			showOptions.Placement = FlyoutPlacementMode.BottomEdgeAlignedRight;
+			flyoutBase.ShowMode = FlyoutShowMode.Transient;
+			flyoutBase.ShowAt(senderElement, showOptions);
+			
+		}
 	}
 }

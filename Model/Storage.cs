@@ -42,7 +42,7 @@ namespace notes.Model
 
 		Note AddRTFMetadata(Note note)
 		{
-			note.Content = $"{note.Content} \n {{{note.Title}|{note.Color}}} ";
+			note.Content = $"{note.Content} \n {{{note.Title}|{note.Color}|{note.IsFavorite}}} ";
 			return note;
 		}
 		Note ParseRTFMetadata(Note note)
@@ -60,6 +60,14 @@ namespace notes.Model
 			catch (IndexOutOfRangeException)
 			{
 				note.Color = "#DFA1A1";
+			}
+			try
+			{
+				note.IsFavorite = bool.Parse(data.Split('|')[2]);
+			}
+			catch (IndexOutOfRangeException)
+			{
+				note.IsFavorite = false;
 			}
 			return note;
 		}
@@ -126,22 +134,22 @@ namespace notes.Model
 			var subfolders = await folder.GetFoldersAsync();
 			foreach (var sf in subfolders)
 			{
-				List<Note> thisNotebookNotes = new List<Note>();
 				var files = await sf.GetFilesAsync();
-				foreach(var file in files)
+				var nb = new Notebook()
+				{
+					Name = sf.Name,
+					Notes = new List<Note>()
+
+				};
+				foreach (var file in files)
 				{
 					Note n = new Note();
 					n.Content = await FileIO.ReadTextAsync(file);
+					n.Notebook = nb;
 					n = ParseRTFMetadata(n);
-					thisNotebookNotes.Add(n);
+					nb.Notes.Add(n);
 				}
-				Notebooks.Add(new Notebook()
-				{
-					Name = sf.Name,
-					Notes = thisNotebookNotes
-					
-
-				});
+				Notebooks.Add(nb);
 
 			}
 		}

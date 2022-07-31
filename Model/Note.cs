@@ -16,8 +16,9 @@ namespace notes.Model
 		string title;
 		bool isFavorite;
 		string content;
-
 		string color;
+
+		public Notebook Notebook { get; set; }
 		public string Color
 		{
 			get

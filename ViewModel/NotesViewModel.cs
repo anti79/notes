@@ -75,8 +75,23 @@ namespace notes.ViewModel
 			}
 			return openNote;
 		}
+		ICommand markFavorite;
+		ICommand GetMarkFavoriteCommand()
+		{
+			if(markFavorite is null)
+			{
+				markFavorite = new ActionCommand<Note>((note)=> {
+					note.IsFavorite = true;
+					Storage.Instance.SaveNote(note, note.Notebook);
+				}
+				);
+			}
+			return markFavorite;
+		}
 
 		public ICommand GoBackCommand { get { return GetGoBackCommand(); } }
 		public ICommand OpenNoteCommand { get { return GetOpenNoteCommand(); } }
+
+		public ICommand MarkFavoriteCommand { get { return GetMarkFavoriteCommand(); } }
 	}
 }

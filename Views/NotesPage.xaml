@@ -9,12 +9,13 @@
 	xmlns:m="using:notes.Model"
 	xmlns:notes="using:notes"
     mc:Ignorable="d"
+	x:Name="page"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 	<Page.Resources>
 		<notes:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
 	</Page.Resources>
 	<Page.DataContext>
-		<vm:NotesViewModel></vm:NotesViewModel>
+		<vm:NotesViewModel x:Name="vm"></vm:NotesViewModel>
 	</Page.DataContext>
 	<Grid>
 		<Grid.RowDefinitions>
@@ -29,15 +30,22 @@
 		<GridView x:Name="gridview" ItemsSource="{Binding Notes}" Grid.Row="1" Tapped="gridview_Tapped">
 			<GridView.ItemTemplate>
 				<DataTemplate x:DataType="m:Note">
-					<Border Background="{Binding Color}" Width="200" Height="200" Margin="30">
-						<Grid Margin="10">
+
+					<Border Background="{Binding Color}" Width="200" Height="200" Margin="10" RightTapped="note_RightTapped">
+						<FlyoutBase.AttachedFlyout>
+							<MenuFlyout>
+								<MenuFlyoutItem Command="{Binding ElementName=page, Path=DataContext.MarkFavoriteCommand}" CommandParameter="{Binding}">Mark as favorite</MenuFlyoutItem>
+							</MenuFlyout>
+						</FlyoutBase.AttachedFlyout>
+						<Grid Margin="10" RightTapped="note_RightTapped">
+							
 							<Grid.RowDefinitions>
 								<RowDefinition Height="7*"></RowDefinition>
 								<RowDefinition Height="24*"></RowDefinition>
 								<RowDefinition Height="5*"></RowDefinition>
 							</Grid.RowDefinitions>
 							<TextBlock FontSize="20" Text="{Binding Title}"></TextBlock>
-							<RichEditBox FontSize="16" Grid.Row="1" Loaded="RichEditBox_Loaded" IsEnabled="False">
+							<RichEditBox FontSize="16" Grid.Row="1" Loaded="RichEditBox_Loaded"  IsEnabled="False">
 								
 							</RichEditBox>
 							<TextBlock Grid.Row="2" Text="{Binding DateString}"></TextBlock>
