@@ -13,25 +13,26 @@ using Windows.UI.Xaml.Input;
 
 namespace notes.ViewModel
 {
-	class NotebooksViewModel:ViewModel
+	class NotebooksViewModel : ViewModel
 	{
 		ObservableCollection<Notebook> notebooks;
 		public ObservableCollection<Notebook> Notebooks { get
 			{
-				if(notebooks is null)
+				if (notebooks is null)
 				{
 					notebooks = new ObservableCollection<Notebook>(Storage.Instance.Notebooks);
 				}
 				return notebooks;
-			} 
+			}
 		}
-		
+
 		public NotebooksViewModel()
 		{
 		}
 
 		ICommand openNotebook;
 		ICommand createNotebook;
+		ICommand openEdit;
 
 		public ICommand OpenNotebookCommand { get
 			{
@@ -50,8 +51,10 @@ namespace notes.ViewModel
 		{
 			if (createNotebook is null)
 			{
-				createNotebook = new Command(()=> {
-					Notebooks.Add(new Notebook() { Name = "Untitled" });
+				createNotebook = new Command(() => {
+					var nb = new Notebook() { Name = "Untitled" };
+					Notebooks.Add(nb);
+					Storage.Instance.SaveNotebook(nb);
 
 				});
 			}
@@ -60,7 +63,7 @@ namespace notes.ViewModel
 
 		ICommand GetOpenNotebookCommand()
 		{
-			if(openNotebook is null)
+			if (openNotebook is null)
 			{
 				openNotebook = new ActionCommand<Notebook>((nb) => {
 					Console.WriteLine(nb);
@@ -77,13 +80,63 @@ namespace notes.ViewModel
 					((MainViewModel)ParentViewModel).CurrentPage = page;
 					((MainViewModel)ParentViewModel).OpenedNotebook = nb;
 				});
-				
+
 			}
 			return openNotebook;
 		}
 
-		
-		
+		bool editingNotebook = false;
+		public bool EditingNotebook { 
+			get
+			{
+				return editingNotebook;
+			}
+			set
+			{
+				editingNotebook = value;
+				RaisePropertyChanged();
+			}
+		}
+		Notebook editedNotebook;
+		public Notebook EditedNotebook
+		{
+			get
+			{
+				return editedNotebook;
+			}
+			set
+			{
+				editedNotebook = value;
+				RaisePropertyChanged();
+			}
+		}
+
+		public ICommand GetOpenEditCommand()
+		{
+			if(openEdit is null)
+			{
+				openEdit = new ActionCommand<Notebook>((nb)=> {
+					EditedNotebook = nb;
+					EditingNotebook = true;
+				});
+			}
+			return openEdit;
+		}
+		public ICommand OpenEditCommand { get { return GetOpenEditCommand(); } }
+		ICommand closeEdit;
+
+		public ICommand GetCloseEditCommand()
+		{
+			if(closeEdit is null)
+			{
+				closeEdit = new Command(()=> {
+					EditingNotebook = false;
+					Storage.Instance.SaveNotebook(EditedNotebook);
+				});
+			}
+			return closeEdit;
+		}
+		public ICommand CloseEditCommand { get { return GetCloseEditCommand(); } }
 		
 	}
 }

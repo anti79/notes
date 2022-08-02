@@ -49,7 +49,8 @@ namespace notes.Model
 			}
 			set
 			{
-				isFavorite = true;
+				isFavorite = value;
+				RaisePropertyChanged();
 			}
 		}
 
@@ -82,7 +83,7 @@ namespace notes.Model
 				RaisePropertyChanged();
 			}
 		}
-		Guid guid;
+		public Guid Guid { get; set; }
 		public string FileName
 		{
 			get
@@ -94,7 +95,7 @@ namespace notes.Model
 					.Replace(":","")
 					+ ".rtf";
 				*/
-				return guid.ToString();
+				return Guid.ToString() + ".rtf";
 				
 			}
 			
@@ -116,10 +117,12 @@ namespace notes.Model
 			}
 		}
 
+
+
 		public Note()
 		{
 			creationDateTime = DateTime.Now;
-			guid = new Guid();
+			Guid = Guid.NewGuid();
 			List<string> colors =  new List<string>() { "#DFA1A1", "#FDBFBF", "#FFD380", "#EDF47A", "#80E7E5" };
 			color = colors[new Random().Next(colors.Count)];
 		}

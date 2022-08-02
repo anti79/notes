@@ -75,23 +75,23 @@ namespace notes.ViewModel
 			}
 			return openNote;
 		}
-		ICommand markFavorite;
-		ICommand GetMarkFavoriteCommand()
+		ICommand toggleFavorite;
+		ICommand GetToggleFavoriteCommand()
 		{
-			if(markFavorite is null)
+			if(toggleFavorite is null)
 			{
-				markFavorite = new ActionCommand<Note>((note)=> {
-					note.IsFavorite = true;
+				toggleFavorite = new ActionCommand<Note>((note)=> {
+					note.IsFavorite = !note.IsFavorite;
 					Storage.Instance.SaveNote(note, note.Notebook);
 				}
 				);
 			}
-			return markFavorite;
+			return toggleFavorite;
 		}
 
 		public ICommand GoBackCommand { get { return GetGoBackCommand(); } }
 		public ICommand OpenNoteCommand { get { return GetOpenNoteCommand(); } }
 
-		public ICommand MarkFavoriteCommand { get { return GetMarkFavoriteCommand(); } }
+		public ICommand ToggleFavoriteCommand { get { return GetToggleFavoriteCommand(); } }
 	}
 }

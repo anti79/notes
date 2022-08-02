@@ -51,10 +51,7 @@ namespace notes.Views
 		private void note_RightTapped(object sender, RightTappedRoutedEventArgs e)
 		{
 			FrameworkElement senderElement = sender as FrameworkElement;
-			if(sender.GetType() == typeof(Grid))
-			{
-				senderElement = senderElement.Parent as FrameworkElement;
-			}
+	
 			FlyoutBase flyoutBase = FlyoutBase.GetAttachedFlyout(senderElement);
 			var showOptions = new FlyoutShowOptions();
 			showOptions.Placement = FlyoutPlacementMode.BottomEdgeAlignedRight;

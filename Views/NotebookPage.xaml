@@ -10,7 +10,9 @@
 	mc:Ignorable="d"
 	xmlns:i="using:Microsoft.Xaml.Interactivity"
 	xmlns:core="using:Microsoft.Xaml.Interactions.Core" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	x:Name="page"
+	>
 	<Page.DataContext>
 		<vm:NotebooksViewModel></vm:NotebooksViewModel>
 	</Page.DataContext>
@@ -23,11 +25,39 @@
 			<TextBlock FontSize="30">Notebooks</TextBlock>
 			<Button Margin="10" controls:DockPanel.Dock="Right" HorizontalAlignment="Right" Command="{Binding CreateNotebookCommand}">+ Notebook</Button>
 		</controls:DockPanel>
+		<FlyoutPresenter Grid.Row="1" Margin="0,-60,0,0" Visibility="{Binding EditingNotebook}">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="17*"></RowDefinition>
+					<RowDefinition Height="47*"></RowDefinition>
+					<RowDefinition Height="298*"></RowDefinition>
+				</Grid.RowDefinitions>
+				<controls:DockPanel VerticalAlignment="Center" Height="32">
+					<TextBox Text="{Binding EditedNotebook.Name, Mode=TwoWay}" Margin="0,0,-348,0"></TextBox>
+					<Button HorizontalAlignment="Right" Command="{Binding CloseEditCommand}">x</Button>
+				</controls:DockPanel>
+				<GridView Grid.Row="2">
+					
+				</GridView>
+
+
+			</Grid>
+		</FlyoutPresenter>
 		<GridView x:Name="gridview" ItemsSource="{Binding Notebooks, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Tapped="gridview_Tapped">
 
 			<GridView.ItemTemplate>
 				<DataTemplate x:DataType="m:Notebook" >
-					<StackPanel Margin="30" HorizontalAlignment="Center">
+					<StackPanel Margin="30" HorizontalAlignment="Center" x:Name="notebook" RightTapped="notebook_RightTapped">
+						<FlyoutBase.AttachedFlyout>
+							<MenuFlyout>
+								<MenuFlyoutItem Command="{Binding ElementName=page, Path=DataContext.OpenEditCommand}" CommandParameter="{Binding}"
+												Text="Edit"
+												>
+
+								</MenuFlyoutItem>
+							</MenuFlyout>
+						</FlyoutBase.AttachedFlyout>
+
 						<Image Source="ms-appx:///Assets/cover1.png" Stretch="None"></Image>
 						<TextBlock Text="{Binding Name}" HorizontalAlignment="Center"></TextBlock>
 					</StackPanel>

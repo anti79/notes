@@ -36,5 +36,15 @@ namespace notes.Views
 			if (e.OriginalSource.GetType() == typeof(Grid)) return;
 			((NotebooksViewModel)DataContext).OpenNotebookCommand.Execute(((FrameworkElement)e.OriginalSource).DataContext);
 		}
+
+		private void notebook_RightTapped(object sender, RightTappedRoutedEventArgs e)
+		{
+			FrameworkElement senderElement = sender as FrameworkElement;
+			FlyoutBase flyoutBase = FlyoutBase.GetAttachedFlyout(senderElement);
+			var showOptions = new FlyoutShowOptions();
+			showOptions.Placement = FlyoutPlacementMode.BottomEdgeAlignedRight;
+			flyoutBase.ShowMode = FlyoutShowMode.Transient;
+			flyoutBase.ShowAt(senderElement, showOptions);
+		}
 	}
 }

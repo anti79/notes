@@ -12,29 +12,37 @@ namespace notes.Model
 {
 	class Storage
 	{
+	
 		private static Storage instance = null;
 		private static readonly object _lock = new object();
 		StorageFolder folder;
 
 
-
+		public async void SaveNotebook(Notebook notebook)
+		{
+			var nbFolder = await folder.CreateFolderAsync(notebook.FolderName, CreationCollisionOption.OpenIfExists);
+			var nameFile = await nbFolder.CreateFileAsync("name.txt", CreationCollisionOption.OpenIfExists);
+			FileIO.WriteTextAsync(nameFile, notebook.Name);
+			
+		}
 
 		public async void SaveNote(Note note, Notebook notebook)
 		{
 			StorageFolder storageFolder;
 			try
 			{
-				storageFolder = await folder.GetFolderAsync(notebook.Name);
+				storageFolder = await folder.GetFolderAsync(notebook.FolderName);
 			}
 			catch
 			{
-				storageFolder = await folder.CreateFolderAsync(notebook.Name);
+				storageFolder = await folder.CreateFolderAsync(notebook.FolderName);
 			}
 
 			var file = await storageFolder.CreateFileAsync(note.FileName,
 			Windows.Storage.CreationCollisionOption.OpenIfExists);
 
 			await Windows.Storage.FileIO.WriteTextAsync(file, AddRTFMetadata(note).Content + Environment.NewLine);
+			
 
 
 
@@ -135,17 +143,32 @@ namespace notes.Model
 			foreach (var sf in subfolders)
 			{
 				var files = await sf.GetFilesAsync();
+				StorageFile nameFile;
+				try
+				{
+					 nameFile= await sf.GetFileAsync("name.txt");
+				}
+				catch (FileNotFoundException)
+				{
+					continue;
+				}
 				var nb = new Notebook()
 				{
-					Name = sf.Name,
-					Notes = new List<Note>()
-
+					Name = await FileIO.ReadTextAsync(nameFile),
+					Notes = new List<Note>(),
+					Guid = new Guid(sf.DisplayName)
 				};
 				foreach (var file in files)
 				{
+					if(file.Name=="name.txt")
+					{
+						continue;
+					}
 					Note n = new Note();
+					n.Guid = new Guid(file.DisplayName);
 					n.Content = await FileIO.ReadTextAsync(file);
 					n.Notebook = nb;
+					
 					n = ParseRTFMetadata(n);
 					nb.Notes.Add(n);
 				}

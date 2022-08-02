@@ -13,6 +13,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 	<Page.Resources>
 		<notes:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
+		<notes:ToggleFavoriteStringConverter x:Key="ToggleFavoriteStringConverter"/>
 	</Page.Resources>
 	<Page.DataContext>
 		<vm:NotesViewModel x:Name="vm"></vm:NotesViewModel>
@@ -34,10 +35,14 @@
 					<Border Background="{Binding Color}" Width="200" Height="200" Margin="10" RightTapped="note_RightTapped">
 						<FlyoutBase.AttachedFlyout>
 							<MenuFlyout>
-								<MenuFlyoutItem Command="{Binding ElementName=page, Path=DataContext.MarkFavoriteCommand}" CommandParameter="{Binding}">Mark as favorite</MenuFlyoutItem>
+								<MenuFlyoutItem Command="{Binding ElementName=page, Path=DataContext.ToggleFavoriteCommand}" CommandParameter="{Binding}"
+												Text="{Binding Path=IsFavorite, Converter={StaticResource ToggleFavoriteStringConverter}}"
+												>
+									
+								</MenuFlyoutItem>
 							</MenuFlyout>
 						</FlyoutBase.AttachedFlyout>
-						<Grid Margin="10" RightTapped="note_RightTapped">
+						<Grid Margin="10">
 							
 							<Grid.RowDefinitions>
 								<RowDefinition Height="7*"></RowDefinition>
