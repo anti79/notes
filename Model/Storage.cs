@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Text;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace notes.Model
 {
@@ -16,8 +18,7 @@ namespace notes.Model
 		private static Storage instance = null;
 		private static readonly object _lock = new object();
 		StorageFolder folder;
-
-
+		
 		public async void SaveNotebook(Notebook notebook)
 		{
 			var nbFolder = await folder.CreateFolderAsync(notebook.FolderName, CreationCollisionOption.OpenIfExists);
@@ -152,15 +153,29 @@ namespace notes.Model
 				{
 					continue;
 				}
+				StorageFile coverFile;
+				try
+				{
+					coverFile = await sf.GetFileAsync("cover");
+				}
+				catch (FileNotFoundException)
+				{
+					coverFile = null;
+				}
 				var nb = new Notebook()
 				{
 					Name = await FileIO.ReadTextAsync(nameFile),
 					Notes = new List<Note>(),
 					Guid = new Guid(sf.DisplayName)
 				};
+				if(!(coverFile is null))
+				{
+					nb.CoverImagePath = (coverFile.Path);
+				}
+
 				foreach (var file in files)
 				{
-					if(file.Name=="name.txt")
+					if(file.Name=="name.txt" || file.Name=="cover")
 					{
 						continue;
 					}

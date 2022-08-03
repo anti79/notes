@@ -125,6 +125,19 @@ namespace notes.ViewModel
 		public ICommand OpenEditCommand { get { return GetOpenEditCommand(); } }
 		ICommand closeEdit;
 
+		public List<string> DefaultCovers
+		{
+			get
+			{
+				return new List<string>()
+				{
+					"ms-appx:///Assets/cover1.png",
+					"ms-appx:///Assets/cover2.png",
+					"ms-appx:///Assets/cover3.png",
+					"ms-appx:///Assets/cover4.png",
+				};
+			}
+		}
 		public ICommand GetCloseEditCommand()
 		{
 			if(closeEdit is null)

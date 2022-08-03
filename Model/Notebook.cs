@@ -13,6 +13,8 @@ namespace notes.Model
 	{
 		string name;
 		public Guid Guid { get; set; }
+		public string CoverImagePath { get; set; }
+
 		public string FolderName { 
 			get
 			{
@@ -45,7 +47,8 @@ namespace notes.Model
 		{
 			Notes = new List<Note>();
 			Guid = Guid.NewGuid();
-			
+			CoverImagePath = "ms-appx:///Assets/cover1.png";
+
 		}
 
 

@@ -36,8 +36,23 @@
 					<TextBox Text="{Binding EditedNotebook.Name, Mode=TwoWay}" Margin="0,0,-348,0"></TextBox>
 					<Button HorizontalAlignment="Right" Command="{Binding CloseEditCommand}">x</Button>
 				</controls:DockPanel>
-				<GridView Grid.Row="2">
-					
+				<StackPanel Grid.Row="1" Orientation="Horizontal">
+					<TextBox IsReadOnly="True" Height="31" Width="291"></TextBox>
+					<Button Margin="10">Choose file...</Button>
+				</StackPanel>
+				<GridView Grid.Row="2" ItemsSource="{Binding DefaultCovers}" >
+					<GridView.ItemsPanel>
+						<ItemsPanelTemplate>
+							<ItemsWrapGrid MaximumRowsOrColumns="2"/>
+						</ItemsPanelTemplate>
+					</GridView.ItemsPanel>
+					<GridView.ItemTemplate>
+						<DataTemplate>
+							<Grid Padding="15">
+							<Image Margin="0" Source="{Binding}" Width="150"></Image>
+							</Grid>
+						</DataTemplate>
+					</GridView.ItemTemplate>
 				</GridView>
 
 
@@ -58,7 +73,7 @@
 							</MenuFlyout>
 						</FlyoutBase.AttachedFlyout>
 
-						<Image Source="ms-appx:///Assets/cover1.png" Stretch="None"></Image>
+						<Image Source="{Binding CoverImagePath}" Stretch="None"></Image>
 						<TextBlock Text="{Binding Name}" HorizontalAlignment="Center"></TextBlock>
 					</StackPanel>
 				</DataTemplate>

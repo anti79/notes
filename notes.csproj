@@ -156,6 +156,9 @@
   <ItemGroup>
     <Content Include="Assets\center-alignment.png" />
     <Content Include="Assets\cover1.png" />
+    <Content Include="Assets\cover2.png" />
+    <Content Include="Assets\cover3.png" />
+    <Content Include="Assets\cover4.png" />
     <Content Include="Assets\fill.png" />
     <Content Include="Assets\justify-alignment.png" />
     <Content Include="Assets\left-alignment.png" />
