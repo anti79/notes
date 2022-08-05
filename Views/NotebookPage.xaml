@@ -20,6 +20,7 @@
 	<Page.Resources>
 		<n:UriToImageConverter x:Key="UriToImageConverter"/>
 		<n:StreamToBitmapConverter x:Key="StreamToBitmapConverter"/>
+		<n:AppURIToFileConverter x:Key="AppURIToFileConverter"/>
 	</Page.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
@@ -64,7 +65,7 @@
 					<Button HorizontalAlignment="Right" Command="{Binding CloseEditCommand}">x</Button>
 				</controls:DockPanel>
 				<StackPanel Grid.Row="1" Orientation="Horizontal">
-					<TextBox IsReadOnly="True" Height="31" Width="291"></TextBox>
+					<!--<TextBox IsReadOnly="True" Height="31" Width="291"></TextBox>-->
 					<Button Margin="10" x:Name="coverFilePickerBtn" Click="coverFilePickerBtn_Click">Choose file...</Button>
 				</StackPanel>
 				<GridView x:Name="coversGridview" Grid.Row="2" ItemsSource="{Binding DefaultCovers}">
@@ -75,6 +76,11 @@
 					</GridView.ItemsPanel>
 					<GridView.ItemTemplate>
 						<DataTemplate>
+							<i:Interaction.Behaviors>
+								<core:EventTriggerBehavior EventName="Tapped">
+									<core:InvokeCommandAction Command="{Binding SetCoverCommand, ElementName=page, ConverterParameter={Binding}, Converter={StaticResource AppURIToFileConverter}}" />
+								</core:EventTriggerBehavior>
+							</i:Interaction.Behaviors>
 							<Grid Padding="15">
 								<Image Margin="0" Source="{Binding}" Width="150"></Image>
 							</Grid>

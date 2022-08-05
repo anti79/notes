@@ -148,7 +148,6 @@ namespace notes.ViewModel
 			{
 				setCover = new  ActionCommand<StorageFile>(async (file)=> {
 					var copy = await Storage.Instance.SaveNotebookCover(EditedNotebook, file);
-
 					EditedNotebook.CoverImage = await copy.OpenAsync(FileAccessMode.Read);
 				});
 				

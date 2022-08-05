@@ -119,6 +119,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppURIToFileConverter.cs" />
     <Compile Include="ColorUtils.cs" />
     <Compile Include="ColorToBrushConverter.cs" />
     <Compile Include="StreamToBitmapConverter.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="ViewModel\ActionCommand.cs" />
     <Compile Include="ViewModel\Command.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\NotebookCover.cs" />
     <Compile Include="ViewModel\NotesViewModel.cs" />
     <Compile Include="ViewModel\NotebooksViewModel.cs" />
     <Compile Include="ViewModel\ObservableObject.cs" />

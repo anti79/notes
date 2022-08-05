@@ -18,6 +18,7 @@ namespace notes.Model
 		IRandomAccessStream coverImage;
 		public IRandomAccessStream CoverImage { get
 			{
+				coverImage.Seek(0);
 				return coverImage;
 			}
 			set
