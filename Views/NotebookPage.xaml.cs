@@ -46,5 +46,29 @@ namespace notes.Views
 			flyoutBase.ShowMode = FlyoutShowMode.Transient;
 			flyoutBase.ShowAt(senderElement, showOptions);
 		}
+
+		private async void coverFilePickerBtn_Click(object sender, RoutedEventArgs e)
+		{
+			var picker = new Windows.Storage.Pickers.FileOpenPicker();
+			picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
+			picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary;
+			picker.FileTypeFilter.Add(".jpg");
+			picker.FileTypeFilter.Add(".jpeg");
+			picker.FileTypeFilter.Add(".png");
+
+			Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
+			if (file != null)
+			{
+				((NotebooksViewModel)DataContext).SetCoverCommand.Execute(file);
+				
+			}
+	
+		}
+
+		//private void coversGridview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		//{
+		//gridview.Items[0]
+		//	((Grid)e.AddedItems.FirstOrDefault()).Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255,100,123,0));
+		//}
 	}
 }

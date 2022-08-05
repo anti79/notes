@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:vm="using:notes.ViewModel"
 	xmlns:m="using:notes.Model"
+	xmlns:n="using:notes"
 	mc:Ignorable="d"
 	xmlns:i="using:Microsoft.Xaml.Interactivity"
 	xmlns:core="using:Microsoft.Xaml.Interactions.Core" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
@@ -16,6 +17,10 @@
 	<Page.DataContext>
 		<vm:NotebooksViewModel></vm:NotebooksViewModel>
 	</Page.DataContext>
+	<Page.Resources>
+		<n:UriToImageConverter x:Key="UriToImageConverter"/>
+		<n:StreamToBitmapConverter x:Key="StreamToBitmapConverter"/>
+	</Page.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition/>
@@ -25,40 +30,8 @@
 			<TextBlock FontSize="30">Notebooks</TextBlock>
 			<Button Margin="10" controls:DockPanel.Dock="Right" HorizontalAlignment="Right" Command="{Binding CreateNotebookCommand}">+ Notebook</Button>
 		</controls:DockPanel>
-		<FlyoutPresenter Grid.Row="1" Margin="0,-60,0,0" Visibility="{Binding EditingNotebook}">
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="17*"></RowDefinition>
-					<RowDefinition Height="47*"></RowDefinition>
-					<RowDefinition Height="298*"></RowDefinition>
-				</Grid.RowDefinitions>
-				<controls:DockPanel VerticalAlignment="Center" Height="32">
-					<TextBox Text="{Binding EditedNotebook.Name, Mode=TwoWay}" Margin="0,0,-348,0"></TextBox>
-					<Button HorizontalAlignment="Right" Command="{Binding CloseEditCommand}">x</Button>
-				</controls:DockPanel>
-				<StackPanel Grid.Row="1" Orientation="Horizontal">
-					<TextBox IsReadOnly="True" Height="31" Width="291"></TextBox>
-					<Button Margin="10">Choose file...</Button>
-				</StackPanel>
-				<GridView Grid.Row="2" ItemsSource="{Binding DefaultCovers}" >
-					<GridView.ItemsPanel>
-						<ItemsPanelTemplate>
-							<ItemsWrapGrid MaximumRowsOrColumns="2"/>
-						</ItemsPanelTemplate>
-					</GridView.ItemsPanel>
-					<GridView.ItemTemplate>
-						<DataTemplate>
-							<Grid Padding="15">
-							<Image Margin="0" Source="{Binding}" Width="150"></Image>
-							</Grid>
-						</DataTemplate>
-					</GridView.ItemTemplate>
-				</GridView>
-
-
-			</Grid>
-		</FlyoutPresenter>
-		<GridView x:Name="gridview" ItemsSource="{Binding Notebooks, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Tapped="gridview_Tapped">
+		
+		<GridView x:Name="gridview" ItemsSource="{Binding Notebooks, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Tapped="gridview_Tapped"  >
 
 			<GridView.ItemTemplate>
 				<DataTemplate x:DataType="m:Notebook" >
@@ -73,11 +46,44 @@
 							</MenuFlyout>
 						</FlyoutBase.AttachedFlyout>
 
-						<Image Source="{Binding CoverImagePath}" Stretch="None"></Image>
+						<Image Source="{Binding CoverImage, Converter={StaticResource StreamToBitmapConverter}}" Stretch="None" MaxHeight="200"></Image>
 						<TextBlock Text="{Binding Name}" HorizontalAlignment="Center"></TextBlock>
 					</StackPanel>
 				</DataTemplate>
 			</GridView.ItemTemplate>
 		</GridView>
+		<FlyoutPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding EditingNotebook}" Grid.RowSpan="2" >
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="17*"></RowDefinition>
+					<RowDefinition Height="47*"></RowDefinition>
+					<RowDefinition Height="298*"></RowDefinition>
+				</Grid.RowDefinitions>
+				<controls:DockPanel VerticalAlignment="Center" Height="32">
+					<TextBox Text="{Binding EditedNotebook.Name, Mode=TwoWay}" Margin="0,0,-348,0"></TextBox>
+					<Button HorizontalAlignment="Right" Command="{Binding CloseEditCommand}">x</Button>
+				</controls:DockPanel>
+				<StackPanel Grid.Row="1" Orientation="Horizontal">
+					<TextBox IsReadOnly="True" Height="31" Width="291"></TextBox>
+					<Button Margin="10" x:Name="coverFilePickerBtn" Click="coverFilePickerBtn_Click">Choose file...</Button>
+				</StackPanel>
+				<GridView x:Name="coversGridview" Grid.Row="2" ItemsSource="{Binding DefaultCovers}">
+					<GridView.ItemsPanel>
+						<ItemsPanelTemplate>
+							<ItemsWrapGrid MaximumRowsOrColumns="2"/>
+						</ItemsPanelTemplate>
+					</GridView.ItemsPanel>
+					<GridView.ItemTemplate>
+						<DataTemplate>
+							<Grid Padding="15">
+								<Image Margin="0" Source="{Binding}" Width="150"></Image>
+							</Grid>
+						</DataTemplate>
+					</GridView.ItemTemplate>
+				</GridView>
+
+
+			</Grid>
+		</FlyoutPresenter>
 	</Grid>
 </Page>

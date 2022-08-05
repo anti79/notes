@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.Storage;
 using Windows.UI.Input;
 using Windows.UI.Xaml.Input;
 
@@ -125,6 +126,7 @@ namespace notes.ViewModel
 		public ICommand OpenEditCommand { get { return GetOpenEditCommand(); } }
 		ICommand closeEdit;
 
+
 		public List<string> DefaultCovers
 		{
 			get
@@ -138,6 +140,23 @@ namespace notes.ViewModel
 				};
 			}
 		}
+
+		public ICommand setCover;
+		public ICommand GetSetCoverCommand()
+		{
+			if(setCover is null)
+			{
+				setCover = new  ActionCommand<StorageFile>(async (file)=> {
+					var copy = await Storage.Instance.SaveNotebookCover(EditedNotebook, file);
+
+					EditedNotebook.CoverImage = await copy.OpenAsync(FileAccessMode.Read);
+				});
+				
+			}
+			return setCover;
+		}
+		public ICommand SetCoverCommand { get { return GetSetCoverCommand(); } }
+
 		public ICommand GetCloseEditCommand()
 		{
 			if(closeEdit is null)

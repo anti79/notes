@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Text;
@@ -24,7 +25,20 @@ namespace notes.Model
 			var nbFolder = await folder.CreateFolderAsync(notebook.FolderName, CreationCollisionOption.OpenIfExists);
 			var nameFile = await nbFolder.CreateFileAsync("name.txt", CreationCollisionOption.OpenIfExists);
 			FileIO.WriteTextAsync(nameFile, notebook.Name);
+
 			
+			
+		}
+		public async Task<StorageFile> SaveNotebookCover(Notebook notebook, StorageFile cover)
+		{
+			var nbFolder = await folder.GetFolderAsync(notebook.FolderName);
+			return await (cover.CopyAsync(nbFolder, "cover", NameCollisionOption.ReplaceExisting));
+
+
+		}
+		public async Task<IRandomAccessStream> GetDefaultCover()
+		{
+			return await (await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/cover1.png"))).OpenAsync(FileAccessMode.Read);
 		}
 
 		public async void SaveNote(Note note, Notebook notebook)
@@ -143,6 +157,7 @@ namespace notes.Model
 			var subfolders = await folder.GetFoldersAsync();
 			foreach (var sf in subfolders)
 			{
+				var nb = new Notebook();
 				var files = await sf.GetFilesAsync();
 				StorageFile nameFile;
 				try
@@ -157,21 +172,20 @@ namespace notes.Model
 				try
 				{
 					coverFile = await sf.GetFileAsync("cover");
+					nb.CoverImage = await coverFile.OpenAsync(FileAccessMode.Read);
 				}
 				catch (FileNotFoundException)
 				{
 					coverFile = null;
+					nb.CoverImage = await GetDefaultCover();
+
+
 				}
-				var nb = new Notebook()
-				{
-					Name = await FileIO.ReadTextAsync(nameFile),
-					Notes = new List<Note>(),
-					Guid = new Guid(sf.DisplayName)
-				};
-				if(!(coverFile is null))
-				{
-					nb.CoverImagePath = (coverFile.Path);
-				}
+
+				nb.Name = await FileIO.ReadTextAsync(nameFile);
+				nb.Notes = new List<Note>();
+				nb.Guid = new Guid(sf.DisplayName);
+				
 
 				foreach (var file in files)
 				{

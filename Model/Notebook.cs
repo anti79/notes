@@ -6,6 +6,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.Storage.Streams;
 
 namespace notes.Model
 {
@@ -13,7 +15,17 @@ namespace notes.Model
 	{
 		string name;
 		public Guid Guid { get; set; }
-		public string CoverImagePath { get; set; }
+		IRandomAccessStream coverImage;
+		public IRandomAccessStream CoverImage { get
+			{
+				return coverImage;
+			}
+			set
+			{
+				coverImage = value;
+				RaisePropertyChanged();
+			}
+		}
 
 		public string FolderName { 
 			get
@@ -47,8 +59,8 @@ namespace notes.Model
 		{
 			Notes = new List<Note>();
 			Guid = Guid.NewGuid();
-			CoverImagePath = "ms-appx:///Assets/cover1.png";
-
+			//CoverImagePath = new Uri("ms-appx:///Assets/cover1.png");
+			
 		}
 
 
