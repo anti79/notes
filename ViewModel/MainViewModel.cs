@@ -96,14 +96,14 @@ namespace notes.ViewModel
 		ICommand switchToAllCommand;
 		ICommand switchToNotebooksCommand;
 		ICommand switchToFavoritesCommand;
-		ICommand createNoteCommand;
+		
 
 		public Notebook OpenedNotebook { get; set; }
 
 		public ICommand SwitchToAll { get { return GetSwitchToAllCommand(); } }
 		public ICommand SwitchToNotebooks { get { return GetSwitchToNotebooksCommand(); } }
 		public ICommand SwitchToFavorites { get { return GetSwitchToFavoritesCommand(); } }
-		public ICommand CreateNote { get { return GetCreateNoteCommand(); } }
+		
 		ICommand GetSwitchToAllCommand()
 		{
 			if (switchToAllCommand is null)
@@ -145,30 +145,7 @@ namespace notes.ViewModel
 			}
 			return switchToFavoritesCommand;
 		}
-		ICommand GetCreateNoteCommand()
-		{
-			if (createNoteCommand is null)
-			{
-				createNoteCommand = new Command(() =>
-				{
-					if (CurrentPage.GetType() == typeof(NotesPage) && ((NotesViewModel)((NotesPage)CurrentPage).DataContext).IsNotebook)
-					{
-
-						EditorPage = new EditorPage();
-						var editorVM = new EditorViewModel((IEditorPage)EditorPage, new Note());
-						editorVM.ParentViewModel = this;
-						editorVM.NewNote = true;
-						EditorPage.DataContext = editorVM;
-						//Storage.Instance.CreateFile()
-
-
-
-					}
-				});
-			}
-			return createNoteCommand;
-		}
-		public ICommand CreateNoteCommand { get { return GetCreateNoteCommand(); } }
+		
 
 		ICommand openNote;
 

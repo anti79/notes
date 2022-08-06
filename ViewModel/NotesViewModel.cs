@@ -1,4 +1,5 @@
 ﻿using notes.Model;
+using notes.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -92,6 +93,26 @@ namespace notes.ViewModel
 		public ICommand GoBackCommand { get { return GetGoBackCommand(); } }
 		public ICommand OpenNoteCommand { get { return GetOpenNoteCommand(); } }
 
+		ICommand createNoteCommand;
 		public ICommand ToggleFavoriteCommand { get { return GetToggleFavoriteCommand(); } }
+		public ICommand CreateNoteCommand { get { return GetCreateNoteCommand(); } }
+		ICommand GetCreateNoteCommand()
+		{
+			if (createNoteCommand is null)
+			{
+				createNoteCommand = new Command(() =>
+				{
+						var editorPage = new EditorPage();
+						var editorVM = new EditorViewModel((IEditorPage)editorPage, new Note());
+						editorVM.ParentViewModel = ParentViewModel;
+						editorVM.NewNote = true;
+						editorPage.DataContext = editorVM;
+						((MainViewModel)ParentViewModel).EditorPage = editorPage;
+						//Storage.Instance.CreateFile()
+					
+				});
+			}
+			return createNoteCommand;
+		}
 	}
 }

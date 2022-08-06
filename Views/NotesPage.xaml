@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:vm="using:notes.ViewModel"
 	xmlns:m="using:notes.Model"
-	xmlns:notes="using:notes"
+	xmlns:notes="using:notes" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
 	x:Name="page"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -23,11 +23,12 @@
 			<RowDefinition/>
 			<RowDefinition Height="9*"></RowDefinition>
 		</Grid.RowDefinitions>
-		<StackPanel Grid.Row="0" Orientation="Horizontal">
+		<controls:DockPanel Grid.Row="0">
 
 			<Button x:Name="backBtn" Command="{Binding GoBackCommand}" Visibility="{Binding IsNotebook}">&lt;</Button>
 			<TextBlock FontSize="30" Text="{Binding Title}"/>
-		</StackPanel>
+			<Button Margin="10" controls:DockPanel.Dock="Right" HorizontalAlignment="Right" Command="{Binding CreateNoteCommand}">+ Note</Button>
+		</controls:DockPanel>
 		<GridView x:Name="gridview" ItemsSource="{Binding Notes}" Grid.Row="1" Tapped="gridview_Tapped">
 			<GridView.ItemTemplate>
 				<DataTemplate x:DataType="m:Note">
