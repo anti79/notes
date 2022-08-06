@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -63,6 +64,14 @@ namespace notes.Views
 				
 			}
 	
+		}
+
+		private async void defaultCover_Tapped(object sender, TappedRoutedEventArgs e)
+		{
+			string uri = (string)((FrameworkElement)sender).DataContext;
+			((NotebooksViewModel)DataContext).SetCoverCommand.Execute(
+				await StorageFile.GetFileFromApplicationUriAsync(new Uri(uri))
+				);
 		}
 
 		//private void coversGridview_SelectionChanged(object sender, SelectionChangedEventArgs e)

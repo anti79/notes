@@ -28,7 +28,14 @@
 			<RowDefinition Height="9*"></RowDefinition>
 		</Grid.RowDefinitions>
 		<controls:DockPanel Grid.Row="0" VerticalAlignment="Center">
-			<TextBlock FontSize="30">Notebooks</TextBlock>
+			<TextBlock FontSize="30" Text="Notebooks">
+				
+				<i:Interaction.Behaviors>
+										<core:EventTriggerBehavior EventName="Tapped">
+											<core:InvokeCommandAction Command="{Binding OpenEditCommand}" />
+										</core:EventTriggerBehavior>
+									</i:Interaction.Behaviors>
+			</TextBlock>
 			<Button Margin="10" controls:DockPanel.Dock="Right" HorizontalAlignment="Right" Command="{Binding CreateNotebookCommand}">+ Notebook</Button>
 		</controls:DockPanel>
 		
@@ -36,7 +43,7 @@
 
 			<GridView.ItemTemplate>
 				<DataTemplate x:DataType="m:Notebook" >
-					<StackPanel Margin="30" HorizontalAlignment="Center" x:Name="notebook" RightTapped="notebook_RightTapped">
+					<StackPanel Margin="30" HorizontalAlignment="Center" x:Name="notebook" RightTapped="notebook_RightTapped" >
 						<FlyoutBase.AttachedFlyout>
 							<MenuFlyout>
 								<MenuFlyoutItem Command="{Binding ElementName=page, Path=DataContext.OpenEditCommand}" CommandParameter="{Binding}"
@@ -46,8 +53,18 @@
 								</MenuFlyoutItem>
 							</MenuFlyout>
 						</FlyoutBase.AttachedFlyout>
+						<Image RightTapped="notebook_RightTapped" Source="{Binding CoverImage, Converter={StaticResource StreamToBitmapConverter}}" Stretch="None" MaxHeight="200">
 
-						<Image Source="{Binding CoverImage, Converter={StaticResource StreamToBitmapConverter}}" Stretch="None" MaxHeight="200"></Image>
+							<FlyoutBase.AttachedFlyout>
+								<MenuFlyout>
+									<MenuFlyoutItem Command="{Binding ElementName=page, Path=DataContext.OpenEditCommand}" CommandParameter="{Binding}"
+												Text="Edit"
+												>
+
+									</MenuFlyoutItem>
+								</MenuFlyout>
+							</FlyoutBase.AttachedFlyout>
+						</Image>
 						<TextBlock Text="{Binding Name}" HorizontalAlignment="Center"></TextBlock>
 					</StackPanel>
 				</DataTemplate>
@@ -76,13 +93,17 @@
 					</GridView.ItemsPanel>
 					<GridView.ItemTemplate>
 						<DataTemplate>
-							<i:Interaction.Behaviors>
-								<core:EventTriggerBehavior EventName="Tapped">
-									<core:InvokeCommandAction Command="{Binding SetCoverCommand, ElementName=page, ConverterParameter={Binding}, Converter={StaticResource AppURIToFileConverter}}" />
-								</core:EventTriggerBehavior>
-							</i:Interaction.Behaviors>
-							<Grid Padding="15">
-								<Image Margin="0" Source="{Binding}" Width="150"></Image>
+							
+							<Grid Padding="15" x:Name="defaultCover" Tapped="defaultCover_Tapped">
+								
+								<Image Margin="0" Source="{Binding}" Width="150">
+									<i:Interaction.Behaviors>
+										<core:EventTriggerBehavior EventName="Tapped">
+											<core:InvokeCommandAction Command="{Binding OpenEditCommand, ElementName=page.DataContext}" />
+										</core:EventTriggerBehavior>
+									</i:Interaction.Behaviors>
+
+								</Image>
 							</Grid>
 						</DataTemplate>
 					</GridView.ItemTemplate>
