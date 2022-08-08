@@ -6,8 +6,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Custom="using:Microsoft.UI.Xaml.Controls"
 	xmlns:v ="using:notes.Views"
-	xmlns:vm="using:notes.ViewModel"
-    x:Class="notes.MainPage"
+	xmlns:i="using:Microsoft.Xaml.Interactivity"
+	xmlns:vm="using:notes.ViewModel" xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+	x:Class="notes.MainPage"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 	<Page.DataContext>
@@ -25,8 +26,10 @@
 				<ColumnDefinition/>
 				<ColumnDefinition/>
 			</Grid.ColumnDefinitions>
-			<StackPanel Grid.Column="0" Orientation="Horizontal">
-				<Button/>
+			<StackPanel Grid.Column="0" Orientation="Horizontal" Padding="10">
+				<Button Content="і" Command="{Binding SearchBox.ToggleSearchCommand}" Visibility="Visible"/>
+				<TextBox Width="442" Height="35" Visibility="{Binding SearchBox.Searching}" Text="{Binding SearchBox.SearchBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+				</TextBox>
 				<Button/>
 			</StackPanel>
 			<StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">

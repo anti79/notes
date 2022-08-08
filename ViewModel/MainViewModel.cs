@@ -88,6 +88,8 @@ namespace notes.ViewModel
 				return Storage.Instance.GetFavoriteNotes();
 			};
 			favVM.ParentViewModel = this;
+			searchBox = new SearchBox();
+			searchBox.ParentViewModel = this;
 
 		}
 
@@ -99,7 +101,14 @@ namespace notes.ViewModel
 		
 
 		public Notebook OpenedNotebook { get; set; }
-
+		SearchBox searchBox;
+		public SearchBox SearchBox
+		{
+			get
+			{
+				return searchBox;
+			}
+		}
 		public ICommand SwitchToAll { get { return GetSwitchToAllCommand(); } }
 		public ICommand SwitchToNotebooks { get { return GetSwitchToNotebooksCommand(); } }
 		public ICommand SwitchToFavorites { get { return GetSwitchToFavoritesCommand(); } }
@@ -164,7 +173,10 @@ namespace notes.ViewModel
 			}
 			return openNote;
 		}
+		
+
 		public ICommand OpenNoteCommand { get { return GetOpenNoteCommand(); } }
+		
 
 		//public bool 
 	}

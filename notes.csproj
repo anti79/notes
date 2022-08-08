@@ -135,6 +135,7 @@
     <Compile Include="ViewModel\NotesViewModel.cs" />
     <Compile Include="ViewModel\NotebooksViewModel.cs" />
     <Compile Include="ViewModel\ObservableObject.cs" />
+    <Compile Include="ViewModel\SearchBox.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="Views\EditorPage.xaml.cs">
       <DependentUpon>EditorPage.xaml</DependentUpon>
