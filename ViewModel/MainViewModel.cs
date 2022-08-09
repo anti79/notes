@@ -14,6 +14,8 @@ namespace notes.ViewModel
 {
 	class MainViewModel : ViewModel
 	{
+
+		
 		Page currentPage;
 		Page editorPage;
 
@@ -21,6 +23,7 @@ namespace notes.ViewModel
 		NotebooksViewModel nbVM;
 		NotesViewModel favVM;
 
+		
 
 
 		public void UpdatePages()
@@ -63,6 +66,7 @@ namespace notes.ViewModel
 				RaisePropertyChanged(nameof(EditorVisible));
 			}
 		}
+		public Page MainPage { get; set; }
 		public MainViewModel()
 		{
 			CurrentPage = new NotebookPage();

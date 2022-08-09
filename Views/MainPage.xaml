@@ -8,6 +8,7 @@
 	xmlns:v ="using:notes.Views"
 	xmlns:i="using:Microsoft.Xaml.Interactivity"
 	xmlns:vm="using:notes.ViewModel" xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+	xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	x:Class="notes.MainPage"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -26,10 +27,43 @@
 				<ColumnDefinition/>
 				<ColumnDefinition/>
 			</Grid.ColumnDefinitions>
-			<StackPanel Grid.Column="0" Orientation="Horizontal" Padding="10">
+			<StackPanel Grid.Column="0" Orientation="Horizontal" Padding="10" x:Name="leftPanel">
+				
 				<Button Content="і" Command="{Binding SearchBox.ToggleSearchCommand}" Visibility="Visible"/>
-				<TextBox Width="442" Height="35" Visibility="{Binding SearchBox.Searching}" Text="{Binding SearchBox.SearchBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+				<!--
+				<TextBox Width="442" Height="35" x:Name="searchTextbox" Visibility="{Binding SearchBox.Searching}" Text="{Binding SearchBox.SearchBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  >
+					
+
 				</TextBox>
+				-->
+				<AutoSuggestBox Width="442" Height="35" 
+								Visibility="Visible"
+								Text="{Binding SearchBox.SearchBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" QueryIcon="Find" ItemsSource="{Binding SearchBox.Results}"
+								
+								>
+					<AutoSuggestBox.ItemTemplate>
+						<DataTemplate>
+							<Grid BorderThickness="1, 0, 1, 1" HorizontalAlignment="Stretch" VerticalAlignment="Center" MinWidth="150">
+								<i:Interaction.Behaviors>
+									<core:EventTriggerBehavior EventName="Tapped">
+										<core:InvokeCommandAction Command="{Binding SearchBox.OpenItemCommand, ElementName=page.DataContext}" CommandParameter="{Binding}"/>
+									</core:EventTriggerBehavior>
+								</i:Interaction.Behaviors>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="1*"/>
+									<ColumnDefinition/>
+
+								</Grid.ColumnDefinitions>
+								<TextBlock Grid.Column="0">note</TextBlock>
+								<TextBlock Grid.Column="1" Text="{Binding Title}" FontSize="14" HorizontalAlignment="Left"/>
+							<!--<TextBlock Text="{Binding ChannelTitle}" Grid.Column="1" Grid.Row="1" FontSize="12" HorizontalAlignment="Left"  Foreground="#FFFFFF"/>-->
+						</Grid>
+					</DataTemplate>
+					</AutoSuggestBox.ItemTemplate>
+					
+					
+					
+				</AutoSuggestBox>
 				<Button/>
 			</StackPanel>
 			<StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -43,15 +77,15 @@
 			</StackPanel>
 		</Grid>
 
-		
+
 		<Frame Name="mainFrame" Grid.Row="1" Margin="30" Content="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 >
-			
+
 		</Frame>
 		<Frame Name="noteFrame" Grid.RowSpan="2" Content="{Binding EditorPage, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding EditorVisible, UpdateSourceTrigger=PropertyChanged}">
-			
+
 		</Frame>
-		
+
 
 		<!--<WebView HorizontalAlignment="Left" Height="610" Margin="10,150,0,0" VerticalAlignment="Top" Width="1040" x:Name="view"/>-->
 

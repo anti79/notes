@@ -1,4 +1,5 @@
-﻿using notes.Views;
+﻿using notes.ViewModel;
+using notes.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,9 +26,19 @@ namespace notes
     {
         public MainPage()
         {
+           
             this.InitializeComponent();
-        }
+            var vm = new MainViewModel();
+            vm.MainPage = this;
+            this.DataContext = vm;
 
+        }
+        /*
+		private void searchTextbox_TextChanged(object sender, TextChangedEventArgs e)
+		{
+            searchFlyout.ShowAt(searchTextbox);
+		}
+        */
 
 	}
 }

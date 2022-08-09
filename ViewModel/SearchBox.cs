@@ -11,6 +11,12 @@ namespace notes.ViewModel
 {
 	class SearchBox:ViewModel
 	{
+		//MainPage page;
+		public SearchBox()
+		{
+			results = new ObservableCollection<ISearchable>();
+		}
+
 		ICommand toggleSearch;
 		bool searching;
 		public bool Searching
@@ -51,60 +57,69 @@ namespace notes.ViewModel
 		}
 		public void Search(string text)
 		{
-			//var mvm = (MainViewModel)ParentViewModel;
+			results.Clear();
 			if (text.Length > 0)
 			{
+				
 				var noteResults = Storage.Instance.GetAllNotes().Where((note) => note.Title.Contains(text));
-
-				if (noteResults.Count() > 0)
-				{
-					hasResults = true;
-				}
-				else
-				{
-					hasResults = false;
-				}
-				NoteResults = new ObservableCollection<Note>(noteResults);
+				var notebookResults = Storage.Instance.Notebooks.Where((nb) => nb.Title.Contains(text));
+				Results = new ObservableCollection<ISearchable>(results.Concat(noteResults));
+				Results = new ObservableCollection<ISearchable>(results.Concat(notebookResults));
+				//NoteResults = new ObservableCollection<Note>(noteResults);
+				//var page = (MainPage)((MainViewModel)ParentViewModel).MainPage;
 			}
+			
 		}
-		ObservableCollection<Note> noteResults;
-		ObservableCollection<Note> notebookResults;
-		bool hasResults;
+		ObservableCollection<ISearchable> results;
 		public bool HasResults
 		{
 			get
 			{
-				return hasResults;
-			}
-			set
-			{
-				hasResults = value;
-				RaisePropertyChanged();
+
+				return results.Count > 0;
 			}
 		}
-		public ObservableCollection<Note> NoteResults { 
+		public ObservableCollection<ISearchable> Results { 
 			get
 			{
-				return noteResults;
+				return results;
 			}
 			set
 			{
-				noteResults = value;
+				results = value;
 				RaisePropertyChanged();
-			}
-		}
-		public ObservableCollection<Note> NotebookResults { 
-			get
-			{
-				return notebookResults;
-			}
-			set
-			{
-				notebookResults = value;
-				RaisePropertyChanged();
+				RaisePropertyChanged(nameof(HasResults));
 
 			}
 		}
+		public ICommand openItemCommand;
+		public ICommand OpenItemCommand
+		{
+			get { return GetOpenItemCommand(); }
+		}
+		public ICommand GetOpenItemCommand()
+		{
+			if(openItemCommand is null)
+			{
+				openItemCommand = new ActionCommand<ISearchable>((item) =>
+				{
+
+					var mainvm = (MainViewModel)ParentViewModel;
+					if (item.GetType()==typeof(Note))
+					{
+						mainvm.SwitchToAll.Execute(null);
+						((NotesViewModel)mainvm.CurrentPage.DataContext).OpenNoteCommand.Execute(item);
+					}
+					else if(item.GetType()==typeof(Notebook))
+					{
+
+					}
+				});
+			}
+			return openItemCommand;
+		}
+
+		
 
 	}
 }

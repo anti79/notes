@@ -11,7 +11,7 @@ using Windows.UI.Text;
 
 namespace notes.Model
 {
-	class Note:ObservableObject
+	class Note:ObservableObject,ISearchable
 	{
 		string title;
 		bool isFavorite;
@@ -126,6 +126,9 @@ namespace notes.Model
 			List<string> colors =  new List<string>() { "#DFA1A1", "#FDBFBF", "#FFD380", "#EDF47A", "#80E7E5" };
 			color = colors[new Random().Next(colors.Count)];
 		}
-
+		public override string ToString()
+		{
+			return Title;
+		}
 	}
 }

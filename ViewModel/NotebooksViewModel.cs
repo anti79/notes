@@ -52,8 +52,9 @@ namespace notes.ViewModel
 		{
 			if (createNotebook is null)
 			{
-				createNotebook = new Command(() => {
-					var nb = new Notebook() { Name = "Untitled" };
+				createNotebook = new Command(async () => {
+					var nb = new Notebook() { Title = "Untitled" };
+					nb.CoverImage = await Storage.Instance.GetDefaultCover();
 					Notebooks.Add(nb);
 					Storage.Instance.SaveNotebook(nb);
 
@@ -74,7 +75,7 @@ namespace notes.ViewModel
 					{
 						return nb.Notes;
 					};
-					vm.Title = nb.Name;
+					vm.Title = nb.Title;
 					vm.IsNotebook = true;
 					page.DataContext = vm;
 					vm.ParentViewModel = ParentViewModel;

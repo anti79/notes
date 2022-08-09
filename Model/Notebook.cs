@@ -11,13 +11,14 @@ using Windows.Storage.Streams;
 
 namespace notes.Model
 {
-	class Notebook : ObservableObject, IEnumerable
+	class Notebook : ObservableObject, IEnumerable, ISearchable
 	{
 		string name;
 		public Guid Guid { get; set; }
 		IRandomAccessStream coverImage;
 		public IRandomAccessStream CoverImage { get
 			{
+
 				coverImage.Seek(0);
 				return coverImage;
 			}
@@ -34,7 +35,7 @@ namespace notes.Model
 				return Guid.ToString();
 			}
 			}
-		public string Name { get
+		public string Title { get
 			{
 				return name;
 			}
@@ -60,14 +61,19 @@ namespace notes.Model
 		{
 			Notes = new List<Note>();
 			Guid = Guid.NewGuid();
-			//CoverImagePath = new Uri("ms-appx:///Assets/cover1.png");
 			
+			//CoverImagePath = new Uri("ms-appx:///Assets/cover1.png");
+
 		}
 
 
 		public IEnumerator GetEnumerator()
 		{
 			return Notes.GetEnumerator();
+		}
+		public override string ToString()
+		{
+			return Title;
 		}
 	}
 }

@@ -24,7 +24,7 @@ namespace notes.Model
 		{
 			var nbFolder = await folder.CreateFolderAsync(notebook.FolderName, CreationCollisionOption.OpenIfExists);
 			var nameFile = await nbFolder.CreateFileAsync("name.txt", CreationCollisionOption.OpenIfExists);
-			FileIO.WriteTextAsync(nameFile, notebook.Name);
+			FileIO.WriteTextAsync(nameFile, notebook.Title);
 
 			
 			
@@ -182,7 +182,7 @@ namespace notes.Model
 
 				}
 
-				nb.Name = await FileIO.ReadTextAsync(nameFile);
+				nb.Title = await FileIO.ReadTextAsync(nameFile);
 				nb.Notes = new List<Note>();
 				nb.Guid = new Guid(sf.DisplayName);
 				
