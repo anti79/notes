@@ -23,7 +23,7 @@ namespace notes
         public object ConvertBack(object value, Type targetType,
             object parameter, string language)
         {
-            SolidColorBrush thisBrush = (SolidColorBrush)value;
+            SolidColorBrush thisBrush = value as SolidColorBrush;
             return thisBrush.Color;
         }
     }

@@ -13,7 +13,7 @@ namespace notes
         public object Convert(object value, Type targetType,
         object parameter, string language)
         {
-            return StorageFile.GetFileFromApplicationUriAsync(new Uri((string)value));
+            return StorageFile.GetFileFromApplicationUriAsync(new Uri(value as string));
         }
 
         // ConvertBack is not implemented for a OneWay binding.

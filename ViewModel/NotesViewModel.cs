@@ -60,7 +60,7 @@ namespace notes.ViewModel
 			{
 				goBack = new Command(() =>
 				{
-					((MainViewModel)ParentViewModel).SwitchToNotebooks.Execute(null);
+					(ParentViewModel as MainViewModel).SwitchToNotebooks.Execute(null);
 				});
 			}
 			return goBack;
@@ -71,7 +71,7 @@ namespace notes.ViewModel
 			{
 				openNote = new ActionCommand<Note>((note) =>
 				{
-					((MainViewModel)ParentViewModel).OpenNoteCommand.Execute(note);
+					(ParentViewModel as MainViewModel).OpenNoteCommand.Execute(note);
 				});
 			}
 			return openNote;
@@ -103,11 +103,11 @@ namespace notes.ViewModel
 				createNoteCommand = new Command(() =>
 				{
 						var editorPage = new EditorPage();
-						var editorVM = new EditorViewModel((IEditorPage)editorPage, new Note());
+						var editorVM = new EditorViewModel(editorPage as IEditorPage, new Note());
 						editorVM.ParentViewModel = ParentViewModel;
 						editorVM.NewNote = true;
 						editorPage.DataContext = editorVM;
-						((MainViewModel)ParentViewModel).EditorPage = editorPage;
+						(ParentViewModel as MainViewModel).EditorPage = editorPage;
 						//Storage.Instance.CreateFile()
 					
 				});

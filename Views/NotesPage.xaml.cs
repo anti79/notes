@@ -35,15 +35,16 @@ namespace notes.Views
 		private void gridview_Tapped(object sender, TappedRoutedEventArgs e)
 		{
 			if (e.OriginalSource.GetType() == typeof(Grid)) return;
-			((NotesViewModel)DataContext).OpenNoteCommand.Execute(((FrameworkElement)e.OriginalSource).DataContext);
+			(DataContext as NotesViewModel).OpenNoteCommand.Execute(
+				(e.OriginalSource as FrameworkElement).DataContext);
 		}
 
 
 		private void RichEditBox_Loaded(object sender, RoutedEventArgs e)
 		{
-			var noteBox = (RichEditBox)sender;
+			var noteBox = sender as RichEditBox;
 			
-			noteBox.Document.SetText(TextSetOptions.FormatRtf, ((Note)noteBox.DataContext).Content);
+			noteBox.Document.SetText(TextSetOptions.FormatRtf, (noteBox.DataContext as Note).Content);
 			noteBox.IsReadOnly = true;
 			noteBox.Foreground = new SolidColorBrush(Colors.Black);
 		}

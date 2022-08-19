@@ -79,8 +79,9 @@ namespace notes.ViewModel
 					vm.IsNotebook = true;
 					page.DataContext = vm;
 					vm.ParentViewModel = ParentViewModel;
-					((MainViewModel)ParentViewModel).CurrentPage = page;
-					((MainViewModel)ParentViewModel).OpenedNotebook = nb;
+					var mainVM = ParentViewModel as MainViewModel;
+					mainVM.CurrentPage = page;
+					mainVM.OpenedNotebook = nb;
 				});
 
 			}

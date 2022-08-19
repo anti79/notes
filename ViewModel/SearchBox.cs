@@ -104,11 +104,11 @@ namespace notes.ViewModel
 				openItemCommand = new ActionCommand<ISearchable>((item) =>
 				{
 
-					var mainvm = (MainViewModel)ParentViewModel;
+					var mainvm = ParentViewModel as MainViewModel;
 					if (item.GetType()==typeof(Note))
 					{
 						mainvm.SwitchToAll.Execute(null);
-						((NotesViewModel)mainvm.CurrentPage.DataContext).OpenNoteCommand.Execute(item);
+						(mainvm.CurrentPage.DataContext as NotesViewModel).OpenNoteCommand.Execute(item);
 					}
 					else if(item.GetType()==typeof(Notebook))
 					{

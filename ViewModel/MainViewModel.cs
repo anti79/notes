@@ -31,7 +31,7 @@ namespace notes.ViewModel
 			allNotesVM.RaisePropertyChanged(nameof(allNotesVM.Notes));
 			nbVM.RaisePropertyChanged(nameof(nbVM.Notebooks));
 			favVM.RaisePropertyChanged(nameof(favVM.Notes));
-			//((ViewModel)CurrentPage.DataContext).RaisePropertyChanged("Notes");
+			
 		}
 		public bool EditorVisible
 		{
@@ -169,7 +169,7 @@ namespace notes.ViewModel
 				openNote = new ActionCommand<Note>((note) =>
 				{
 					EditorPage = new EditorPage();
-					var editorVM = new EditorViewModel((IEditorPage)EditorPage, note);
+					var editorVM = new EditorViewModel(EditorPage as IEditorPage, note);
 					editorVM.Note = note;
 					editorVM.ParentViewModel = this;
 					EditorPage.DataContext = editorVM;

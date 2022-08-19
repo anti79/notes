@@ -14,8 +14,8 @@ namespace notes
         public object Convert(object value, Type targetType,
       object parameter, string language)
         {
-            BitmapImage img = new BitmapImage();
-            img.SetSource((IRandomAccessStream)value);
+            var img = new BitmapImage();
+            img.SetSource(value as IRandomAccessStream);
             return img;
         }
 

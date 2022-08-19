@@ -15,7 +15,7 @@ namespace notes
         object parameter, string language)
         {
             // The value parameter is the data from the source object.
-            ImageSource image = new BitmapImage((Uri)value);
+            var image = new BitmapImage(value as Uri);
             return image;
         }
 

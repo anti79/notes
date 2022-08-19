@@ -71,7 +71,7 @@ namespace notes
             
 
 
-            return (FrameworkElement)element.GetValue(ParentProperty);
+            return element.GetValue(ParentProperty) as FrameworkElement;
         }
     }
 }

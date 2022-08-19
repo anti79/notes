@@ -121,7 +121,7 @@ namespace notes.Model
 
 		public List <Note> GetAllNotes ()
 		{
-				List<Note> list = new List<Note>();
+				var list = new List<Note>();
 				foreach(Notebook nb in Notebooks)
 				{
 					foreach(Note n in nb)
@@ -136,7 +136,7 @@ namespace notes.Model
 		
 		public List<Note> GetFavoriteNotes()
 		{
-			List<Note> list = new List<Note>();
+			var list = new List<Note>();
 			foreach (Notebook nb in Notebooks)
 			{
 				foreach (Note n in nb)
@@ -193,7 +193,7 @@ namespace notes.Model
 					{
 						continue;
 					}
-					Note n = new Note();
+					var n = new Note();
 					n.Guid = new Guid(file.DisplayName);
 					n.Content = await FileIO.ReadTextAsync(file);
 					n.Notebook = nb;

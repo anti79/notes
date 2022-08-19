@@ -67,7 +67,7 @@ namespace notes.ViewModel
 			{
 				exitCommand = new Command(() =>
 				{
-					var mainVM = ((MainViewModel)ParentViewModel);
+					var mainVM = ParentViewModel as MainViewModel;
 					mainVM.UpdatePages();
 					mainVM.EditorPage = null;
 					string str = "";
@@ -78,7 +78,7 @@ namespace notes.ViewModel
 					Note.Color = ChosenColor.ToString();
 					if (NewNote)
 					{
-						((NotesViewModel)mainVM.CurrentPage.DataContext).Notes.Add(Note);
+						(mainVM.CurrentPage.DataContext as NotesViewModel).Notes.Add(Note);
 						mainVM.OpenedNotebook.Notes.Add(Note);
 					}
 					Storage.Instance.SaveNote(Note, mainVM.OpenedNotebook);

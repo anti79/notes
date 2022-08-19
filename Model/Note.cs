@@ -123,7 +123,7 @@ namespace notes.Model
 		{
 			creationDateTime = DateTime.Now;
 			Guid = Guid.NewGuid();
-			List<string> colors =  new List<string>() { "#DFA1A1", "#FDBFBF", "#FFD380", "#EDF47A", "#80E7E5" };
+			var colors =  new List<string>() { "#DFA1A1", "#FDBFBF", "#FFD380", "#EDF47A", "#80E7E5" };
 			color = colors[new Random().Next(colors.Count)];
 		}
 		public override string ToString()

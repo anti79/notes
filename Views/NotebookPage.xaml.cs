@@ -33,9 +33,10 @@ namespace notes.Views
 
 		private void gridview_Tapped(object sender, TappedRoutedEventArgs e)
 		{
-			//((FrameworkElement)e.OriginalSource).DataContext;
+			
 			if (e.OriginalSource.GetType() == typeof(Grid)) return;
-			((NotebooksViewModel)DataContext).OpenNotebookCommand.Execute(((FrameworkElement)e.OriginalSource).DataContext);
+			(DataContext as NotebooksViewModel).OpenNotebookCommand.Execute(
+				(e.OriginalSource as FrameworkElement).DataContext);
 		}
 
 		private void notebook_RightTapped(object sender, RightTappedRoutedEventArgs e)
@@ -60,7 +61,7 @@ namespace notes.Views
 			Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
 			if (file != null)
 			{
-				((NotebooksViewModel)DataContext).SetCoverCommand.Execute(file);
+				(DataContext as NotebooksViewModel).SetCoverCommand.Execute(file);
 				
 			}
 	
@@ -68,16 +69,10 @@ namespace notes.Views
 
 		private async void defaultCover_Tapped(object sender, TappedRoutedEventArgs e)
 		{
-			string uri = (string)((FrameworkElement)sender).DataContext;
-			((NotebooksViewModel)DataContext).SetCoverCommand.Execute(
+			string uri = (sender as FrameworkElement).DataContext as string;
+			(DataContext as NotebooksViewModel).SetCoverCommand.Execute(
 				await StorageFile.GetFileFromApplicationUriAsync(new Uri(uri))
 				);
 		}
-
-		//private void coversGridview_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		//{
-		//gridview.Items[0]
-		//	((Grid)e.AddedItems.FirstOrDefault()).Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255,100,123,0));
-		//}
 	}
 }
