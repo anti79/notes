@@ -15,15 +15,21 @@ namespace notes.Model
 {
 	class Storage
 	{
-	
-		private static Storage instance = null;
+		const string NOTEBOOK_NAME_FILE = "name.txt";
+		const string NOTEBOOK_COVER_FILE = "cover";
+		const string DEFAULT_COVER_URI = "ms-appx:///Assets/cover0.png";
+		const string DEFAULT_NOTE_COLOR = "#DFA1A1";
+
+
+
+        private static Storage instance = null;
 		private static readonly object _lock = new object();
 		StorageFolder folder;
 		
 		public async void SaveNotebook(Notebook notebook)
 		{
 			var nbFolder = await folder.CreateFolderAsync(notebook.FolderName, CreationCollisionOption.OpenIfExists);
-			var nameFile = await nbFolder.CreateFileAsync("name.txt", CreationCollisionOption.OpenIfExists);
+			var nameFile = await nbFolder.CreateFileAsync(NOTEBOOK_NAME_FILE, CreationCollisionOption.OpenIfExists);
 			FileIO.WriteTextAsync(nameFile, notebook.Title);
 
 			
@@ -32,13 +38,13 @@ namespace notes.Model
 		public async Task<StorageFile> SaveNotebookCover(Notebook notebook, StorageFile cover)
 		{
 			var nbFolder = await folder.GetFolderAsync(notebook.FolderName);
-			return await (cover.CopyAsync(nbFolder, "cover", NameCollisionOption.ReplaceExisting));
+			return await (cover.CopyAsync(nbFolder, NOTEBOOK_COVER_FILE, NameCollisionOption.ReplaceExisting));
 
 
 		}
 		public async Task<IRandomAccessStream> GetDefaultCover()
 		{
-			return await (await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/cover1.png"))).OpenAsync(FileAccessMode.Read);
+			return await (await StorageFile.GetFileFromApplicationUriAsync(new Uri(DEFAULT_COVER_URI))).OpenAsync(FileAccessMode.Read);
 		}
 
 		public async void SaveNote(Note note, Notebook notebook)
@@ -82,7 +88,7 @@ namespace notes.Model
 			}
 			catch (IndexOutOfRangeException)
 			{
-				note.Color = "#DFA1A1";
+				note.Color = DEFAULT_NOTE_COLOR;
 			}
 			try
 			{
@@ -162,7 +168,7 @@ namespace notes.Model
 				StorageFile nameFile;
 				try
 				{
-					 nameFile= await sf.GetFileAsync("name.txt");
+					 nameFile= await sf.GetFileAsync(NOTEBOOK_NAME_FILE);
 				}
 				catch (FileNotFoundException)
 				{
@@ -171,7 +177,7 @@ namespace notes.Model
 				StorageFile coverFile;
 				try
 				{
-					coverFile = await sf.GetFileAsync("cover");
+					coverFile = await sf.GetFileAsync(NOTEBOOK_COVER_FILE);
 					nb.CoverImage = await coverFile.OpenAsync(FileAccessMode.Read);
 				}
 				catch (FileNotFoundException)
@@ -189,7 +195,7 @@ namespace notes.Model
 
 				foreach (var file in files)
 				{
-					if(file.Name=="name.txt" || file.Name=="cover")
+					if(file.Name==NOTEBOOK_NAME_FILE || file.Name==NOTEBOOK_COVER_FILE)
 					{
 						continue;
 					}

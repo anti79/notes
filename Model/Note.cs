@@ -84,37 +84,17 @@ namespace notes.Model
 			}
 		}
 		public Guid Guid { get; set; }
+
+		const string extension = ".rtf";
 		public string FileName
 		{
 			get
 			{
-				/*
-				return creationDateTime.ToUniversalTime().ToString()
-					.Replace("/","")
-					.Replace(" ", "-")
-					.Replace(":","")
-					+ ".rtf";
-				*/
-				return Guid.ToString() + ".rtf";
+			
+				return Guid.ToString() + extension;
 				
 			}
 			
-		}
-		public string DateString
-		{
-			get //todo: extension method
-			{
-				if (creationDateTime.Date == DateTime.Today)
-				{
-					return "Today";
-				}
-				else if (creationDateTime.Date == DateTime.Today - TimeSpan.FromDays(1))
-				{
-					return "Yesterday";
-				}
-				return creationDateTime.Date.ToShortDateString();
-
-			}
 		}
 
 

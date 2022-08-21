@@ -29,17 +29,7 @@ namespace notes
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
-        async void CreateFolder()
-		{
-            Windows.Storage.StorageFolder local = ApplicationData.Current.LocalFolder;
-            try
-			{
-                await local.GetFolderAsync("notes");
-            }
-            catch (FileNotFoundException) { 
-                await local.CreateFolderAsync("notes");
-            }
-        }
+       
         public App()
         {
             this.InitializeComponent();

@@ -123,6 +123,9 @@
     <Compile Include="ColorUtils.cs" />
     <Compile Include="ColorToBrushConverter.cs" />
     <Compile Include="FlyoutHelper.cs" />
+    <Compile Include="Localization\DefaultValuesStrings.cs" />
+    <Compile Include="Localization\MenuStrings.cs" />
+    <Compile Include="Localization\TitleStrings.cs" />
     <Compile Include="Model\ISearchable.cs" />
     <Compile Include="StreamToBitmapConverter.cs" />
     <Compile Include="ToggleFavoriteStringConverter.cs" />
@@ -161,10 +164,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\center-alignment.png" />
+    <Content Include="Assets\cover0.png" />
     <Content Include="Assets\cover1.png" />
     <Content Include="Assets\cover2.png" />
     <Content Include="Assets\cover3.png" />
-    <Content Include="Assets\cover4.png" />
     <Content Include="Assets\fill.png" />
     <Content Include="Assets\justify-alignment.png" />
     <Content Include="Assets\left-alignment.png" />

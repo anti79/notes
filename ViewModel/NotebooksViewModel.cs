@@ -53,7 +53,7 @@ namespace notes.ViewModel
 			if (createNotebook is null)
 			{
 				createNotebook = new Command(async () => {
-					var nb = new Notebook() { Title = "Untitled" };
+					var nb = new Notebook() { Title = DefaultValuesStrings.DEFAULT_NOTEBOOK_NAME };
 					nb.CoverImage = await Storage.Instance.GetDefaultCover();
 					Notebooks.Add(nb);
 					Storage.Instance.SaveNotebook(nb);
@@ -128,18 +128,20 @@ namespace notes.ViewModel
 		public ICommand OpenEditCommand { get { return GetOpenEditCommand(); } }
 		ICommand closeEdit;
 
-
-		public List<string> DefaultCovers
+		const string baseCoverUri = "ms-appx:///Assets/cover";
+		const string baseCoverExtension = ".png";
+		const int defaultCovers = 4;
+        public List<string> DefaultCovers
 		{
 			get
 			{
-				return new List<string>()
+				var list = new List<string>();
+				for(int i=1;i<defaultCovers;i++)
 				{
-					"ms-appx:///Assets/cover1.png",
-					"ms-appx:///Assets/cover2.png",
-					"ms-appx:///Assets/cover3.png",
-					"ms-appx:///Assets/cover4.png",
-				};
+					list.Add(baseCoverUri + i.ToString() + baseCoverExtension);
+				}
+				return list;
+				
 			}
 		}
 

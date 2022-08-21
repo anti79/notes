@@ -1,4 +1,5 @@
-﻿using notes.Model;
+﻿using notes.Localization;
+using notes.Model;
 using notes.Views;
 using System;
 using System.Collections.Generic;
@@ -75,7 +76,7 @@ namespace notes.ViewModel
 			CurrentPage.DataContext = vm;
 
 			allNotesVM = new NotesViewModel(); ;
-			allNotesVM.Title = "All notes";
+			allNotesVM.Title = TitleStrings.NOTES_PAGE_TITLE;
 			allNotesVM.GetNotesDelegate = () =>
 			{
 				return Storage.Instance.GetAllNotes();
@@ -86,7 +87,7 @@ namespace notes.ViewModel
 			nbVM.ParentViewModel = this;
 
 			favVM = new NotesViewModel();
-			favVM.Title = "Favorites";
+			favVM.Title = TitleStrings.FAVORITES_PAGE_TITLE;
 			favVM.GetNotesDelegate = () =>
 			{
 				return Storage.Instance.GetFavoriteNotes();

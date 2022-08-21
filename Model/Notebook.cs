@@ -62,7 +62,6 @@ namespace notes.Model
 			Notes = new List<Note>();
 			Guid = Guid.NewGuid();
 			
-			//CoverImagePath = new Uri("ms-appx:///Assets/cover1.png");
 
 		}
 

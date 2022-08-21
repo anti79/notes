@@ -1,4 +1,5 @@
-﻿using System;
+﻿using notes.Localization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,11 +16,11 @@ namespace notes
             // The value parameter is the data from the source object.
             bool isFav = (bool)value;
             if (isFav) {
-                return "Unmark as favorite";
+                return MenuStrings.UNMARK_FAV;
             }
             else
 			{
-                return "mark as favorite";
+                return MenuStrings.MARK_FAV;
 			}
         }
 
