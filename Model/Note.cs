@@ -96,7 +96,13 @@ namespace notes.Model
 			}
 			
 		}
-
+		public string DateString
+		{
+			get
+			{
+				return creationDateTime.ToString();
+			}
+		}
 
 
 		public Note()

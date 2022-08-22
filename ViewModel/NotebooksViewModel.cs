@@ -56,7 +56,7 @@ namespace notes.ViewModel
 					var nb = new Notebook() { Title = DefaultValuesStrings.DEFAULT_NOTEBOOK_NAME };
 					nb.CoverImage = await Storage.Instance.GetDefaultCover();
 					Notebooks.Add(nb);
-					Storage.Instance.SaveNotebook(nb);
+					Storage.Instance.SaveNotebookAsync(nb);
 
 				});
 			}
@@ -150,9 +150,14 @@ namespace notes.ViewModel
 		{
 			if(setCover is null)
 			{
-				setCover = new  ActionCommand<StorageFile>(async (file)=> {
-					var copy = await Storage.Instance.SaveNotebookCover(EditedNotebook, file);
-					EditedNotebook.CoverImage = await copy.OpenAsync(FileAccessMode.Read);
+				setCover = new ActionCommand<StorageFile>(async (file)=> {
+
+                        var copy = await Storage.Instance.SaveNotebookCoverAsync(EditedNotebook, file);
+                        EditedNotebook.CoverImage = await copy.OpenAsync(FileAccessMode.Read);
+
+                    
+
+                    
 				});
 				
 			}
@@ -166,7 +171,7 @@ namespace notes.ViewModel
 			{
 				closeEdit = new Command(()=> {
 					EditingNotebook = false;
-					Storage.Instance.SaveNotebook(EditedNotebook);
+					Storage.Instance.SaveNotebookAsync(EditedNotebook);
 				});
 			}
 			return closeEdit;

@@ -26,19 +26,17 @@ namespace notes.Model
 		private static readonly object _lock = new object();
 		StorageFolder folder;
 		
-		public async void SaveNotebook(Notebook notebook)
+		public async Task SaveNotebookAsync(Notebook notebook)
 		{
 			var nbFolder = await folder.CreateFolderAsync(notebook.FolderName, CreationCollisionOption.OpenIfExists);
 			var nameFile = await nbFolder.CreateFileAsync(NOTEBOOK_NAME_FILE, CreationCollisionOption.OpenIfExists);
 			FileIO.WriteTextAsync(nameFile, notebook.Title);
 
-			
-			
 		}
-		public async Task<StorageFile> SaveNotebookCover(Notebook notebook, StorageFile cover)
+		public async Task<StorageFile> SaveNotebookCoverAsync(Notebook notebook, StorageFile cover)
 		{
 			var nbFolder = await folder.GetFolderAsync(notebook.FolderName);
-			return await (cover.CopyAsync(nbFolder, NOTEBOOK_COVER_FILE, NameCollisionOption.ReplaceExisting));
+			return await cover.CopyAsync(nbFolder, NOTEBOOK_COVER_FILE, NameCollisionOption.ReplaceExisting);
 
 
 		}
@@ -47,7 +45,7 @@ namespace notes.Model
 			return await (await StorageFile.GetFileFromApplicationUriAsync(new Uri(DEFAULT_COVER_URI))).OpenAsync(FileAccessMode.Read);
 		}
 
-		public async void SaveNote(Note note, Notebook notebook)
+		public async Task SaveNoteAsync(Note note, Notebook notebook)
 		{
 			StorageFolder storageFolder;
 			try
@@ -61,12 +59,7 @@ namespace notes.Model
 
 			var file = await storageFolder.CreateFileAsync(note.FileName,
 			Windows.Storage.CreationCollisionOption.OpenIfExists);
-
-			await Windows.Storage.FileIO.WriteTextAsync(file, AddRTFMetadata(note).Content + Environment.NewLine);
-			
-
-
-
+			Windows.Storage.FileIO.WriteTextAsync(file, AddRTFMetadata(note).Content + Environment.NewLine);
 		}
 
 		Note AddRTFMetadata(Note note)

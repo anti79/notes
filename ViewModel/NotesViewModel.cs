@@ -83,7 +83,7 @@ namespace notes.ViewModel
 			{
 				toggleFavorite = new ActionCommand<Note>((note)=> {
 					note.IsFavorite = !note.IsFavorite;
-					Storage.Instance.SaveNote(note, note.Notebook);
+					Storage.Instance.SaveNoteAsync(note, note.Notebook);
 				}
 				);
 			}
