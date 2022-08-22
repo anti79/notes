@@ -20,7 +20,7 @@ namespace notes.Model
 		const string DEFAULT_COVER_URI = "ms-appx:///Assets/cover0.png";
 		const string DEFAULT_NOTE_COLOR = "#DFA1A1";
 
-
+		IReadOnlyList<StorageFolder> subfolders;
 
         private static Storage instance = null;
 		private static readonly object _lock = new object();
@@ -151,9 +151,26 @@ namespace notes.Model
 			Notebooks = new List<Notebook>();
 			folder = ApplicationData.Current.LocalFolder;
 		}
+		
 		public async Task Load()
 		{
-			var subfolders = await folder.GetFoldersAsync();
+
+			await LoadSubfoldersAsync();
+			await LoadNotebooksAsync();
+			LoadNotesAsync();
+		
+				
+
+			
+		}
+		
+		async Task LoadSubfoldersAsync()
+		{
+            subfolders = await folder.GetFoldersAsync();
+        }
+		async Task LoadNotebooksAsync()
+		{
+			
 			foreach (var sf in subfolders)
 			{
 				var nb = new Notebook();
@@ -161,7 +178,7 @@ namespace notes.Model
 				StorageFile nameFile;
 				try
 				{
-					 nameFile= await sf.GetFileAsync(NOTEBOOK_NAME_FILE);
+					nameFile = await sf.GetFileAsync(NOTEBOOK_NAME_FILE);
 				}
 				catch (FileNotFoundException)
 				{
@@ -184,25 +201,33 @@ namespace notes.Model
 				nb.Title = await FileIO.ReadTextAsync(nameFile);
 				nb.Notes = new List<Note>();
 				nb.Guid = new Guid(sf.DisplayName);
-				
-
-				foreach (var file in files)
-				{
-					if(file.Name==NOTEBOOK_NAME_FILE || file.Name==NOTEBOOK_COVER_FILE)
-					{
-						continue;
-					}
-					var n = new Note();
-					n.Guid = new Guid(file.DisplayName);
-					n.Content = await FileIO.ReadTextAsync(file);
-					n.Notebook = nb;
-					
-					n = ParseRTFMetadata(n);
-					nb.Notes.Add(n);
-				}
 				Notebooks.Add(nb);
 
 			}
+		}
+		async Task LoadNotesAsync()
+		{
+			foreach (var sf in subfolders)
+			{
+				var files = await sf.GetFilesAsync();
+                for(int i=0;i<files.Count;i++)
+                {
+					var file = files[i];
+                    if (file.Name == NOTEBOOK_NAME_FILE || file.Name == NOTEBOOK_COVER_FILE)
+                    {
+                        continue;
+                    }
+                    var n = new Note();
+                    n.Guid = new Guid(file.DisplayName);
+                    n.Content = await FileIO.ReadTextAsync(file);
+                    n.Notebook = Notebooks[i];
+
+                    n = ParseRTFMetadata(n);
+					Notebooks[i].Notes.Add(n);
+                }
+                ;
+
+            }
 		}
 	}
 }
