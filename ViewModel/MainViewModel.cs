@@ -152,8 +152,9 @@ namespace notes.ViewModel
 				switchToFavoritesCommand = new Command(() =>
 				{
 					CurrentPage = new NotesPage();
-					CurrentPage.DataContext = favVM;
-
+                    favVM.LoadNotes();
+                    CurrentPage.DataContext = favVM;
+					
 				}
 				);
 			}

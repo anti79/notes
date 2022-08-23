@@ -37,15 +37,19 @@ namespace notes.ViewModel
 				getNotesDelegate = value;
 			}
 		}
-
+		public void LoadNotes()
+		{
+            notes = new ObservableCollection<Note>(getNotesDelegate());
+			RaisePropertyChanged("Notes");
+        }
 		ObservableCollection<Note> notes;
 		public ObservableCollection<Note> Notes
 		{
 			get {
 				if(notes is null)
 				{
-					notes = new ObservableCollection<Note>(getNotesDelegate());
-				}
+					LoadNotes();
+                }
 				return notes;
 			}
 			
@@ -83,6 +87,8 @@ namespace notes.ViewModel
 			{
 				toggleFavorite = new ActionCommand<Note>((note)=> {
 					note.IsFavorite = !note.IsFavorite;
+                    notes = new ObservableCollection<Note>(getNotesDelegate());
+                    RaisePropertyChanged(nameof(Notes));
 					Storage.Instance.SaveNoteAsync(note, note.Notebook);
 				}
 				);
