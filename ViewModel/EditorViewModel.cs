@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.PlatformUI;
+using notes.Localization;
 using notes.Model;
 using notes.Views;
 using System;
@@ -23,7 +24,8 @@ namespace notes.ViewModel
 	
 
 		public Note Note { get; set; }
-		IEditorPage page;
+        string title;
+        IEditorPage page;
 		ITextDocument document;
 		public bool NewNote { get; set; }
 		public EditorViewModel(IEditorPage page, Note note)
@@ -43,12 +45,18 @@ namespace notes.ViewModel
 			
 
 		}
-		ICommand exitCommand;
-		public ICommand ExitCommand
+
+		
+		ICommand saveExit;
+		ICommand goBack;
+		public ICommand SaveExitCommand
 		{
-			get { return GetExitCommand(); }
+			get { return GetSaveExitCommand(); }
 		}
-		string title;
+		public ICommand GoBackCommand
+		{
+			get { return GetGoBackCommand(); }
+		}
 		public string Title
 		{
 			get
@@ -61,32 +69,54 @@ namespace notes.ViewModel
 				RaisePropertyChanged();
 			}
 		}
-		ICommand GetExitCommand()
+		ICommand GetGoBackCommand()
 		{
-			if (exitCommand is null)
+			if(goBack is null)
 			{
-				exitCommand = new Command(() =>
+				goBack = new Command(() =>
 				{
-					var mainVM = ParentViewModel as MainViewModel;
-					mainVM.UpdatePages();
-					mainVM.EditorPage = null;
-					string str = "";
-					page.GetEditorContent().GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out str);
-					Note.Content = str;
-					Note.Title = Title;
-					Note.Notebook = mainVM.OpenedNotebook;
-					Note.Color = ChosenColor.ToString();
-					if (NewNote)
-					{
-						(mainVM.CurrentPage.DataContext as NotesViewModel).Notes.Add(Note);
-						mainVM.OpenedNotebook.Notes.Add(Note);
-					}
-					Storage.Instance.SaveNoteAsync(Note, mainVM.OpenedNotebook);
+                    var mainVM = ParentViewModel as MainViewModel;
+                    mainVM.UpdatePages();
+                    mainVM.EditorPage = null;
 
+                });
+			}
+			return goBack;
+		}
+		ICommand GetSaveExitCommand()
+		{
+			if (saveExit is null)
+			{
+				saveExit = new Command(() =>
+				{
+                    var mainVM = ParentViewModel as MainViewModel;
+                    if (title.Length > 1)
+					{
+
+						
+						mainVM.UpdatePages();
+						mainVM.EditorPage = null;
+						string str = "";
+						page.GetEditorContent().GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out str);
+						Note.Content = str;
+						Note.Title = Title;
+						Note.Notebook = mainVM.OpenedNotebook;
+						Note.Color = ChosenColor.ToString();
+						if (NewNote)
+						{
+							(mainVM.CurrentPage.DataContext as NotesViewModel).Notes.Add(Note);
+							mainVM.OpenedNotebook.Notes.Add(Note);
+						}
+						Storage.Instance.SaveNoteAsync(Note, mainVM.OpenedNotebook);
+					}
+					else
+					{
+						MainPage.ShowMessageBox(PopupStrings.ENTER_TITLE);
+					}
 
 				});
 			}
-			return exitCommand;
+			return saveExit;
 		}
 
 

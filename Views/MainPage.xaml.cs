@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -33,12 +34,10 @@ namespace notes
             this.DataContext = vm;
 
         }
-        /*
-		private void searchTextbox_TextChanged(object sender, TextChangedEventArgs e)
-		{
-            searchFlyout.ShowAt(searchTextbox);
-		}
-        */
-
-	}
+        public static void ShowMessageBox(string text)
+        {
+            MessageDialog md = new MessageDialog(text);
+            md.ShowAsync();
+        }
+    }
 }

@@ -8,6 +8,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage.Streams;
+using Windows.UI.Popups;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -51,5 +52,6 @@ namespace notes.Views
 			}
 			//textEditorBox.Document.LoadFromStream(TextSetOptions.FormatRtf, stream);
 		}
+		
 	}
 }

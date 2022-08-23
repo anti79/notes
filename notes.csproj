@@ -125,6 +125,7 @@
     <Compile Include="FlyoutHelper.cs" />
     <Compile Include="Localization\DefaultValuesStrings.cs" />
     <Compile Include="Localization\MenuStrings.cs" />
+    <Compile Include="Localization\PopupStrings.cs" />
     <Compile Include="Localization\TitleStrings.cs" />
     <Compile Include="Model\ISearchable.cs" />
     <Compile Include="StreamToBitmapConverter.cs" />
@@ -145,6 +146,7 @@
       <DependentUpon>EditorPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\IEditorPage.cs" />
+    <Compile Include="Views\IMainPage.cs" />
     <Compile Include="Views\NotesPage.xaml.cs">
       <DependentUpon>NotesPage.xaml</DependentUpon>
     </Compile>

@@ -1,4 +1,5 @@
-﻿using notes.Model;
+﻿using notes.Localization;
+using notes.Model;
 using notes.Views;
 using System;
 using System.Collections.Generic;
@@ -170,8 +171,17 @@ namespace notes.ViewModel
 			if(closeEdit is null)
 			{
 				closeEdit = new Command(()=> {
-					EditingNotebook = false;
-					Storage.Instance.SaveNotebookAsync(EditedNotebook);
+					if (EditedNotebook.Title.Length > 1)
+					{
+
+
+						EditingNotebook = false;
+						Storage.Instance.SaveNotebookAsync(EditedNotebook);
+					}
+					else
+					{
+						MainPage.ShowMessageBox(PopupStrings.ENTER_TITLE);
+					}
 				});
 			}
 			return closeEdit;

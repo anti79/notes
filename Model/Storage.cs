@@ -158,10 +158,6 @@ namespace notes.Model
 			await LoadSubfoldersAsync();
 			await LoadNotebooksAsync();
 			LoadNotesAsync();
-		
-				
-
-			
 		}
 		
 		async Task LoadSubfoldersAsync()
