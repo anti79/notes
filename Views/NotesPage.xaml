@@ -38,10 +38,12 @@
 							<MenuFlyout>
 								<MenuFlyoutItem Command="{Binding ElementName=page, Path=DataContext.ToggleFavoriteCommand}" CommandParameter="{Binding}"
 												Text="{Binding Path=IsFavorite, Converter={StaticResource ToggleFavoriteStringConverter}}"
-												>
-									
-								</MenuFlyoutItem>
-							</MenuFlyout>
+												></MenuFlyoutItem>
+                                <MenuFlyoutItem Command="{Binding ElementName=page, Path=DataContext.DeleteNoteCommand}" CommandParameter="{Binding}"
+												Text="Delete"
+												></MenuFlyoutItem>
+
+                            </MenuFlyout>
 						</FlyoutBase.AttachedFlyout>
 						<Grid Margin="10">
 							

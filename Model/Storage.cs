@@ -151,8 +151,19 @@ namespace notes.Model
 			Notebooks = new List<Notebook>();
 			folder = ApplicationData.Current.LocalFolder;
 		}
-		
-		public async Task Load()
+		public async Task DeleteNoteAsync(Note note)
+		{
+			var subfolder = await folder.GetFolderAsync(note.Notebook.FolderName);
+            var file = await subfolder.GetFileAsync(note.FileName);
+			file.DeleteAsync();
+		}
+        public async Task DeleteNotebook(Notebook nb)
+        {
+			var subfolder = await folder.GetFolderAsync(nb.FolderName);
+			subfolder.DeleteAsync();
+			
+        }
+        public async Task Load()
 		{
 
 			await LoadSubfoldersAsync();

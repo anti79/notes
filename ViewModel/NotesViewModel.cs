@@ -56,8 +56,29 @@ namespace notes.ViewModel
 		}
 
 
+
+
 		ICommand goBack;
 		ICommand openNote;
+		ICommand deleteNote;
+
+		ICommand GetDeleteNoteCommand()
+		{
+            if (deleteNote is null)
+            {
+                deleteNote =  new ActionCommand<Note>((note) =>
+                {
+					Storage.Instance.DeleteNoteAsync(note);
+					notes.Remove(note);
+					note.Notebook.Notes.Remove(note);
+                });
+            }
+            return deleteNote;
+        }
+		public ICommand DeleteNoteCommand
+		{
+			get{ return GetDeleteNoteCommand(); }
+		}
 		ICommand GetGoBackCommand()
 		{
 			if (goBack is null)

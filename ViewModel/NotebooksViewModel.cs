@@ -147,6 +147,21 @@ namespace notes.ViewModel
 		}
 
 		public ICommand setCover;
+		public ICommand deleteNotebook;
+		public ICommand DeleteNotebookCommand { get { return GetDeleteNotebookCommand(); } }
+		ICommand GetDeleteNotebookCommand()
+		{
+			if(deleteNotebook is null)
+			{
+				deleteNotebook = new ActionCommand<Notebook>((nb) =>
+				{
+					Notebooks.Remove(nb);
+					Storage.Instance.DeleteNotebook(nb);
+
+				});
+			}
+			return deleteNotebook;
+		}
 		public ICommand GetSetCoverCommand()
 		{
 			if(setCover is null)

@@ -40,11 +40,13 @@
 					<StackPanel Margin="30" HorizontalAlignment="Center" x:Name="notebook" RightTapped="notebook_RightTapped" >
 						<FlyoutBase.AttachedFlyout>
 							<MenuFlyout>
-								<MenuFlyoutItem Command="{Binding ElementName=page, Path=DataContext.OpenEditCommand}" CommandParameter="{Binding}"
+                                <MenuFlyoutItem Command="{Binding ElementName=page, Path=DataContext.OpenEditCommand}" CommandParameter="{Binding}"
 												Text="Edit"
+												></MenuFlyoutItem>
+                                <MenuFlyoutItem Command="{Binding ElementName=page, Path=DataContext.DeleteNotebookCommand}" CommandParameter="{Binding}"
+												Text="Delete"
 												>
-
-								</MenuFlyoutItem>
+                                    </MenuFlyoutItem>
 							</MenuFlyout>
 						</FlyoutBase.AttachedFlyout>
 						<Image RightTapped="notebook_RightTapped" Source="{Binding CoverImage, Converter={StaticResource StreamToBitmapConverter}}" Stretch="None" MaxHeight="200">
