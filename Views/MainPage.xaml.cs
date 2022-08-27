@@ -1,4 +1,5 @@
-﻿using notes.ViewModel;
+﻿using notes.Model;
+using notes.ViewModel;
 using notes.Views;
 using System;
 using System.Collections.Generic;
@@ -39,5 +40,13 @@ namespace notes
             MessageDialog md = new MessageDialog(text);
             md.ShowAsync();
         }
-    }
+
+
+		private void searchBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+		{
+            var chosen = args.SelectedItem as ISearchable;
+            var mainVM = DataContext as MainViewModel;
+            mainVM.OpenItemCommand.Execute(chosen);
+		}
+	}
 }

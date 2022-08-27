@@ -114,6 +114,7 @@ namespace notes.ViewModel
 				return searchBox;
 			}
 		}
+		
 		public ICommand SwitchToAll { get { return GetSwitchToAllCommand(); } }
 		public ICommand SwitchToNotebooks { get { return GetSwitchToNotebooksCommand(); } }
 		public ICommand SwitchToFavorites { get { return GetSwitchToFavoritesCommand(); } }
@@ -163,6 +164,7 @@ namespace notes.ViewModel
 		
 
 		ICommand openNote;
+		ICommand openItem;
 
 		ICommand GetOpenNoteCommand()
 		{
@@ -182,8 +184,50 @@ namespace notes.ViewModel
 		
 
 		public ICommand OpenNoteCommand { get { return GetOpenNoteCommand(); } }
-		
+		public ICommand OpenItemCommand { get { return GetOpenItemCommand();  } }
 
+		ICommand GetOpenItemCommand()
+		{
+			if(openItem is null)
+			{
+				openItem = new ActionCommand<ISearchable>((item) => {
+					if(item.GetType()==typeof(Note))
+					{
+						OpenNoteCommand.Execute(item);
+					}
+					else if(item.GetType()==typeof(Notebook))
+					{
+						OpenedNotebook = item as Notebook;
+						var page = new NotesPage();
+						var vm = new NotesViewModel();
+						vm.ParentViewModel = this;
+						vm.GetNotesDelegate = () =>
+						{
+							return OpenedNotebook.Notes;
+						};
+						vm.Title = OpenedNotebook.Title;
+						vm.IsNotebook = true;
+						page.DataContext = vm;
+						CurrentPage = page;
+
+					}
+
+				});
+			}
+			return openItem;
+		}
+		/*
+		public void OpenItem(Note item)
+		{
+			OpenNoteCommand.Execute(item);
+		}
+		public void OpenItem(Notebook item)
+		{
+			OpenedNotebook = item;
+			SwitchToNotebooks.Execute(null);
+			(CurrentPage.DataContext as NotebooksViewModel).OpenNotebookCommand.Execute(item);
+		}
+		*/
 		//public bool 
 	}
 }

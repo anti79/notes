@@ -39,16 +39,19 @@
 				<AutoSuggestBox Width="442" Height="35" 
 								Visibility="Visible"
 								Text="{Binding SearchBox.SearchBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" QueryIcon="Find" ItemsSource="{Binding SearchBox.Results}"
-								
+								Name="searchBox"
+								SuggestionChosen="searchBox_SuggestionChosen"
 								>
+					<i:Interaction.Behaviors>
+						<core:EventTriggerBehavior EventName="SuggestionChosen">
+							<core:InvokeCommandAction Command="{Binding SearchBox.OpenItemCommand, ElementName=page.DataContext}" CommandParameter="{Binding}"/>
+							<!--doesn't work for some reason-->
+						</core:EventTriggerBehavior>
+					</i:Interaction.Behaviors>
 					<AutoSuggestBox.ItemTemplate>
 						<DataTemplate>
 							<Grid BorderThickness="1, 0, 1, 1" HorizontalAlignment="Stretch" VerticalAlignment="Center" MinWidth="150">
-								<i:Interaction.Behaviors>
-									<core:EventTriggerBehavior EventName="Tapped">
-										<core:InvokeCommandAction Command="{Binding SearchBox.OpenItemCommand, ElementName=page.DataContext}" CommandParameter="{Binding}"/>
-									</core:EventTriggerBehavior>
-								</i:Interaction.Behaviors>
+								
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="1*"/>
 									<ColumnDefinition/>
@@ -58,7 +61,9 @@
 								<TextBlock Grid.Column="1" Text="{Binding Title}" FontSize="14" HorizontalAlignment="Left"/>
 							<!--<TextBlock Text="{Binding ChannelTitle}" Grid.Column="1" Grid.Row="1" FontSize="12" HorizontalAlignment="Left"  Foreground="#FFFFFF"/>-->
 						</Grid>
-					</DataTemplate>
+							
+						</DataTemplate>
+						
 					</AutoSuggestBox.ItemTemplate>
 					
 					

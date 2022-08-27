@@ -69,7 +69,6 @@ namespace notes.ViewModel
 			if (openNotebook is null)
 			{
 				openNotebook = new ActionCommand<Notebook>((nb) => {
-					Console.WriteLine(nb);
 					var page = new NotesPage();
 					var vm = new NotesViewModel();
 					vm.GetNotesDelegate = () =>
