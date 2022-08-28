@@ -57,7 +57,7 @@ namespace notes.ViewModel
 					var nb = new Notebook() { Title = DefaultValuesStrings.DEFAULT_NOTEBOOK_NAME };
 					nb.CoverImage = await Storage.Instance.GetDefaultCover();
 					Notebooks.Add(nb);
-					Storage.Instance.SaveNotebookAsync(nb);
+					await Storage.Instance.SaveNotebookAsync(nb);
 
 				});
 			}
@@ -71,7 +71,7 @@ namespace notes.ViewModel
 				openNotebook = new ActionCommand<Notebook>((nb) => {
 					var page = new NotesPage();
 					var vm = new NotesViewModel();
-					vm.GetNotesDelegate = () =>
+					vm.GetNotesDelegate = async () =>
 					{
 						return nb.Notes;
 					};

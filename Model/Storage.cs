@@ -120,6 +120,7 @@ namespace notes.Model
 
 		public List <Note> GetAllNotes ()
 		{
+				
 				var list = new List<Note>();
 				foreach(Notebook nb in Notebooks)
 				{
@@ -163,12 +164,12 @@ namespace notes.Model
 			subfolder.DeleteAsync();
 			
         }
-        public async Task Load()
+        public async Task LoadAsync()
 		{
 
 			await LoadSubfoldersAsync();
 			await LoadNotebooksAsync();
-			LoadNotesAsync();
+			await LoadNotesAsync();
 		}
 		
 		async Task LoadSubfoldersAsync()
@@ -177,7 +178,7 @@ namespace notes.Model
         }
 		async Task LoadNotebooksAsync()
 		{
-			
+			Notebooks.Clear();
 			foreach (var sf in subfolders)
 			{
 				var nb = new Notebook();
@@ -214,6 +215,7 @@ namespace notes.Model
 		}
 		async Task LoadNotesAsync()
 		{
+			
 			foreach (var sf in subfolders)
 			{
 				var files = await sf.GetFilesAsync();

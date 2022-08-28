@@ -49,7 +49,7 @@ namespace notes
         protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
 
-            await Storage.Instance.Load();
+            await Storage.Instance.LoadAsync();
 
             Frame rootFrame = Window.Current.Content as Frame;
 
