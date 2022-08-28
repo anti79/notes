@@ -112,9 +112,13 @@ namespace notes.Model
 			var colors =  new List<string>() { "#DFA1A1", "#FDBFBF", "#FFD380", "#EDF47A", "#80E7E5" };
 			color = colors[new Random().Next(colors.Count)];
 		}
+		public string Type
+		{
+			get { return this.GetType().Name; }
+		}
 		public override string ToString()
 		{
-			return Title;
+			return Type;
 		}
 	}
 }

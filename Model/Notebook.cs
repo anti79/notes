@@ -29,12 +29,12 @@ namespace notes.Model
 			}
 		}
 
-		public string FolderName { 
+		public string FolderName {
 			get
 			{
 				return Guid.ToString();
 			}
-			}
+		}
 		public string Title { get
 			{
 				return name;
@@ -61,7 +61,7 @@ namespace notes.Model
 		{
 			Notes = new List<Note>();
 			Guid = Guid.NewGuid();
-			
+
 
 		}
 
@@ -70,9 +70,12 @@ namespace notes.Model
 		{
 			return Notes.GetEnumerator();
 		}
+		public string Type { 
+			get { return this.GetType().Name; }
+		}
 		public override string ToString()
 		{
-			return Title;
+			return Type;
 		}
 	}
 }

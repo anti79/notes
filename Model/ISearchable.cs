@@ -8,6 +8,7 @@ namespace notes.Model
 {
 	interface ISearchable
 	{
+		string Type { get; }
 		string ToString();
 	}
 }

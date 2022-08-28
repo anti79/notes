@@ -27,16 +27,18 @@
 				<ColumnDefinition/>
 				<ColumnDefinition/>
 			</Grid.ColumnDefinitions>
-			<StackPanel Grid.Column="0" Orientation="Horizontal" Padding="10" x:Name="leftPanel">
-				
-				<Button Content="і" Command="{Binding SearchBox.ToggleSearchCommand}" Visibility="Visible"/>
+			<Grid Grid.Column="0" x:Name="leftPanel">
+
+				<!--<Button Content="і" Command="{Binding SearchBox.ToggleSearchCommand}" Visibility="Visible"/>-->
 				<!--
 				<TextBox Width="442" Height="35" x:Name="searchTextbox" Visibility="{Binding SearchBox.Searching}" Text="{Binding SearchBox.SearchBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  >
 					
 
 				</TextBox>
 				-->
-				<AutoSuggestBox Width="442" Height="35" 
+				<AutoSuggestBox Height="35" 
+								Margin="20"
+								
 								Visibility="Visible"
 								Text="{Binding SearchBox.SearchBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" QueryIcon="Find" ItemsSource="{Binding SearchBox.Results}"
 								Name="searchBox"
@@ -51,30 +53,31 @@
 					<AutoSuggestBox.ItemTemplate>
 						<DataTemplate>
 							<Grid BorderThickness="1, 0, 1, 1" HorizontalAlignment="Stretch" VerticalAlignment="Center" MinWidth="150">
-								
+
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="1*"/>
 									<ColumnDefinition/>
 
 								</Grid.ColumnDefinitions>
-								<TextBlock Grid.Column="0">note</TextBlock>
-								<TextBlock Grid.Column="1" Text="{Binding Title}" FontSize="14" HorizontalAlignment="Left"/>
-							<!--<TextBlock Text="{Binding ChannelTitle}" Grid.Column="1" Grid.Row="1" FontSize="12" HorizontalAlignment="Left"  Foreground="#FFFFFF"/>-->
-						</Grid>
-							
+								<TextBlock Grid.Column="0" Text="{Binding Title}" FontSize="14" HorizontalAlignment="Left">note</TextBlock>
+								<TextBlock Grid.Column="1" Text="{Binding Type}"/>
+								
+								<!--<TextBlock Text="{Binding ChannelTitle}" Grid.Column="1" Grid.Row="1" FontSize="12" HorizontalAlignment="Left"  Foreground="#FFFFFF"/>-->
+							</Grid>
+
 						</DataTemplate>
-						
+
 					</AutoSuggestBox.ItemTemplate>
-					
-					
-					
+
+
+
 				</AutoSuggestBox>
-				<Button/>
-			</StackPanel>
+
+			</Grid>
 			<StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-				<Button x:Name="notebooksBtn"  Command="{ Binding SwitchToNotebooks }">Notebooks</Button>
-				<Button x:Name="allBtn" Command="{ Binding SwitchToAll }" >All notes</Button>
-				<Button x:Name="favoritesBtn"  Command="{ Binding SwitchToFavorites }"  >Favorites</Button>
+				<Button x:Name="notebooksBtn"  Command="{ Binding SwitchToNotebooks }" Margin="5">Notebooks</Button>
+				<Button x:Name="allBtn" Command="{ Binding SwitchToAll }"  Margin="5">All notes</Button>
+				<Button x:Name="favoritesBtn"  Command="{ Binding SwitchToFavorites }"   Margin="5">Favorites</Button>
 			</StackPanel>
 			<StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
 				<Button></Button>
