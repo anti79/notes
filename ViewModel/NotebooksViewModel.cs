@@ -154,7 +154,9 @@ namespace notes.ViewModel
 			{
 				deleteNotebook = new ActionCommand<Notebook>((nb) =>
 				{
+					nb.Notes.Clear();
 					Notebooks.Remove(nb);
+					
 					Storage.Instance.DeleteNotebook(nb);
 
 				});
@@ -169,10 +171,6 @@ namespace notes.ViewModel
 
                         var copy = await Storage.Instance.SaveNotebookCoverAsync(EditedNotebook, file);
                         EditedNotebook.CoverImage = await copy.OpenAsync(FileAccessMode.Read);
-
-                    
-
-                    
 				});
 				
 			}

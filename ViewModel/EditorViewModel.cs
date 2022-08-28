@@ -100,6 +100,8 @@ namespace notes.ViewModel
 						page.GetEditorContent().GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out str);
 						Note.Content = str;
 						Note.Title = Title;
+
+
 						Note.Notebook = mainVM.OpenedNotebook;
 						Note.Color = ChosenColor.ToString();
 						if (NewNote)

@@ -23,14 +23,13 @@
 				</Grid.RowDefinitions>
 				<Grid>
 					<Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="13*"></ColumnDefinition>
+						<ColumnDefinition Width="13*"></ColumnDefinition>
 						<ColumnDefinition Width="62*"></ColumnDefinition>
 						<ColumnDefinition Width="13*"></ColumnDefinition>
 					</Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" x:Name="backBtn" Command="{Binding GoBackCommand}" Width="220" Height="80" HorizontalAlignment="Center" >Back</Button>
-                    <TextBox Text="{Binding Title, Mode=TwoWay}" PlaceholderText="Title" Grid.Column="1" FontSize="50" Margin="5,10,0,10"></TextBox>
-	
-					<Button Grid.Column="2" x:Name="saveBtn" Command="{Binding SaveExitCommand}" Width="220" Height="80" HorizontalAlignment="Center" >Save</Button>
+					<Button Grid.Column="0" x:Name="backBtn" Command="{Binding GoBackCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">Back</Button>
+					<TextBox Text="{Binding Title, Mode=TwoWay}" PlaceholderText="Title" Grid.Column="1" FontSize="50" Margin="10"></TextBox>
+					<Button Grid.Column="2" x:Name="saveBtn" Command="{Binding SaveExitCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Margin="10">Save</Button>
 				</Grid>
 				<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
 					<StackPanel Orientation="Horizontal" Margin="20">

@@ -125,9 +125,11 @@ namespace notes.ViewModel
 			{
 				switchToAllCommand = new Command(() =>
 				{
+					
+					allNotesVM.LoadNotes();
 					CurrentPage = new NotesPage();
 					CurrentPage.DataContext = allNotesVM;
-
+					
 
 				});
 			}
