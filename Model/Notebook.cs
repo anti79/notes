@@ -45,7 +45,8 @@ namespace notes.Model
 				RaisePropertyChanged();
 			}
 		}
-		public List<Note> notes;
+		private List<Note> notes;
+		public bool IsDeletable { get; set; }
 		public List<Note> Notes { get
 			{
 
@@ -61,7 +62,7 @@ namespace notes.Model
 		{
 			Notes = new List<Note>();
 			Guid = Guid.NewGuid();
-
+			IsDeletable = true;
 
 		}
 

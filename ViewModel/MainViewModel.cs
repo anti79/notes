@@ -129,7 +129,7 @@ namespace notes.ViewModel
 					allNotesVM.LoadNotes();
 					CurrentPage = new NotesPage();
 					CurrentPage.DataContext = allNotesVM;
-					
+					(allNotesVM.CreateNoteCommand as Command).RaiseCanExecuteChanged();
 
 				});
 			}

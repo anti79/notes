@@ -30,7 +30,8 @@ namespace notes.Model
 		{
 			var nbFolder = await folder.CreateFolderAsync(notebook.FolderName, CreationCollisionOption.OpenIfExists);
 			var nameFile = await nbFolder.CreateFileAsync(NOTEBOOK_NAME_FILE, CreationCollisionOption.OpenIfExists);
-			FileIO.WriteTextAsync(nameFile, notebook.Title);
+			Notebooks.Add(notebook);
+			await FileIO.WriteTextAsync(nameFile, notebook.Title);
 
 		}
 		public async Task<StorageFile> SaveNotebookCoverAsync(Notebook notebook, StorageFile cover)
@@ -160,7 +161,8 @@ namespace notes.Model
         public async Task DeleteNotebook(Notebook nb)
         {
 			var subfolder = await folder.GetFolderAsync(nb.FolderName);
-			subfolder.DeleteAsync();
+			Notebooks.Remove(nb);
+			await subfolder.DeleteAsync();
 			
         }
         public async Task Load()
@@ -168,7 +170,7 @@ namespace notes.Model
 
 			await LoadSubfoldersAsync();
 			await LoadNotebooksAsync();
-			LoadNotesAsync();
+			await LoadNotesAsync();
 		}
 		
 		async Task LoadSubfoldersAsync()
@@ -177,7 +179,16 @@ namespace notes.Model
         }
 		async Task LoadNotebooksAsync()
 		{
-			
+			/*
+			if(subfolders.Count<1)
+			{
+				var defaultNb = new Notebook();
+				defaultNb.Title = DefaultValuesStrings.STARTING_NOTEBOOK_NAME;
+				defaultNb.IsDeletable = false;
+				defaultNb.Notes = new List<Note>();
+				await SaveNotebookAsync(defaultNb);
+			}
+			*/
 			foreach (var sf in subfolders)
 			{
 				var nb = new Notebook();

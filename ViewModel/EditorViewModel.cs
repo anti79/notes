@@ -107,6 +107,10 @@ namespace notes.ViewModel
 						if (NewNote)
 						{
 							(mainVM.CurrentPage.DataContext as NotesViewModel).Notes.Add(Note);
+							if (mainVM.OpenedNotebook is null)
+							{
+								mainVM.OpenedNotebook = Storage.Instance.Notebooks[0];
+							}
 							mainVM.OpenedNotebook.Notes.Add(Note);
 						}
 						Storage.Instance.SaveNoteAsync(Note, mainVM.OpenedNotebook);

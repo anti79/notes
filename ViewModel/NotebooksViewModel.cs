@@ -57,7 +57,7 @@ namespace notes.ViewModel
 					var nb = new Notebook() { Title = DefaultValuesStrings.DEFAULT_NOTEBOOK_NAME };
 					nb.CoverImage = await Storage.Instance.GetDefaultCover();
 					Notebooks.Add(nb);
-					Storage.Instance.SaveNotebookAsync(nb);
+					await Storage.Instance.SaveNotebookAsync(nb);
 
 				});
 			}
@@ -152,12 +152,12 @@ namespace notes.ViewModel
 		{
 			if(deleteNotebook is null)
 			{
-				deleteNotebook = new ActionCommand<Notebook>((nb) =>
+				deleteNotebook = new ActionCommand<Notebook>(async (nb) =>
 				{
 					nb.Notes.Clear();
 					Notebooks.Remove(nb);
 					
-					Storage.Instance.DeleteNotebook(nb);
+					await Storage.Instance.DeleteNotebook(nb);
 
 				});
 			}

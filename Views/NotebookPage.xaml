@@ -45,6 +45,7 @@
 												></MenuFlyoutItem>
                                 <MenuFlyoutItem Command="{Binding ElementName=page, Path=DataContext.DeleteNotebookCommand}" CommandParameter="{Binding}"
 												Text="Delete"
+												Visibility="{Binding IsDeletable}"
 												>
                                     </MenuFlyoutItem>
 							</MenuFlyout>

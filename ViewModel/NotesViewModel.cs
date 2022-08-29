@@ -137,6 +137,13 @@ namespace notes.ViewModel
 						(ParentViewModel as MainViewModel).EditorPage = editorPage;
 						//Storage.Instance.CreateFile()
 					
+				}, 
+				
+				() =>
+				{
+					//var mainvm = ParentViewModel as MainViewModel;
+					return Storage.Instance.Notebooks.Count > 0;
+
 				});
 			}
 			return createNoteCommand;
