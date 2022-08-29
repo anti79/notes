@@ -103,6 +103,7 @@ namespace notes.ViewModel
 
 
 						Note.Notebook = mainVM.OpenedNotebook;
+						
 						Note.Color = ChosenColor.ToString();
 						if (NewNote)
 						{

@@ -13,15 +13,16 @@ namespace notes.ViewModel
 {
 	class NotesViewModel : ViewModel
 	{
-		public delegate List<Note> GetNotes();
+		public delegate Task<List<Note>> GetNotes();
 		GetNotes getNotesDelegate;
 
 		public string Title {get;set;}
 		public bool IsNotebook { get; set; }
 		public NotesViewModel()
 		{
-			GetNotesDelegate = () =>
+			GetNotesDelegate = async () =>
 			{
+				await Storage.Instance.LoadAsync();
 				return Storage.Instance.GetAllNotes();
 			};
 			IsNotebook = false;
@@ -37,9 +38,9 @@ namespace notes.ViewModel
 				getNotesDelegate = value;
 			}
 		}
-		public void LoadNotes()
+		public async Task LoadNotesAsync()
 		{
-            notes = new ObservableCollection<Note>(getNotesDelegate());
+            notes = new ObservableCollection<Note>(await getNotesDelegate());
 			RaisePropertyChanged("Notes");
         }
 		ObservableCollection<Note> notes;
@@ -48,7 +49,7 @@ namespace notes.ViewModel
 			get {
 				if(notes is null)
 				{
-					LoadNotes();
+					LoadNotesAsync();
                 }
 				return notes;
 			}
@@ -106,9 +107,9 @@ namespace notes.ViewModel
 		{
 			if(toggleFavorite is null)
 			{
-				toggleFavorite = new ActionCommand<Note>((note)=> {
+				toggleFavorite = new ActionCommand<Note>( async (note)=> {
 					note.IsFavorite = !note.IsFavorite;
-                    notes = new ObservableCollection<Note>(getNotesDelegate());
+                    notes = new ObservableCollection<Note>(await getNotesDelegate());
                     RaisePropertyChanged(nameof(Notes));
 					Storage.Instance.SaveNoteAsync(note, note.Notebook);
 				}

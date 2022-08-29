@@ -77,8 +77,9 @@ namespace notes.ViewModel
 
 			allNotesVM = new NotesViewModel(); ;
 			allNotesVM.Title = TitleStrings.NOTES_PAGE_TITLE;
-			allNotesVM.GetNotesDelegate = () =>
+			allNotesVM.GetNotesDelegate = async () =>
 			{
+				await Storage.Instance.LoadAsync();
 				return Storage.Instance.GetAllNotes();
 			};
 			allNotesVM.ParentViewModel = this;
@@ -88,8 +89,9 @@ namespace notes.ViewModel
 
 			favVM = new NotesViewModel();
 			favVM.Title = TitleStrings.FAVORITES_PAGE_TITLE;
-			favVM.GetNotesDelegate = () =>
+			favVM.GetNotesDelegate = async () =>
 			{
+				await Storage.Instance.LoadAsync();
 				return Storage.Instance.GetFavoriteNotes();
 			};
 			favVM.ParentViewModel = this;
@@ -124,9 +126,8 @@ namespace notes.ViewModel
 			if (switchToAllCommand is null)
 			{
 				switchToAllCommand = new Command(() =>
-				{
-					
-					allNotesVM.LoadNotes();
+				{ 
+					allNotesVM.LoadNotesAsync();
 					CurrentPage = new NotesPage();
 					CurrentPage.DataContext = allNotesVM;
 					(allNotesVM.CreateNoteCommand as Command).RaiseCanExecuteChanged();
@@ -155,7 +156,7 @@ namespace notes.ViewModel
 				switchToFavoritesCommand = new Command(() =>
 				{
 					CurrentPage = new NotesPage();
-                    favVM.LoadNotes();
+                    favVM.LoadNotesAsync();
                     CurrentPage.DataContext = favVM;
 					
 				}
@@ -203,7 +204,7 @@ namespace notes.ViewModel
 						var page = new NotesPage();
 						var vm = new NotesViewModel();
 						vm.ParentViewModel = this;
-						vm.GetNotesDelegate = () =>
+						vm.GetNotesDelegate = async () =>
 						{
 							return OpenedNotebook.Notes;
 						};

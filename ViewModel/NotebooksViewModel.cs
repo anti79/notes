@@ -71,7 +71,7 @@ namespace notes.ViewModel
 				openNotebook = new ActionCommand<Notebook>((nb) => {
 					var page = new NotesPage();
 					var vm = new NotesViewModel();
-					vm.GetNotesDelegate = () =>
+					vm.GetNotesDelegate = async () =>
 					{
 						return nb.Notes;
 					};
