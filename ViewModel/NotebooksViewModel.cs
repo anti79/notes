@@ -58,6 +58,7 @@ namespace notes.ViewModel
 					nb.CoverImage = await Storage.Instance.GetDefaultCover();
 					Notebooks.Add(nb);
 					await Storage.Instance.SaveNotebookAsync(nb);
+					
 
 				});
 			}
@@ -77,11 +78,13 @@ namespace notes.ViewModel
 					};
 					vm.Title = nb.Title;
 					vm.IsNotebook = true;
+					(vm.CreateNoteCommand as Command).RaiseCanExecuteChanged();
 					page.DataContext = vm;
 					vm.ParentViewModel = ParentViewModel;
 					var mainVM = ParentViewModel as MainViewModel;
 					mainVM.CurrentPage = page;
 					mainVM.OpenedNotebook = nb;
+					
 				});
 
 			}
@@ -182,13 +185,13 @@ namespace notes.ViewModel
 		{
 			if(closeEdit is null)
 			{
-				closeEdit = new Command(()=> {
+				closeEdit = new Command(async ()=> {
 					if (EditedNotebook.Title.Length > 1)
 					{
 
 
 						EditingNotebook = false;
-						Storage.Instance.SaveNotebookAsync(EditedNotebook);
+						await Storage.Instance.SaveNotebookAsync(EditedNotebook);
 					}
 					else
 					{

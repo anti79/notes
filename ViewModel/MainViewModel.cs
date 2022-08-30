@@ -125,11 +125,17 @@ namespace notes.ViewModel
 		{
 			if (switchToAllCommand is null)
 			{
-				switchToAllCommand = new Command(() =>
-				{ 
-					allNotesVM.LoadNotesAsync();
+				switchToAllCommand = new Command(async () =>
+				{
+					//allNotesVM.LoadNotesAsync();
+				//	if (allNotesVM.Notes != null)
+				//	{
+					//	allNotesVM.Notes.Clear();
+					//}
 					CurrentPage = new NotesPage();
+					//await allNotesVM.LoadNotesAsync();
 					CurrentPage.DataContext = allNotesVM;
+
 					(allNotesVM.CreateNoteCommand as Command).RaiseCanExecuteChanged();
 
 				});
@@ -142,8 +148,13 @@ namespace notes.ViewModel
 			{
 				switchToNotebooksCommand = new Command(() =>
 				{
+					/*if (nbVM.Notebooks != null)
+					{
+						nbVM.Notebooks.Clear();
+					}*/
 					CurrentPage = new NotebookPage();
 					CurrentPage.DataContext = nbVM;
+
 				});
 			}
 			return switchToNotebooksCommand;

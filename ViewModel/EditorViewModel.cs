@@ -87,7 +87,7 @@ namespace notes.ViewModel
 		{
 			if (saveExit is null)
 			{
-				saveExit = new Command(() =>
+				saveExit = new Command(async () =>
 				{
                     var mainVM = ParentViewModel as MainViewModel;
                     if (title.Length > 1)
@@ -112,9 +112,10 @@ namespace notes.ViewModel
 							{
 								mainVM.OpenedNotebook = Storage.Instance.Notebooks[0];
 							}
-							mainVM.OpenedNotebook.Notes.Add(Note);
+							//mainVM.OpenedNotebook.Notes.Add(Note);
 						}
-						Storage.Instance.SaveNoteAsync(Note, mainVM.OpenedNotebook);
+						await Storage.Instance.SaveNoteAsync(Note, mainVM.OpenedNotebook);
+						mainVM.OpenedNotebook.Notes.Add(Note);
 					}
 					else
 					{

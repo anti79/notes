@@ -22,7 +22,8 @@ namespace notes.ViewModel
 		{
 			GetNotesDelegate = async () =>
 			{
-				await Storage.Instance.LoadAsync();
+				//await Storage.Instance.LoadAsync();
+				(CreateNoteCommand as Command).RaiseCanExecuteChanged();
 				return Storage.Instance.GetAllNotes();
 			};
 			IsNotebook = false;
@@ -107,11 +108,11 @@ namespace notes.ViewModel
 		{
 			if(toggleFavorite is null)
 			{
-				toggleFavorite = new ActionCommand<Note>( async (note)=> {
+				toggleFavorite = new AsyncActionCommand<Note>( async (note)=> {
 					note.IsFavorite = !note.IsFavorite;
                     notes = new ObservableCollection<Note>(await getNotesDelegate());
                     RaisePropertyChanged(nameof(Notes));
-					Storage.Instance.SaveNoteAsync(note, note.Notebook);
+					await Storage.Instance.SaveNoteAsync(note, note.Notebook);
 				}
 				);
 			}

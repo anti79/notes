@@ -131,6 +131,8 @@
     <Compile Include="StreamToBitmapConverter.cs" />
     <Compile Include="ToggleFavoriteStringConverter.cs" />
     <Compile Include="UriToImageConverter.cs" />
+    <Compile Include="ViewModel\AsyncActionCommand.cs" />
+    <Compile Include="ViewModel\AsyncCommand.cs" />
     <Compile Include="ViewModel\EditorViewModel.cs" />
     <Compile Include="Model\Notebook.cs" />
     <Compile Include="Model\Storage.cs" />

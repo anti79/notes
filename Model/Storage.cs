@@ -20,7 +20,7 @@ namespace notes.Model
 		const string DEFAULT_COVER_URI = "ms-appx:///Assets/cover0.png";
 		const string DEFAULT_NOTE_COLOR = "#DFA1A1";
 
-		IReadOnlyList<StorageFolder> subfolders;
+		List<StorageFolder> subfolders;
 
         private static Storage instance = null;
 		private static readonly object _lock = new object();
@@ -30,7 +30,7 @@ namespace notes.Model
 		{
 			var nbFolder = await folder.CreateFolderAsync(notebook.FolderName, CreationCollisionOption.OpenIfExists);
 			var nameFile = await nbFolder.CreateFileAsync(NOTEBOOK_NAME_FILE, CreationCollisionOption.OpenIfExists);
-			Notebooks.Add(notebook);
+			
 			await FileIO.WriteTextAsync(nameFile, notebook.Title);
 
 		}
@@ -60,7 +60,7 @@ namespace notes.Model
 
 			var file = await storageFolder.CreateFileAsync(note.FileName,
 			Windows.Storage.CreationCollisionOption.OpenIfExists);
-			Windows.Storage.FileIO.WriteTextAsync(file, AddRTFMetadata(note).Content + Environment.NewLine);
+			await Windows.Storage.FileIO.WriteTextAsync(file, AddRTFMetadata(note).Content + Environment.NewLine);
 		}
 
 		Note AddRTFMetadata(Note note)
@@ -96,12 +96,6 @@ namespace notes.Model
 		}
 		
 
-
-		public async Task<IRandomAccessStream> GetStream(Note note)
-		{
-			return await (
-				(await folder.GetFileAsync(note.FileName)).OpenAsync(FileAccessMode.ReadWrite));
-		}
 		public List<Notebook> Notebooks { get; set; }
 		public static Storage Instance
 		{
@@ -168,15 +162,16 @@ namespace notes.Model
         }
         public async Task LoadAsync()
 		{
-
-			await LoadSubfoldersAsync();
+			Notebooks.Clear();
+			
+			if(subfolders is null) await LoadSubfoldersAsync();
 			await LoadNotebooksAsync();
 			await LoadNotesAsync();
 		}
 		
 		async Task LoadSubfoldersAsync()
 		{
-            subfolders = await folder.GetFoldersAsync();
+            subfolders = new List<StorageFolder>(await folder.GetFoldersAsync());
         }
 		async Task LoadNotebooksAsync()
 		{
@@ -232,6 +227,7 @@ namespace notes.Model
 				var files = await sf.GetFilesAsync();
                 for(int i=0;i<files.Count;i++)
                 {
+					//TODO: catch
 					var file = files[i];
                     if (file.Name == NOTEBOOK_NAME_FILE || file.Name == NOTEBOOK_COVER_FILE)
                     {
