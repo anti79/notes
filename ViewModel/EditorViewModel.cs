@@ -87,7 +87,7 @@ namespace notes.ViewModel
 		{
 			if (saveExit is null)
 			{
-				saveExit = new Command(async () =>
+				saveExit = new AsyncCommand(async () =>
 				{
                     var mainVM = ParentViewModel as MainViewModel;
                     if (title.Length > 1)

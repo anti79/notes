@@ -41,7 +41,7 @@ namespace notes.Model
 
 
 		}
-		public async Task<IRandomAccessStream> GetDefaultCover()
+		public async Task<IRandomAccessStream> GetDefaultCoverAsync()
 		{
 			return await (await StorageFile.GetFileFromApplicationUriAsync(new Uri(DEFAULT_COVER_URI))).OpenAsync(FileAccessMode.Read);
 		}
@@ -151,9 +151,9 @@ namespace notes.Model
 		{
 			var subfolder = await folder.GetFolderAsync(note.Notebook.FolderName);
             var file = await subfolder.GetFileAsync(note.FileName);
-			file.DeleteAsync();
+			await file.DeleteAsync();
 		}
-        public async Task DeleteNotebook(Notebook nb)
+        public async Task DeleteNotebookAsync(Notebook nb)
         {
 			var subfolder = await folder.GetFolderAsync(nb.FolderName);
 			Notebooks.Remove(nb);
@@ -207,7 +207,7 @@ namespace notes.Model
 				catch (FileNotFoundException)
 				{
 					coverFile = null;
-					nb.CoverImage = await GetDefaultCover();
+					nb.CoverImage = await GetDefaultCoverAsync();
 
 
 				}

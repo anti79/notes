@@ -53,9 +53,9 @@ namespace notes.ViewModel
 		{
 			if (createNotebook is null)
 			{
-				createNotebook = new Command(async () => {
+				createNotebook = new AsyncCommand(async () => {
 					var nb = new Notebook() { Title = DefaultValuesStrings.DEFAULT_NOTEBOOK_NAME };
-					nb.CoverImage = await Storage.Instance.GetDefaultCover();
+					nb.CoverImage = await Storage.Instance.GetDefaultCoverAsync();
 					Notebooks.Add(nb);
 					await Storage.Instance.SaveNotebookAsync(nb);
 					
@@ -69,13 +69,14 @@ namespace notes.ViewModel
 		{
 			if (openNotebook is null)
 			{
-				openNotebook = new ActionCommand<Notebook>((nb) => {
+				openNotebook = new AsyncActionCommand<Notebook>(async (nb) => {
 					var page = new NotesPage();
 					var vm = new NotesViewModel();
 					vm.GetNotesDelegate = async () =>
 					{
 						return nb.Notes;
 					};
+					await vm.LoadNotesAsync();
 					vm.Title = nb.Title;
 					vm.IsNotebook = true;
 					(vm.CreateNoteCommand as Command).RaiseCanExecuteChanged();
@@ -155,12 +156,12 @@ namespace notes.ViewModel
 		{
 			if(deleteNotebook is null)
 			{
-				deleteNotebook = new ActionCommand<Notebook>(async (nb) =>
+				deleteNotebook = new AsyncActionCommand<Notebook>(async (nb) =>
 				{
 					nb.Notes.Clear();
 					Notebooks.Remove(nb);
 					
-					await Storage.Instance.DeleteNotebook(nb);
+					await Storage.Instance.DeleteNotebookAsync(nb);
 
 				});
 			}
@@ -170,7 +171,7 @@ namespace notes.ViewModel
 		{
 			if(setCover is null)
 			{
-				setCover = new ActionCommand<StorageFile>(async (file)=> {
+				setCover = new AsyncActionCommand<StorageFile>(async (file)=> {
 
                         var copy = await Storage.Instance.SaveNotebookCoverAsync(EditedNotebook, file);
                         EditedNotebook.CoverImage = await copy.OpenAsync(FileAccessMode.Read);
@@ -185,7 +186,7 @@ namespace notes.ViewModel
 		{
 			if(closeEdit is null)
 			{
-				closeEdit = new Command(async ()=> {
+				closeEdit = new AsyncCommand(async ()=> {
 					if (EditedNotebook.Title.Length > 1)
 					{
 

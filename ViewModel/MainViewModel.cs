@@ -3,6 +3,7 @@ using notes.Model;
 using notes.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -91,7 +92,7 @@ namespace notes.ViewModel
 			favVM.Title = TitleStrings.FAVORITES_PAGE_TITLE;
 			favVM.GetNotesDelegate = async () =>
 			{
-				await Storage.Instance.LoadAsync();
+				//await Storage.Instance.LoadAsync();
 				return Storage.Instance.GetFavoriteNotes();
 			};
 			favVM.ParentViewModel = this;
@@ -125,17 +126,12 @@ namespace notes.ViewModel
 		{
 			if (switchToAllCommand is null)
 			{
-				switchToAllCommand = new Command(async () =>
+				switchToAllCommand = new AsyncCommand( async () =>
 				{
-					//allNotesVM.LoadNotesAsync();
-				//	if (allNotesVM.Notes != null)
-				//	{
-					//	allNotesVM.Notes.Clear();
-					//}
+					var allNotes = Storage.Instance.GetAllNotes();
+					allNotesVM.Notes = new ObservableCollection<Note>(allNotes);
 					CurrentPage = new NotesPage();
-					//await allNotesVM.LoadNotesAsync();
 					CurrentPage.DataContext = allNotesVM;
-
 					(allNotesVM.CreateNoteCommand as Command).RaiseCanExecuteChanged();
 
 				});
@@ -164,10 +160,10 @@ namespace notes.ViewModel
 		{
 			if (switchToFavoritesCommand is null)
 			{
-				switchToFavoritesCommand = new Command(() =>
+				switchToFavoritesCommand = new AsyncCommand(async () =>
 				{
 					CurrentPage = new NotesPage();
-                    favVM.LoadNotesAsync();
+                    await favVM.LoadNotesAsync();
                     CurrentPage.DataContext = favVM;
 					
 				}

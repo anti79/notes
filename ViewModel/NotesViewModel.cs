@@ -20,9 +20,10 @@ namespace notes.ViewModel
 		public bool IsNotebook { get; set; }
 		public NotesViewModel()
 		{
+			Notes = new ObservableCollection<Note>();
 			GetNotesDelegate = async () =>
 			{
-				//await Storage.Instance.LoadAsync();
+				await Storage.Instance.LoadAsync();
 				(CreateNoteCommand as Command).RaiseCanExecuteChanged();
 				return Storage.Instance.GetAllNotes();
 			};
@@ -41,20 +42,12 @@ namespace notes.ViewModel
 		}
 		public async Task LoadNotesAsync()
 		{
-            notes = new ObservableCollection<Note>(await getNotesDelegate());
+            Notes = new ObservableCollection<Note>(await getNotesDelegate());
 			RaisePropertyChanged("Notes");
         }
-		ObservableCollection<Note> notes;
 		public ObservableCollection<Note> Notes
 		{
-			get {
-				if(notes is null)
-				{
-					LoadNotesAsync();
-                }
-				return notes;
-			}
-			
+			get;set;
 		}
 
 
@@ -71,7 +64,7 @@ namespace notes.ViewModel
                 deleteNote =  new ActionCommand<Note>((note) =>
                 {
 					Storage.Instance.DeleteNoteAsync(note);
-					notes.Remove(note);
+					Notes.Remove(note);
 					note.Notebook.Notes.Remove(note);
                 });
             }
@@ -110,8 +103,10 @@ namespace notes.ViewModel
 			{
 				toggleFavorite = new AsyncActionCommand<Note>( async (note)=> {
 					note.IsFavorite = !note.IsFavorite;
-                    notes = new ObservableCollection<Note>(await getNotesDelegate());
+
+                    Notes = new ObservableCollection<Note>(await getNotesDelegate());
                     RaisePropertyChanged(nameof(Notes));
+
 					await Storage.Instance.SaveNoteAsync(note, note.Notebook);
 				}
 				);
@@ -144,8 +139,8 @@ namespace notes.ViewModel
 				() =>
 				{
 					//var mainvm = ParentViewModel as MainViewModel;
-					return Storage.Instance.Notebooks.Count > 0;
-
+					//return Storage.Instance.Notebooks.Count > 0;
+					return true;
 				});
 			}
 			return createNoteCommand;
