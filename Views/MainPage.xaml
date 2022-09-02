@@ -28,12 +28,9 @@
 				<ColumnDefinition/>
 			</Grid.ColumnDefinitions>
 			<Grid Grid.Column="0" x:Name="leftPanel">
-
 				<!--<Button Content="і" Command="{Binding SearchBox.ToggleSearchCommand}" Visibility="Visible"/>-->
 				<!--
 				<TextBox Width="442" Height="35" x:Name="searchTextbox" Visibility="{Binding SearchBox.Searching}" Text="{Binding SearchBox.SearchBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  >
-					
-
 				</TextBox>
 				-->
 				<AutoSuggestBox Height="35" 

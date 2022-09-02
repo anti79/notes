@@ -100,11 +100,11 @@ namespace notes.ViewModel
 			{
 				toggleFavorite = new AsyncActionCommand<Note>( async (note)=> {
 					note.IsFavorite = !note.IsFavorite;
-
-                    Notes = new ObservableCollection<Note>(await getNotesDelegate());
+					await Storage.Instance.SaveNoteAsync(note, note.Notebook);
+					Notes = new ObservableCollection<Note>(await getNotesDelegate());
                     RaisePropertyChanged(nameof(Notes));
 
-					await Storage.Instance.SaveNoteAsync(note, note.Notebook);
+					
 				}
 				);
 			}

@@ -86,7 +86,7 @@ namespace notes.ViewModel
 			favVM.Title = TitleStrings.FAVORITES_PAGE_TITLE;
 			favVM.GetNotesDelegate = async () =>
 			{
-				//await Storage.Instance.LoadAsync();
+				await Storage.Instance.LoadAsync();
 				return Storage.Instance.GetFavoriteNotes();
 			};
 			favVM.ParentViewModel = this;
