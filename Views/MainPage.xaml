@@ -70,10 +70,7 @@
 				<Button x:Name="allBtn" Command="{ Binding SwitchToAll }"  Margin="5">All notes</Button>
 				<Button x:Name="favoritesBtn"  Command="{ Binding SwitchToFavorites }"   Margin="5">Favorites</Button>
 			</StackPanel>
-			<StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
-				<Button></Button>
-				<Button>...</Button>
-			</StackPanel>
+	
 		</Grid>
 		<Frame Name="mainFrame" Grid.Row="1" Margin="30" Content="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
 		</Frame>
