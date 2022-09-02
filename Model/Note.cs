@@ -70,7 +70,6 @@ namespace notes.Model
 		
 		DateTime creationDateTime;
 
-
 		public DateTime CreationDateTime
 		{
 			get
@@ -103,8 +102,6 @@ namespace notes.Model
 				return creationDateTime.ToString();
 			}
 		}
-
-
 		public Note()
 		{
 			creationDateTime = DateTime.Now;

@@ -50,9 +50,6 @@ namespace notes.ViewModel
 			get;set;
 		}
 
-
-
-
 		ICommand goBack;
 		ICommand openNote;
 		ICommand deleteNote;

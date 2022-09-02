@@ -101,7 +101,6 @@ namespace notes.ViewModel
 						Note.Content = str;
 						Note.Title = Title;
 
-
 						Note.Notebook = mainVM.OpenedNotebook;
 						
 						Note.Color = ChosenColor.ToString();
@@ -126,7 +125,6 @@ namespace notes.ViewModel
 			}
 			return saveExit;
 		}
-
 
 		//FORMATTING
 		ICommand toggleBold;
@@ -186,7 +184,6 @@ namespace notes.ViewModel
 					document.Selection.CharacterFormat.Italic = FormatEffect.Toggle;
 				});
 
-
 			}
 			return toggleItalic;
 		}
@@ -214,8 +211,6 @@ namespace notes.ViewModel
 					}
 
 				});
-
-
 			}
 			return toggleUnderlined;
 		}
@@ -235,8 +230,6 @@ namespace notes.ViewModel
 				{
 					document.Selection.CharacterFormat.Strikethrough = FormatEffect.Toggle;
 				});
-
-
 			}
 			return toggleStrikethrough;
 		}
@@ -258,8 +251,6 @@ namespace notes.ViewModel
 					document.Selection.ParagraphFormat.Alignment = (ParagraphAlignment)Enum.Parse(typeof(ParagraphAlignment), type);
 					//document.Selection.ParagraphFormat.ListStyle = MarkerStyle.
 				});
-
-
 			}
 			return setAlignment;
 		}

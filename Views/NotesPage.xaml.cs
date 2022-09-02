@@ -39,7 +39,6 @@ namespace notes.Views
 				(e.OriginalSource as FrameworkElement).DataContext);
 		}
 
-
 		private void RichEditBox_Loaded(object sender, RoutedEventArgs e)
 		{
 			var noteBox = sender as RichEditBox;
@@ -52,7 +51,6 @@ namespace notes.Views
 		private void note_RightTapped(object sender, RightTappedRoutedEventArgs e)
 		{
 			FrameworkElement senderElement = sender as FrameworkElement;
-	
 			FlyoutBase flyoutBase = FlyoutBase.GetAttachedFlyout(senderElement);
 			var showOptions = new FlyoutShowOptions();
 			showOptions.Placement = FlyoutPlacementMode.BottomEdgeAlignedRight;

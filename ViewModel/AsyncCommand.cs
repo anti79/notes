@@ -13,7 +13,6 @@ namespace notes.ViewModel
         bool CanExecute();
     }
 
-
     public static class TaskUtilities
     {
     #pragma warning disable RECS0165 // Asynchronous methods should return a Task instead of void
@@ -23,7 +22,6 @@ namespace notes.ViewModel
             await task;
         }
     }
-
 
     public class AsyncCommand : IAsyncCommand
     {
@@ -81,6 +79,4 @@ namespace notes.ViewModel
         }
         #endregion
     }
-
-
 }

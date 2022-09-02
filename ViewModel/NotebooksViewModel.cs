@@ -189,8 +189,6 @@ namespace notes.ViewModel
 				closeEdit = new AsyncCommand(async ()=> {
 					if (EditedNotebook.Title.Length > 1)
 					{
-
-
 						EditingNotebook = false;
 						await Storage.Instance.SaveNotebookAsync(EditedNotebook);
 					}

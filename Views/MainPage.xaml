@@ -61,18 +61,12 @@
 								</Grid.ColumnDefinitions>
 								<TextBlock Grid.Column="0" Text="{Binding Title}" FontSize="14" HorizontalAlignment="Left">note</TextBlock>
 								<TextBlock Grid.Column="1" Text="{Binding Type}"/>
-								
+
 								<!--<TextBlock Text="{Binding ChannelTitle}" Grid.Column="1" Grid.Row="1" FontSize="12" HorizontalAlignment="Left"  Foreground="#FFFFFF"/>-->
 							</Grid>
-
 						</DataTemplate>
-
 					</AutoSuggestBox.ItemTemplate>
-
-
-
 				</AutoSuggestBox>
-
 			</Grid>
 			<StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
 				<Button x:Name="notebooksBtn"  Command="{ Binding SwitchToNotebooks }" Margin="5">Notebooks</Button>
@@ -84,19 +78,9 @@
 				<Button>...</Button>
 			</StackPanel>
 		</Grid>
-
-
-		<Frame Name="mainFrame" Grid.Row="1" Margin="30" Content="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
->
-
+		<Frame Name="mainFrame" Grid.Row="1" Margin="30" Content="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
 		</Frame>
 		<Frame Name="noteFrame" Grid.RowSpan="2" Content="{Binding EditorPage, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding EditorVisible, UpdateSourceTrigger=PropertyChanged}">
-
 		</Frame>
-
-
-		<!--<WebView HorizontalAlignment="Left" Height="610" Margin="10,150,0,0" VerticalAlignment="Top" Width="1040" x:Name="view"/>-->
-
-
 	</Grid>
 </Page>

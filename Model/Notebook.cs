@@ -66,7 +66,6 @@ namespace notes.Model
 
 		}
 
-
 		public IEnumerator GetEnumerator()
 		{
 			return Notes.GetEnumerator();

@@ -39,7 +39,6 @@ namespace notes.Model
 			var nbFolder = await folder.GetFolderAsync(notebook.FolderName);
 			return await cover.CopyAsync(nbFolder, NOTEBOOK_COVER_FILE, NameCollisionOption.ReplaceExisting);
 
-
 		}
 		public async Task<IRandomAccessStream> GetDefaultCoverAsync()
 		{
@@ -175,16 +174,6 @@ namespace notes.Model
         }
 		async Task LoadNotebooksAsync()
 		{
-			/*
-			if(subfolders.Count<1)
-			{
-				var defaultNb = new Notebook();
-				defaultNb.Title = DefaultValuesStrings.STARTING_NOTEBOOK_NAME;
-				defaultNb.IsDeletable = false;
-				defaultNb.Notes = new List<Note>();
-				await SaveNotebookAsync(defaultNb);
-			}
-			*/
 			foreach (var sf in subfolders)
 			{
 				var nb = new Notebook();
@@ -208,8 +197,6 @@ namespace notes.Model
 				{
 					coverFile = null;
 					nb.CoverImage = await GetDefaultCoverAsync();
-
-
 				}
 
 				nb.Title = await FileIO.ReadTextAsync(nameFile);

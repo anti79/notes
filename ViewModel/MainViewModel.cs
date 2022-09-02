@@ -16,18 +16,12 @@ namespace notes.ViewModel
 {
 	class MainViewModel : ViewModel
 	{
-
-		
 		Page currentPage;
 		Page editorPage;
 
 		NotesViewModel allNotesVM;
 		NotebooksViewModel nbVM;
 		NotesViewModel favVM;
-
-		
-
-
 		public void UpdatePages()
 		{
 			allNotesVM.RaisePropertyChanged(nameof(allNotesVM.Notes));
@@ -101,13 +95,10 @@ namespace notes.ViewModel
 
 		}
 
-
-
 		ICommand switchToAllCommand;
 		ICommand switchToNotebooksCommand;
 		ICommand switchToFavoritesCommand;
 		
-
 		public Notebook OpenedNotebook { get; set; }
 		SearchBox searchBox;
 		public SearchBox SearchBox

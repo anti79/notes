@@ -41,7 +41,6 @@ namespace notes
             md.ShowAsync();
         }
 
-
 		private void searchBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
 		{
             var chosen = args.SelectedItem as ISearchable;

@@ -68,9 +68,6 @@ namespace notes
 
         public static FrameworkElement GetParent(DependencyObject element)
         {
-            
-
-
             return element.GetValue(ParentProperty) as FrameworkElement;
         }
     }
