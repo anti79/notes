@@ -11,7 +11,7 @@ using Windows.UI.Text;
 
 namespace notes.Model
 {
-	class Note:ObservableObject,ISearchable
+	public class Note:ObservableObject,ISearchable
 	{
 		string title;
 		bool isFavorite;

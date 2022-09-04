@@ -11,7 +11,7 @@ using Windows.Storage.Streams;
 
 namespace notes.Model
 {
-	class Notebook : ObservableObject, IEnumerable, ISearchable
+	public class Notebook : ObservableObject, IEnumerable, ISearchable
 	{
 		string name;
 		public Guid Guid { get; set; }

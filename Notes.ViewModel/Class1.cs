@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace notes.Model
+namespace Notes.ViewModel
 {
-	interface ISearchable
-	{
-		string Type { get; }
-		string ToString();
-	}
+    public class Class1
+    {
+    }
 }

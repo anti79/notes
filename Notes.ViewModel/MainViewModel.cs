@@ -14,7 +14,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace notes.ViewModel
 {
-	class MainViewModel : ViewModel
+	public class MainViewModel : ViewModel
 	{
 		Page currentPage;
 		Page editorPage;

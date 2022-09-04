@@ -13,7 +13,7 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace notes.Model
 {
-	class Storage
+	public class Storage
 	{
 		const string NOTEBOOK_NAME_FILE = "name.txt";
 		const string NOTEBOOK_COVER_FILE = "cover";
