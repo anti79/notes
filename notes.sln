@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "notes", "notes.csproj", "{4F49C144-6AF7-47A1-B75B-2DA75A1F8217}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.View", "Notes.View.csproj", "{4F49C144-6AF7-47A1-B75B-2DA75A1F8217}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
